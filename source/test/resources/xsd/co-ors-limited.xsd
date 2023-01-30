@@ -1,0 +1,223 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sdo="commonj.sdo" xmlns:sdoJava="commonj.sdo/java" xmlns:sdoXML="commonj.sdo/xml" xmlns:ns1="urn:cs-base.informatica.mdm" xmlns:ns2="urn:co-types.informatica.mdm" xmlns:ns3="urn:cs-rest.informatica.mdm" xmlns="urn:co-ors.informatica.mdm" xmlns:ns4="urn:co-base.informatica.mdm" xmlns:ns5="commonj.sdo" elementFormDefault="qualified" targetNamespace="urn:co-ors.informatica.mdm">
+	<xsd:import schemaLocation="cs-base.xsd" namespace="urn:cs-base.informatica.mdm"/>
+	<xsd:import schemaLocation="co-types.xsd" namespace="urn:co-types.informatica.mdm"/>
+	<xsd:import schemaLocation="cs-rest.xsd" namespace="urn:cs-rest.informatica.mdm"/>
+	<xsd:import schemaLocation="co-base.xsd" namespace="urn:co-base.informatica.mdm"/>
+	<xsd:import schemaLocation="sdoModel.xsd" namespace="commonj.sdo"/>
+	<xsd:complexType name="ExHFC_HEP_CustomerOrgView.Root">
+		<xsd:complexContent>
+			<xsd:extension base="ns4:Root">
+				<xsd:sequence>
+					<xsd:element name="ExVndrMDMId" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExBusinessName" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExEmail" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPhoneNumber" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExAddressLn1" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExAddressLn2" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCity" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExZipCode" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExTaxjurisdiction" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExVNSAPId" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExUseCleanseAddrInd" type="ns5:Boolean" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCleansedAddrLn1" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCleansedAddrLn2" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCleansedCity" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCleansedState" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCleansedCountry" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCleansedZipCode" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExAddressvalidationStatus" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExReason" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExRefinitivSearchResult" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExRegion" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExOneTimeVendor" type="ns5:Boolean" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExBusinessName2" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExBusinessName3" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExBusinessName4" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSearchTerm1" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSearchTerm2" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExValidate" type="ns5:Boolean" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExFullName" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExVNSAPId1" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExAddrLn3" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExAddrLn4" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCleansedAddrLn3" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExCleansedAddrLn4" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSpendCommitedFlag" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExExpecAnnualSpend" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExSerengetiFlg" type="ns5:Boolean" minOccurs="0"/>
+					<xsd:element name="ExANID" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExVNPaymentMethod" type="ns5:Boolean" minOccurs="0"/>
+					<xsd:element name="ExTaxReviewStatus" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExDrftSts" type="ns5:Boolean" minOccurs="0"/>
+					<xsd:element name="ExVendorPaymentMethodComments" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPortalState_1_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPortalState_1_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPortalState_1_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPortalState_1_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPortalState_1_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPortalState_1_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPortalState_1_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPortalState_1_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPortalState_1_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPortalState_1_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPortalState_1_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPortalState_1_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPortalState_1_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPortalState_1_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPortalState_1_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryAddress_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryElectronicCommunication_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPI_1_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPI_1_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPI_1_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPI_1_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPI_1_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExVendorBusinessRel_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPI_1_ExPurchaseOrgs_1_ExCompanyCodePurchaseOrgs_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPrimaryPymntDtls_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExSAPAttributes_1_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExSAPAttributes_1_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSAPAttributes_1_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSAPAttributes_1_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSAPAttributes_1_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExSAPAttributes_1_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExSAPAttributes_1_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSAPAttributes_1_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSAPAttributes_1_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSAPAttributes_1_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExSAPAttributes_1_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExSAPAttributes_1_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExSAPAttributes_1_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExSAPAttributes_1_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExSAPAttributes_1_key" type="ns1:Key" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_consolidationInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_creator" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_interactionId" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_updatedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_lastUpdateDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_lastRowidSystem" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_dirtyIndicator" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_deletedBy" type="xsd:string" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_deletedInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_hubStateInd" type="xsd:integer" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_deletedDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_rowidObject" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_cmDirtyInd" type="xsd:integer" minOccurs="0" nillable="true"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_createDate" type="xsd:dateTime" minOccurs="0" nillable="true" sdoXML:dataType="sdo:Date"/>
+					<xsd:element name="ExPrimaryCommunication_1_ExPhoneCommunication_key" type="ns1:Key" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="exHFC_HEP_CustomerOrgView.Root" type="ExHFC_HEP_CustomerOrgView.Root"/>
+</xsd:schema>

@@ -1,0 +1,13 @@
+<mandatory>
+	<field>
+		<fieldName>
+			
+		</fieldName>
+	</field>
+	<child>
+		<childName>companyCd</childName>
+		<fieldName>
+			preferredMethodOfPayment
+		</fieldName>
+	</child>
+</mandatory>

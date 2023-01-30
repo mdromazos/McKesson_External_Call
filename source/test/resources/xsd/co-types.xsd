@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xsd:schema [
+        <!ELEMENT xsd:schema (xsd:simpleType)*>
+        <!ATTLIST xsd:schema
+                xmlns:xsd CDATA #REQUIRED
+                targetNamespace CDATA #REQUIRED
+                xmlns CDATA #REQUIRED
+                elementFormDefault CDATA #REQUIRED>
+        <!ELEMENT xsd:simpleType (xsd:annotation|xsd:restriction)*>
+        <!ATTLIST xsd:simpleType
+                name CDATA #REQUIRED>
+        <!ELEMENT xsd:annotation (xsd:documentation)*>
+        <!ELEMENT xsd:documentation (#PCDATA)>
+        <!ELEMENT xsd:restriction (#PCDATA)>
+        <!ATTLIST xsd:restriction
+                base CDATA #REQUIRED>
+        ]>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="urn:co-types.informatica.mdm"
+        xmlns="urn:co-types.informatica.mdm" elementFormDefault="qualified">
+
+    <xsd:simpleType name="ImageURL">
+        <xsd:annotation>
+            <xsd:documentation>String represents Image URL</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="HyperlinkText">
+        <xsd:annotation>
+            <xsd:documentation>String represents a hyperlink (can be HTTP, FTP or MAILTO)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="FileAttachment">
+        <xsd:annotation>
+            <xsd:documentation>String is a file ID in the file storage</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+</xsd:schema>

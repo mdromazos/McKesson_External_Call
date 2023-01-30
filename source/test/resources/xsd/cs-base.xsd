@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:cs-base.informatica.mdm"
+            xmlns="urn:cs-base.informatica.mdm"
+            xmlns:sdoJava="commonj.sdo/java"
+            xmlns:sdo="commonj.sdo"
+            xmlns:sdoXML="commonj.sdo/xml"
+            sdoJava:package="com.informatica.mdm.sdo.cs.base"
+            elementFormDefault="qualified">
+	<xsd:import schemaLocation="sdoModel.xsd" namespace="commonj.sdo"/>
+
+    <xsd:complexType name="CsRequest" abstract="true"/>
+
+    <xsd:complexType name="CsResponse" abstract="true"/>
+
+    <xsd:complexType name="CsFaultDetails" abstract="true"/>
+
+    <xsd:complexType name="CsFault">
+        <xsd:all>
+            <xsd:element name="errorCode" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="errorMessage" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="details" type="CsFaultDetails" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="origin" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:all>
+    </xsd:complexType>
+    <xsd:element name="CsFault" type="CsFault"/>
+
+    <xsd:simpleType name="ValidationErrorLevel">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ERROR" />
+            <xsd:enumeration value="WARNING" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ValidationError">
+        <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="level" type="ValidationErrorLevel" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="message" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="field" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ValidationErrors">
+        <xsd:complexContent>
+            <xsd:extension base="CsFaultDetails">
+        <xsd:sequence>
+            <xsd:element name="error" type="ValidationError" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="CoFilter">
+        <xsd:sequence>
+            <xsd:element name="object" type="CoFilterNode" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="Fields">
+       <xsd:annotation>
+           <xsd:documentation>This is a comma separated list of BE fields.</xsd:documentation>
+       </xsd:annotation>
+       <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="DataFilter">
+       <xsd:annotation>
+           <xsd:documentation>This is a query in BEQL format. Only '=' (equal) and '[..,..]' (range) conditions combined with 'AND' operator</xsd:documentation>
+       </xsd:annotation>
+       <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="ContentMetadata">
+        <xsd:restriction base="xsd:string">
+           <xsd:enumeration value="XREF" />
+           <xsd:enumeration value="PENDING_XREF" />
+           <xsd:enumeration value="DELETED_XREF" />
+           <xsd:enumeration value="HISTORY" />
+           <xsd:enumeration value="BVT" />
+           <xsd:enumeration value="TRUST" />
+           <xsd:enumeration value="XREF_TRUST" />
+           <xsd:enumeration value="CONTRIBUTING_XREF" />
+           <xsd:enumeration value="MATCH" />
+           <xsd:enumeration value="MERGE_ORIGIN" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="BusinessEntityKey">
+        <xsd:sequence>
+            <xsd:element name="key" type="Key" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="BusinessEntityPath">
+        <xsd:complexContent>
+           <xsd:extension base="BusinessEntityKey">
+               <xsd:sequence>
+                   <xsd:element name="label" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                   <xsd:element name="object" type="BusinessEntityPath" minOccurs="0" maxOccurs="1"/>
+               </xsd:sequence>
+           </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="CoFilterNode">
+        <xsd:complexContent>
+            <xsd:extension base="BusinessEntityKey">
+                <xsd:sequence>
+                    <xsd:element name="order" type="OrderBy" minOccurs="0" maxOccurs="1"/>
+                   <xsd:element name="fields" type="Fields" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="pager" type="Pager" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="recordState" type="RecordState" minOccurs="0" maxOccurs="3"/>
+                   <xsd:element name="contentMetadata" type="ContentMetadata" minOccurs="0" maxOccurs="8"/>
+                   <xsd:element name="filter" type="DataFilter" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="object" type="CoFilterNode" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+                <xsd:attribute name="depth" type="xsd:int"/>
+               <xsd:attribute name="suppress" type="xsd:boolean" default="false"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="OrderBy">
+        <xsd:annotation>
+            <xsd:documentation>This is a comma separated list of BE fields with +/- prefix.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:complexType name="Pager">
+        <xsd:attribute name="firstRecord" type="xsd:int"/>
+        <xsd:attribute name="recordsToReturn" type="xsd:int"/>
+        <xsd:attribute name="returnTotal" type="xsd:boolean"/>
+        <xsd:attribute name="searchToken" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Key">
+        <xsd:annotation>
+            <xsd:documentation>This is used to identify a record in a Siperian object (base object, ...). A combination of system name, rowid, source key, GBID can be used to identify a unique record.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="rowid" type="Rowid" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="systemName" type="SystemName" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="sourceKey" type="SourceKey" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="rowidXref" type="Rowid" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="gbid" type="GBID" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GBID">
+        <xsd:attribute name="field" type="xsd:string" use="required"/>
+        <xsd:attribute name="value" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Keys">
+        <xsd:sequence>
+            <xsd:element name="keys" type="Key" maxOccurs="unbounded" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="Rowid">
+        <xsd:annotation>
+            <xsd:documentation>This is a rowid_object value for a Siperian base object.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="SourceKey">
+        <xsd:annotation>
+            <xsd:documentation>This is a source system primary key (pkey_src_object).</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="SystemName">
+        <xsd:annotation>
+            <xsd:documentation>This is the name of a system as defined in an ORS.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="RecordState">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PENDING"/>
+            <xsd:enumeration value="ACTIVE"/>
+            <xsd:enumeration value="DELETED"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="RecordState.List">
+        <xsd:sequence>
+            <xsd:element name="recordState" type="RecordState" minOccurs="0" maxOccurs="3"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="String.List">
+        <xsd:sequence>
+            <xsd:element name="string" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="EffectivePeriod">
+        <xsd:annotation>
+            <xsd:documentation>This is the effective period for a version enabled BO.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="startDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"/>
+        <xsd:attribute name="endDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"/>
+    </xsd:complexType>
+
+     <xsd:complexType name="User">
+        <xsd:sequence>
+             <xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+             <xsd:element name="fullName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+	        <xsd:element name="password" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+	        <xsd:element name="firstName" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+    		<xsd:element name="middleName" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+    		<xsd:element name="lastName" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+    		<xsd:element name="email" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+    		<xsd:element name="orsId" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+    		<xsd:element name="changeSummary" type="sdo:ChangeSummaryType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+	<xsd:element name="user" type="User"/>
+
+
+    <xsd:complexType name="User.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="user" type="User" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Role.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="role" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="UsersAndRoles">
+        <xsd:sequence>
+             <xsd:element name="users" type="User.Pager" minOccurs="1" maxOccurs="1"/>
+             <xsd:element name="roles" type="Role.Pager" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+<xsd:complexType name="TaskPrivilege">
+  <xsd:sequence>
+      <xsd:element name="read" type="xsd:boolean"/>
+      <xsd:element name="create" type="xsd:boolean"/>
+      <xsd:element name="update" type="xsd:boolean"/>
+      <xsd:element name="merge"  type="xsd:boolean"/>
+      <xsd:element name="execute" type="xsd:boolean"/>
+      <xsd:element name="delete"  type="xsd:boolean"/>
+  </xsd:sequence>
+ </xsd:complexType>
+
+
+    <xsd:simpleType name="Aggregate">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="RECORD"/>
+            <xsd:enumeration value="NODE"/>
+            <xsd:enumeration value="ENTITY"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="Aggregate.List">
+        <xsd:sequence>
+            <xsd:element name="aggregate" type="Aggregate" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MatchRule.List">
+        <xsd:sequence>
+            <xsd:element name="matchRule" type="xsd:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="Granularity">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="YEAR"/>
+            <xsd:enumeration value="MONTH"/>
+            <xsd:enumeration value="WEEK"/>
+            <xsd:enumeration value="DAY"/>
+            <xsd:enumeration value="MINUTE"/>
+            <xsd:enumeration value="AUTO"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="MergeEventItem">
+        <xsd:sequence>
+            <xsd:element name="target" type="BusinessEntityKey" maxOccurs="1" minOccurs="1"/>
+            <xsd:element name="source" type="Key" maxOccurs="unbounded" minOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MergeEventDetails">
+        <xsd:sequence>
+            <xsd:element name="item" type="MergeEventItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RelationshipFilter">
+        <xsd:sequence>
+            <xsd:element name="relationshipType" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="entityType" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="relationshipLabel" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="entityLabel" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="honorDirection" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FuzzyFilter">
+        <xsd:sequence>
+            <xsd:element name="field" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FuzzyFilter.List">
+        <xsd:sequence>
+            <xsd:element name="filterItem" type="FuzzyFilter" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="R2HError">
+        <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="message" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="row" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="column" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BulkResult">
+        <xsd:sequence>
+            <xsd:element name="successful" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="failed" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="skipped" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="item" type="xsd:anyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

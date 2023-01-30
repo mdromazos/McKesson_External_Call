@@ -1,0 +1,77 @@
+{
+    "ExParentEntity": {
+        "ExParentEtityCd": "HFC_HEP",
+        "ExParentEntityDesc": "HFC / HEP"
+    },
+    "ExPrtlState": {
+        "prtyRleStsVal": "New"
+    },
+    "ExCountry": {
+        "cntryCd": "US",
+        "cntryDesc": "United States"
+    },
+    "ExZipCode": "75220",
+    "ExVendorType": {
+        "ExParentEntyVndrTypCnct": "HFC_HEP - Crude",
+        "ExVendorTypeDesc": "Crude"
+    },
+    "ExVendorSubType": {
+        "ExVndrTypSubTypCnct": "HFC_HEP - Crude - Crude",
+        "ExVendorSubTypeDesc": "Crude inventory purchases"
+    },
+    "ExFullName": "4-STAR HOSE & SUPPLY",
+    "ExAddressLn1": "10704 COMPOSITE DR",
+    "ExCity": "DALLAS",
+    "ExState": {
+        "stateCd": "TX",
+        "stateDesc": "Texas"
+    },
+    "ExTaxjurisdiction": "NE0000000",
+    "ExDrftSts": "false",
+    "ExPymntTerm": {
+        "PaymentTermCd": "FREIGHT-N10I",
+        "PaymentTermDesc": "N10I - Net 10 days from Invoice date"
+    },
+    "ExVndrApprover": {
+        "ExApproverName": "1-vendorapprover2",
+        "ExApproverFullNm": "vendorapprover2"
+    },
+    "ExValidate": "false",
+    "ExTax": {
+        "item": [
+            {
+                "ExTaxType": {
+                    "key": {
+                        "rowid": "2             "
+                    },
+                    "rowidObject": "2             ",
+                    "creator": "admin",
+                    "createDate": "2021-10-11T10:09:28.537-07:00",
+                    "updatedBy": "admin",
+                    "lastUpdateDate": "2021-10-11T10:09:28.537-07:00",
+                    "consolidationInd": 4,
+                    "lastRowidSystem": "LOOKUP        ",
+                    "hubStateInd": 1,
+                    "taxNumTypCd": "EIN"
+                },
+                "EXWitholdingTaxReq": "false",
+                "ExTaxNum": "751877241"
+            }
+        ],
+        "$original": {
+            "item": [
+                null
+            ]
+        }
+    },
+    "ExPI": {
+        "item": [
+            {}
+        ],
+        "$original": {
+            "item": [
+                null
+            ]
+        }
+    }
+}

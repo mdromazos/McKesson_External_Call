@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:sdoJava="commonj.sdo/java" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="urn:cs-rest.informatica.mdm"
+            xmlns="urn:cs-rest.informatica.mdm" elementFormDefault="qualified"
+            xmlns:sdo="commonj.sdo"
+            xmlns:sdoXML="commonj.sdo/xml"
+            sdoJava:package="com.informatica.mdm.sdo.cs.rest"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="commonj.sdo/java ">
+    <xsd:complexType name="Link" >
+        <xsd:attribute name="href" type="xsd:string"/>
+        <xsd:attribute name="rel" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:element name="link" type="Link"/>
+
+    <xsd:complexType name="IdLabel" >
+        <xsd:attribute name="id" type="xsd:string"/>
+        <xsd:attribute name="label" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Pager">
+        <xsd:sequence>
+            <xsd:element ref="link" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="item" type="xsd:anyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="firstRecord" type="xsd:int"/>
+        <xsd:attribute name="recordCount" type="xsd:int"/>
+        <xsd:attribute name="pageSize" type="xsd:int"/>
+        <xsd:attribute name="searchToken" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="FileMetadata">
+        <xsd:sequence>
+            <xsd:element name="fileId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="fileName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="fileType" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="fileContentType" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="digest" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="comments" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="uploadedBy" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="lastUploadDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"/>
+            <xsd:element name="creator" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="createDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"/>
+            <xsd:element name="updatedBy" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="lastUpdateDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

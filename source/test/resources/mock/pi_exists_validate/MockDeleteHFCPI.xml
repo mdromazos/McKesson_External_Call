@@ -1,0 +1,20 @@
+<ns6:ExHFC_HEP_CustomerOrgView xmlns:ns5="urn:co-types.informatica.mdm" xmlns:ns0="urn:cs-rest.informatica.mdm" xmlns:ns1="urn:cs-base.informatica.mdm" xmlns:ns2="urn:co-base.informatica.mdm" xmlns:ns6="urn:co-ors.informatica.mdm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns6:ExHFC_HEP_CustomerOrgView">
+   <ns6:ExHFC_HEP_CustomerOrgView>
+      <ns2:key>
+         <ns1:rowid>80003</ns1:rowid>
+      </ns2:key>
+      <ns2:rowidObject>80003</ns2:rowidObject>
+      <ns6:ExPortalState_1_rowidObject>80003         </ns6:ExPortalState_1_rowidObject>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_rowidObject>80003         </ns6:ExPrimaryCommunication_1_ExPrimaryAddress_rowidObject>
+      <ns6:ExPrimaryCommunication_1_rowidObject>60003         </ns6:ExPrimaryCommunication_1_rowidObject>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_rowidObject>80001         </ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_rowidObject>
+      <ns6:ExTax xmlns:ns7="urn:co-meta.informatica.mdm" xmlns:ns8="urn:task-base.informatica.mdm"/>
+   </ns6:ExHFC_HEP_CustomerOrgView>
+   <ns6:changeSummary logging="false" delete="#/ns6:ExHFC_HEP_CustomerOrgView/ns6:changeSummary/ns6:ExTax/ns6:item[1]" xmlns:sdo="commonj.sdo">
+      <ns6:ExTax sdo:ref="#/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExTax" xmlns:ns8="urn:task-base.informatica.mdm" xmlns:ns7="urn:co-meta.informatica.mdm">
+         <ns6:item xsi:type="ns6:ExHFC_HEP_CustomerOrgView.ExTax">
+            <ns2:rowidObject>80002</ns2:rowidObject>
+         </ns6:item>
+      </ns6:ExTax>
+   </ns6:changeSummary>
+</ns6:ExHFC_HEP_CustomerOrgView>

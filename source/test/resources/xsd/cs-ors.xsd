@@ -1,0 +1,1561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+        targetNamespace="urn:cs-ors.informatica.mdm"
+        xmlns:sdo="commonj.sdo"
+        xmlns:sdoXML="commonj.sdo/xml"
+        xmlns:ns1="urn:cs-base.informatica.mdm"
+        xmlns:ns2="urn:task-base.informatica.mdm"
+        xmlns:ns4="urn:co-base.informatica.mdm"
+        xmlns:ns5="urn:co-meta.informatica.mdm"
+        xmlns:sdoJava="commonj.sdo/java"
+        sdoJava:package="mdm.informatica.cs_ors"
+        xmlns="urn:cs-ors.informatica.mdm"
+>
+    <xsd:import namespace="commonj.sdo"/>
+    <xsd:import namespace="commonj.sdo/xml"/>
+    <xsd:import namespace="commonj.sdo/java"/>
+
+
+    <xsd:import schemaLocation="cs-base.xsd" namespace="urn:cs-base.informatica.mdm"/>
+    <xsd:import schemaLocation="task-base.xsd" namespace="urn:task-base.informatica.mdm"/>
+    <xsd:import schemaLocation="co-base.xsd" namespace="urn:co-base.informatica.mdm"/>
+    <xsd:import schemaLocation="co-meta.xsd" namespace="urn:co-meta.informatica.mdm"/>
+
+
+    <!-- Write Entity / rel / view -->
+
+    <xsd:complexType name="WriteEntity">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                    <xsd:element name="parameters" type="WriteEntityParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="writeEntity" type="WriteEntity"/>
+    <xsd:complexType name="WriteEntityParameters">
+        <xsd:sequence>
+            <xsd:element name="systemName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="validateOnly" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="ignoreWarnings" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="recordState" type="ns1:RecordState" minOccurs="0"/>
+            <xsd:element name="taskComment" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="taskAttachments" type="ns1:String.List" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="effectivePeriod" type="ns1:EffectivePeriod" minOccurs="0"/>
+            <xsd:element name="timelineAction" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="periodReferenceDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="unmodifiedSince" type="xsd:long" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="WriteEntityReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                    <xsd:element name="parameters" type="WriteEntityReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="writeEntityReturn" type="WriteEntityReturn"/>
+    <xsd:complexType name="WriteEntityReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="processId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <!-- read entity /rel/ view -->
+
+    <xsd:complexType name="ReadEntity">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ReadEntityParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="readEntity" type="ReadEntity"/>
+    <xsd:complexType name="ReadEntityParameters">
+        <xsd:sequence>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="historyDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="readSystemFields" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="defaultPageSize" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="caseInsensitive" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="outputFilter" type="ns1:CoFilter" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ReadEntityReturn" >
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="readEntityReturn" type="ReadEntityReturn"/>
+    <!-- match delete -->
+
+    <xsd:complexType name="MatchDelete">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="MatchDeleteParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="matchDelete" type="MatchDelete"/>
+    <xsd:complexType name="MatchDeleteParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="keys" type="ns1:Keys" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="matchDeleteParameters" type="MatchDeleteParameters"/>
+
+    <xsd:complexType name="MatchDeleteReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="matchDeleteReturnParameters" type="MatchDeleteReturnParameters"/>
+    <xsd:complexType name="MatchDeleteReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="MatchDeleteReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="matchDeleteReturn" type="MatchDeleteReturn"/>
+
+    <!-- list co -->
+
+    <xsd:complexType name="ListCO">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ListCOParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listCO" type="ListCO"/>
+    <xsd:complexType name="ListCOParameters">
+        <xsd:sequence>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="readSystemFields" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listCOParameters" type="ListCOParameters"/>
+    <xsd:complexType name="ListCOReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listCOReturn" type="ListCOReturn"/>
+
+
+    <!-- promote previww -->
+
+    <xsd:complexType name="PromotePreview">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="PromotePreviewParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="promotePreview" type="PromotePreview"/>
+    <xsd:complexType name="PromotePreviewParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="promotePreviewParameters" type="PromotePreviewParameters"/>
+    <xsd:complexType name="PromotePreviewReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="promotePreviewReturn" type="PromotePreviewReturn"/>
+
+    <!--GetBpmMetadata-->
+
+    <xsd:complexType name="GetBpmMetadataReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetBpmMetadataReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getBpmMetadataReturn" type="GetBpmMetadataReturn"/>
+    <xsd:complexType name="GetBpmMetadataParameters">
+        <xsd:sequence>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getBpmMetadataParameters" type="GetBpmMetadataParameters"/>
+    <xsd:complexType name="GetBpmMetadata">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetBpmMetadataParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getBpmMetadata" type="GetBpmMetadata"/>
+    <xsd:complexType name="GetBpmMetadataReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="doesSupportAdministration" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="doesSupportLineage" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="doesSupportAttachments" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="maximumAttachmentFileSizeInMb" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="taskTypes" type="ns2:TaskTypes" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getBpmMetadataReturnParameters" type="GetBpmMetadataReturnParameters"/>
+
+
+    <!--GetTaskLineage-->
+
+    <xsd:complexType name="GetTaskLineageReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns2:TaskData.Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getTaskLineageReturn" type="GetTaskLineageReturn"/>
+    <xsd:complexType name="GetTaskLineageParameters">
+        <xsd:sequence>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+            <xsd:element name="pager" type="ns1:Pager" minOccurs="0"/>
+            <xsd:element name="taskFilter" type="ns2:TaskFilter" minOccurs="0"/>
+            <xsd:element name="processFilter" type="ns2:ProcessFilter" minOccurs="0"/>
+            <xsd:element name="order" type="ns2:SortCriteria" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getTaskLineageParameters" type="GetTaskLineageParameters"/>
+    <xsd:complexType name="GetTaskLineage">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetTaskLineageParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getTaskLineage" type="GetTaskLineage"/>
+
+    <!--ReadTask-->
+    <xsd:complexType name="ReadTask">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ReadTaskParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="readTask" type="ReadTask"/>
+    <xsd:complexType name="ReadTaskParameters">
+        <xsd:sequence>
+            <xsd:element name="taskId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="readTaskParameters" type="ReadTaskParameters"/>
+    <xsd:complexType name="ReadTaskReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns2:TaskData" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="readTaskReturn" type="ReadTaskReturn"/>
+
+    <!--GetEventDetails-->
+    <xsd:complexType name="GetEventDetails">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetEventDetailsParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getEventDetails" type="GetEventDetails"/>
+    <xsd:complexType name="GetEventDetailsReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="view" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="GetEventDetailsParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="eventId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getEventDetailsParameters" type="GetEventDetailsParameters"/>
+    <xsd:element name="getEventDetailsReturnParameters" type="GetEventDetailsReturnParameters"/>
+    <xsd:complexType name="GetEventDetailsReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:HistoryEntity" minOccurs="0"/>
+                    <xsd:element name="parameters" type="GetEventDetailsReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getEventDetailsReturn" type="GetEventDetailsReturn"/>
+
+
+    <xsd:complexType name="ExecuteTaskActionReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="executeTaskActionReturn" type="ExecuteTaskActionReturn"/>
+    <xsd:complexType name="ExecuteTaskActionParameters">
+        <xsd:sequence>
+            <xsd:element name="taskId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="taskAction" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="executeTaskActionParameters" type="ExecuteTaskActionParameters"/>
+    <xsd:complexType name="ExecuteTaskAction">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns2:TaskData" minOccurs="0"/>
+                    <xsd:element name="parameters" type="ExecuteTaskActionParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="executeTaskAction" type="ExecuteTaskAction"/>
+
+
+    <xsd:complexType name="UpdatePendingMergeReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                    <xsd:element name="parameters" type="UpdatePendingMergeReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="updatePendingMergeReturn" type="UpdatePendingMergeReturn"/>
+    <xsd:complexType name="UpdatePendingMergeParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="keysAndOverrides" type="ns4:KeysAndOverrides" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="updatePendingMergeParameters" type="UpdatePendingMergeParameters"/>
+    <xsd:complexType name="UpdatePendingMerge">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="UpdatePendingMergeParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="updatePendingMerge" type="UpdatePendingMerge"/>
+    <xsd:complexType name="UpdatePendingMergeReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="updatePendingMergeReturnParameters" type="UpdatePendingMergeReturnParameters"/>
+
+
+    <xsd:complexType name="PromoteMergeReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="promoteMergeReturn" type="PromoteMergeReturn"/>
+    <xsd:complexType name="PromoteMerge">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="PromoteMergeParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="promoteMerge" type="PromoteMerge"/>
+    <xsd:complexType name="PromoteMergeParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="view" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="logChanges" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="promoteMergeParameters" type="PromoteMergeParameters"/>
+
+
+    <xsd:complexType name="SearchSuggesterParameters">
+        <xsd:sequence>
+            <xsd:element name="suggest" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="objectName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="recordsToReturn" type="sdo:Int" minOccurs="0"/>
+            <xsd:element name="buildIndex" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="searchSuggesterParameters" type="SearchSuggesterParameters"/>
+    <xsd:complexType name="SearchSuggesterReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:SearchSuggestions" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="searchSuggesterReturn" type="SearchSuggesterReturn"/>
+    <xsd:complexType name="SearchSuggester">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="SearchSuggesterParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="searchSuggester" type="SearchSuggester"/>
+
+
+    <xsd:complexType name="SearchEntity">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="SearchEntityParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="searchEntity" type="SearchEntity"/>
+    <xsd:complexType name="SearchEntityReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:SmartSearch.Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="searchEntityReturn" type="SearchEntityReturn"/>
+
+    <xsd:complexType name="SearchEntityParameters">
+        <xsd:sequence>
+            <xsd:element name="query" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="fieldedQuery" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="facets" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="filters" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="readSystemFields" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="defaultPageSize" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="order" type="ns1:OrderBy" minOccurs="0"/>
+            <xsd:element name="maxSortedRecords" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="queryOperator" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="pager" type="ns1:Pager" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="outputFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="outputView" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="fqCondition" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="searchEntityParameters" type="SearchEntityParameters"/>
+
+
+    <xsd:complexType name="CreateTaskParameters">
+        <xsd:sequence>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createTaskParameters" type="CreateTaskParameters"/>
+    <xsd:complexType name="CreateTaskReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="CreateTaskReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="createTaskReturn" type="CreateTaskReturn"/>
+    <xsd:complexType name="CreateTask">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns2:TaskData" minOccurs="0"/>
+                    <xsd:element name="parameters" type="CreateTaskParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="createTask" type="CreateTask"/>
+    <xsd:complexType name="CreateTaskReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="processId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="createTaskReturnParameters" type="CreateTaskReturnParameters"/>
+
+
+    <xsd:complexType name="PreviewMergeReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="previewMergeReturn" type="PreviewMergeReturn"/>
+    <xsd:complexType name="PreviewMergeParameters">
+        <xsd:sequence>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="view" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="keysAndOverrides" type="ns4:KeysAndOverrides" minOccurs="0"/>
+            <xsd:element name="readSystemFields" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="logChanges" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="outputFilter" type="ns1:CoFilter" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="previewMergeParameters" type="PreviewMergeParameters"/>
+    <xsd:complexType name="PreviewMerge">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="PreviewMergeParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="previewMerge" type="PreviewMerge"/>
+
+
+    <xsd:complexType name="Promote">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="PromoteParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="promote" type="Promote"/>
+    <xsd:complexType name="PromoteReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                    <xsd:element name="parameters" type="PromoteReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="promoteReturn" type="PromoteReturn"/>
+    <xsd:complexType name="PromoteParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="promoteParameters" type="PromoteParameters"/>
+    <xsd:complexType name="PromoteReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="promoteReturnParameters" type="PromoteReturnParameters"/>
+
+
+    <xsd:complexType name="UpdateTaskReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="updateTaskReturn" type="UpdateTaskReturn"/>
+    <xsd:complexType name="UpdateTask">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns2:TaskData" minOccurs="0"/>
+                    <xsd:element name="parameters" type="UpdateTaskParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="updateTask" type="UpdateTask"/>
+    <xsd:complexType name="UpdateTaskParameters">
+        <xsd:sequence>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+            <xsd:element name="taskId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="patch" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="updateTaskParameters" type="UpdateTaskParameters"/>
+
+
+    <xsd:complexType name="WriteMerge">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:DaaSEntity.Pager" minOccurs="0"/>
+                    <xsd:element name="parameters" type="WriteMergeParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="writeMerge" type="WriteMerge"/>
+    <xsd:complexType name="WriteMergeReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                    <xsd:element name="parameters" type="WriteMergeReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="writeMergeReturn" type="WriteMergeReturn"/>
+    <xsd:complexType name="WriteMergeParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="writeMergeParameters" type="WriteMergeParameters"/>
+    <xsd:complexType name="WriteMergeReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="processId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="writeMergeReturnParameters" type="WriteMergeReturnParameters"/>
+
+
+    <xsd:complexType name="TaskCompleteParameters">
+        <xsd:sequence>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+            <xsd:element name="taskId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="taskCompleteParameters" type="TaskCompleteParameters"/>
+
+    <xsd:complexType name="TaskCompleteReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="taskCompleteReturn" type="TaskCompleteReturn"/>
+    <xsd:complexType name="TaskComplete">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns2:TaskData" minOccurs="0"/>
+                    <xsd:element name="parameters" type="TaskCompleteParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="taskComplete" type="TaskComplete"/>
+
+
+    <xsd:complexType name="GetDaaSMetadataReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns5:DaaSMetadata" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getDaaSMetadataReturn" type="GetDaaSMetadataReturn"/>
+    <xsd:complexType name="GetDaaSMetadata">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetDaaSMetadataParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getDaaSMetadata" type="GetDaaSMetadata"/>
+    <xsd:complexType name="GetDaaSMetadataParameters">
+        <xsd:sequence>
+            <xsd:element name="providerName" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getDaaSMetadataParameters" type="GetDaaSMetadataParameters"/>
+
+
+    <xsd:complexType name="UnMerge">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="UnMergeParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="unMerge" type="UnMerge"/>
+    <xsd:complexType name="UnMergeReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="processId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unMergeReturnParameters" type="UnMergeReturnParameters"/>
+    <xsd:complexType name="UnMergeReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                    <xsd:element name="parameters" type="UnMergeReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="unMergeReturn" type="UnMergeReturn"/>
+    <xsd:complexType name="UnMergeParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="unmergeKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="xrefKey" type="ns1:Key" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="treeUnmerge" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="taskComment" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="taskAttachments" type="ns1:String.List" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="unMergeParameters" type="UnMergeParameters"/>
+
+
+    <xsd:complexType name="ListHistoryEventsReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:HistoryItem.Pager" minOccurs="0"/>
+                    <xsd:element name="parameters" type="ListHistoryEventsReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="ListHistoryEventsParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="historyPeriod" type="ns1:EffectivePeriod" minOccurs="0"/>
+            <xsd:element name="granularity" type="ns1:Granularity" minOccurs="0"/>
+            <xsd:element name="changeTypeFilter" type="ns4:ChangeType.List" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="pager" type="ns1:Pager" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listHistoryEventsParameters" type="ListHistoryEventsParameters"/>
+    <xsd:element name="listHistoryEventsReturn" type="ListHistoryEventsReturn"/>
+    <xsd:complexType name="ListHistoryEventsReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="view" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listHistoryEventsReturnParameters" type="ListHistoryEventsReturnParameters"/>
+    <xsd:complexType name="ListHistoryEvents">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ListHistoryEventsParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listHistoryEvents" type="ListHistoryEvents"/>
+
+
+    <xsd:complexType name="MatchUpdate">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="MatchUpdateParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="matchUpdate" type="MatchUpdate"/>
+    <xsd:complexType name="MatchUpdateParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="keys" type="ns1:Keys" minOccurs="0"/>
+            <xsd:element name="automerge" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="matchUpdateParameters" type="MatchUpdateParameters"/>
+    <xsd:complexType name="MatchUpdateReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="view" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="matchUpdateReturnParameters" type="MatchUpdateReturnParameters"/>
+    <xsd:complexType name="MatchUpdateReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="MatchUpdateReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="matchUpdateReturn" type="MatchUpdateReturn"/>
+
+
+    <xsd:complexType name="Merge">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="MergeParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="merge" type="Merge"/>
+    <xsd:complexType name="MergeParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="keysAndOverrides" type="ns4:KeysAndOverrides" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="taskComment" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="taskAttachments" type="ns1:String.List" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="mergeParameters" type="MergeParameters"/>
+    <xsd:complexType name="MergeReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                    <xsd:element name="parameters" type="MergeReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="mergeReturn" type="MergeReturn"/>
+    <xsd:complexType name="MergeReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="processId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="mergeReturnParameters" type="MergeReturnParameters"/>
+
+
+    <xsd:complexType name="DeletePendingReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                    <xsd:element name="parameters" type="DeletePendingReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="deletePendingReturn" type="DeletePendingReturn"/>
+    <xsd:complexType name="DeletePendingParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deletePendingParameters" type="DeletePendingParameters"/>
+    <xsd:complexType name="DeletePendingReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="deletePendingReturnParameters" type="DeletePendingReturnParameters"/>
+    <xsd:complexType name="DeletePending">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="DeletePendingParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="deletePending" type="DeletePending"/>
+
+
+    <xsd:complexType name="ListMetadataReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns5:ObjectMetadata.Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listMetadataReturn" type="ListMetadataReturn"/>
+    <xsd:complexType name="ListMetadata">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ListMetadataParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listMetadata" type="ListMetadata"/>
+    <xsd:complexType name="ListMetadataParameters">
+        <xsd:sequence>
+            <xsd:element name="pager" type="ns1:Pager" minOccurs="0"/>
+            <xsd:element name="filter" type="ns5:MetadataFilter" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="objectType" type="ns5:ObjectType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listMetadataParameters" type="ListMetadataParameters"/>
+
+    <xsd:complexType name="ListHierarchyMetadataReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns5:HierarchyMetadata.Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listHierarchyMetadataReturn" type="ListHierarchyMetadataReturn"/>
+    <xsd:complexType name="ListHierarchyMetadata">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ListHierarchyMetadataParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listHierarchyMetadata" type="ListHierarchyMetadataReturn"/>
+    <xsd:complexType name="ListHierarchyMetadataParameters">
+        <xsd:sequence>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="entityName" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listHierarchyMetadataParameters" type="ListHierarchyMetadataParameters"/>
+
+    <xsd:complexType name="ListTasksReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns2:TaskData.Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listTasksReturn" type="ListTasksReturn"/>
+    <xsd:complexType name="ListTasks">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ListTasksParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listTasks" type="ListTasks"/>
+    <xsd:complexType name="ListTasksParameters">
+        <xsd:sequence>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+            <xsd:element name="pager" type="ns1:Pager" minOccurs="0"/>
+            <xsd:element name="filter" type="ns2:TaskFilter" minOccurs="0"/>
+            <xsd:element name="order" type="ns2:SortCriteria" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listTasksParameters" type="ListTasksParameters"/>
+
+
+    <xsd:complexType name="MatchCOParameters">
+        <xsd:sequence>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="fuzzyFilter" type="ns1:FuzzyFilter.List" minOccurs="0"/>
+            <xsd:element name="matchRuleSet" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="matchColumns" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="readSystemFields" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="defaultPageSize" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="outputFilter" type="ns1:CoFilter" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="matchCOParameters" type="MatchCOParameters"/>
+    <xsd:complexType name="MatchCOReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="matchCOReturn" type="MatchCOReturn"/>
+    <xsd:complexType name="MatchCO">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="MatchCOParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="matchCO" type="MatchCO"/>
+
+
+    <xsd:complexType name="GetSourceSystemsReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getSourceSystemsReturn" type="GetSourceSystemsReturn"/>
+    <xsd:complexType name="GetSourceSystems">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetSourceSystemsParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getSourceSystems" type="GetSourceSystems"/>
+    <xsd:complexType name="GetSourceSystemsParameters">
+        <xsd:sequence>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="aggregate" type="ns1:Aggregate.List" minOccurs="0"/>
+            <xsd:element name="contributorsOnly" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="describe" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="recordStates" type="ns1:RecordState.List" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getSourceSystemsParameters" type="GetSourceSystemsParameters"/>
+
+
+    <xsd:complexType name="ListAssignableUsersParameters">
+        <xsd:sequence>
+            <xsd:element name="taskType" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="businessEntity" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="listAssignableUsersParameters" type="ListAssignableUsersParameters"/>
+    <xsd:complexType name="ListAssignableUsers">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ListAssignableUsersParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listAssignableUsers" type="ListAssignableUsers"/>
+    <xsd:complexType name="ListAssignableUsersReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns1:UsersAndRoles" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listAssignableUsersReturn" type="ListAssignableUsersReturn"/>
+
+
+    <xsd:complexType name="GetMetadata">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetMetadataParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getMetadata" type="GetMetadata"/>
+    <xsd:complexType name="GetMetadataReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns5:ObjectMetadata" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getMetadataReturn" type="GetMetadataReturn"/>
+    <xsd:complexType name="GetMetadataParameters">
+        <xsd:sequence>
+            <xsd:element name="objectName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getMetadataParameters" type="GetMetadataParameters"/>
+
+    <xsd:complexType name="GetHierarchyMetadata">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetHierarchyMetadataParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getHierarchyMetadata" type="GetHierarchyMetadata"/>
+    <xsd:complexType name="GetHierarchyMetadataReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns5:HierarchyMetadata" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getHierarchyMetadataReturn" type="GetMetadataReturn"/>
+    <xsd:complexType name="GetHierarchyMetadataParameters">
+        <xsd:sequence>
+            <xsd:element name="hierarchyName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getHierarchyMetadataParameters" type="GetHierarchyMetadataParameters"/>
+
+    <xsd:complexType name="GetRelatedReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:RelatedEntity.Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getRelatedReturn" type="GetRelatedReturn"/>
+    <xsd:complexType name="GetRelatedParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="recordStates" type="ns1:RecordState.List" minOccurs="0"/>
+            <xsd:element name="relationshipFilter" type="ns1:RelationshipFilter" minOccurs="0"/>
+            <xsd:element name="pager" type="ns1:Pager" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="historyDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="readSystemFields" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="loadInactive" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getRelatedParameters" type="GetRelatedParameters"/>
+    <xsd:complexType name="GetRelated">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetRelatedParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getRelated" type="GetRelated"/>
+
+
+    <xsd:complexType name="QueryCOReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="queryCOReturn" type="QueryCOReturn"/>
+    <xsd:complexType name="QueryCO">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="QueryCOParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="queryCO" type="QueryCO"/>
+    <xsd:complexType name="QueryCOParameters">
+        <xsd:sequence>
+            <xsd:element name="coFilter" type="ns1:CoFilter" minOccurs="0"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" minOccurs="0" sdoXML:dataType="sdo:Date"/>
+            <xsd:element name="readSystemFields" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="defaultPageSize" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="caseInsensitive" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="outputFilter" type="ns1:CoFilter" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="queryCOParameters" type="QueryCOParameters"/>
+
+
+    <xsd:complexType name="GetTaskTypePrivilegeReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns1:TaskPrivilege" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getTaskTypePrivilegeReturn" type="GetTaskTypePrivilegeReturn"/>
+    <xsd:complexType name="GetTaskTypePrivilegeParameters">
+        <xsd:sequence>
+            <xsd:element name="subjectAreaUid" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="taskType" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="applicationContext" type="ns2:ApplicationContext" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getTaskTypePrivilegeParameters" type="GetTaskTypePrivilegeParameters"/>
+    <xsd:complexType name="GetTaskTypePrivilege">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetTaskTypePrivilegeParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getTaskTypePrivilege" type="GetTaskTypePrivilege"/>
+
+
+    <xsd:complexType name="UpdateUserReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="updateUserReturn" type="UpdateUserReturn"/>
+    <xsd:complexType name="UpdateUser">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns1:User" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="updateUser" type="UpdateUser"/>
+
+
+    <xsd:complexType name="ReadMatchReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="view" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="readMatchReturnParameters" type="ReadMatchReturnParameters"/>
+    <xsd:complexType name="ReadMatchParameters">
+        <xsd:sequence>
+            <xsd:element name="businessEntityKey" type="ns1:BusinessEntityKey" minOccurs="0"/>
+            <xsd:element name="recordStates" type="ns1:RecordState.List" minOccurs="0"/>
+            <xsd:element name="pager" type="ns1:Pager" minOccurs="0"/>
+            <xsd:element name="matchRuleFilter" type="ns1:MatchRule.List" minOccurs="0"/>
+            <xsd:element name="facets" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="readMatchParameters" type="ReadMatchParameters"/>
+    <xsd:complexType name="ReadMatchReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:MatchedEntity.Pager" minOccurs="0"/>
+                    <xsd:element name="parameters" type="ReadMatchReturnParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="readMatchReturn" type="ReadMatchReturn"/>
+    <xsd:complexType name="ReadMatch">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="ReadMatchParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="readMatch" type="ReadMatch"/>
+
+    <xsd:complexType name="ListTimelinePeriodsReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:Timeline.Pager" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="listTimelinePeriodsReturn" type="ListTimelinePeriodsReturn"/>
+
+    <xsd:complexType name="GetMatchRuleMetadata">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="parameters" type="GetMatchRuleMetadataParameters" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getMatchRuleMetadata" type="GetMatchRuleMetadata"/>
+    <xsd:complexType name="GetMatchRuleMetadataReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns5:MatchRuleDetails" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="getMatchRuleMetadataReturn" type="GetMatchRuleMetadataReturn"/>
+    <xsd:complexType name="GetMatchRuleMetadataParameters">
+        <xsd:sequence>
+            <xsd:element name="object" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="matchRule" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="getMatchRuleMetadataParameters" type="GetMatchRuleMetadataParameters"/>
+
+
+    <xsd:complexType name="DaaSSearchEntity">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"   />
+                    <xsd:element name="parameters" type="DaaSSearchEntityParameters" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="daaSSearchEntity" type="DaaSSearchEntity"/>
+    <xsd:complexType name="DaaSSearchEntityParameters">
+        <xsd:sequence>
+            <xsd:element name="daasProvider" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="logChanges" type="xsd:boolean" minOccurs="0"   />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="daaSSearchEntityParameters" type="DaaSSearchEntityParameters"/>
+    <xsd:complexType name="DaaSSearchEntityReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:DaaSEntity.Pager" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="daaSSearchEntityReturn" type="DaaSSearchEntityReturn"/>
+
+
+    <xsd:complexType name="DaaSReadEntity">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"   />
+                    <xsd:element name="parameters" type="DaaSReadEntityParameters" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="daaSReadEntity" type="DaaSReadEntity"/>
+    <xsd:complexType name="DaaSReadEntityParameters">
+        <xsd:sequence>
+            <xsd:element name="daasProvider" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="logChanges" type="xsd:boolean" minOccurs="0"   />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="daaSReadEntityParameters" type="DaaSReadEntityParameters"/>
+    <xsd:complexType name="DaaSReadEntityReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="daaSReadEntityReturn" type="DaaSReadEntityReturn"/>
+
+
+    <xsd:complexType name="DaaSImportEntityReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="processId" type="xsd:string" minOccurs="0"   />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="daaSImportEntityReturnParameters" type="DaaSImportEntityReturnParameters"/>
+    <xsd:complexType name="DaaSImportEntity">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="xsd:anyType" minOccurs="0"   />
+                    <xsd:element name="parameters" type="DaaSImportEntityParameters" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="daaSImportEntity" type="DaaSImportEntity"/>
+    <xsd:complexType name="DaaSImportEntityParameters">
+        <xsd:sequence>
+            <xsd:element name="xml2be" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="systemName" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="effectivePeriod" type="ns1:EffectivePeriod" minOccurs="0"   />
+            <xsd:element name="validateOnly" type="xsd:boolean" minOccurs="0"   />
+            <xsd:element name="recordState" type="ns1:RecordState" minOccurs="0"   />
+            <xsd:element name="taskComment" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="taskAttachments" type="ns1:String.List" minOccurs="0"   />
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"   />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="daaSImportEntityParameters" type="DaaSImportEntityParameters"/>
+    <xsd:complexType name="DaaSImportEntityReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"   />
+                    <xsd:element name="parameters" type="DaaSImportEntityReturnParameters" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="daaSImportEntityReturn" type="DaaSImportEntityReturn"/>
+
+    <xsd:complexType name="DaaSChangeEntity">
+        <xsd:complexContent>
+            <xsd:extension base="ns4:DaaSChange">
+                <xsd:sequence>
+                    <xsd:element name="before" type="xsd:anyType" minOccurs="0"   />
+                    <xsd:element name="after" type="xsd:anyType" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="DaaSUpdateEntity">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsRequest">
+                <xsd:sequence>
+                    <xsd:element name="object" type="DaaSChangeEntity" minOccurs="0"   />
+                    <xsd:element name="parameters" type="DaaSUpdateEntityParameters" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="daaSUpdateEntity" type="DaaSUpdateEntity"/>
+    <xsd:complexType name="DaaSUpdateEntityParameters">
+        <xsd:sequence>
+            <xsd:element name="xml2be" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="systemName" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="effectivePeriod" type="ns1:EffectivePeriod" minOccurs="0"   />
+            <xsd:element name="validateOnly" type="xsd:boolean" minOccurs="0"   />
+            <xsd:element name="recordState" type="ns1:RecordState" minOccurs="0"   />
+            <xsd:element name="taskComment" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="taskAttachments" type="ns1:String.List" minOccurs="0"   />
+            <xsd:element name="locale" type="xsd:string" minOccurs="0"   />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="daaSUpdateEntityParameters" type="DaaSUpdateEntityParameters"/>
+    <xsd:complexType name="DaaSUpdateEntityReturn">
+        <xsd:complexContent>
+            <xsd:extension base="ns1:CsResponse">
+                <xsd:sequence>
+                    <xsd:element name="object" type="ns4:CompositeObjectBase" minOccurs="0"   />
+                    <xsd:element name="parameters" type="DaaSUpdateEntityReturnParameters" minOccurs="0"   />
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:element name="daaSUpdateEntityReturn" type="DaaSUpdateEntityReturn"/>
+    <xsd:complexType name="DaaSUpdateEntityReturnParameters">
+        <xsd:sequence>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0"   />
+            <xsd:element name="processId" type="xsd:string" minOccurs="0"   />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="daaSUpdateEntityReturnParameters" type="DaaSUpdateEntityReturnParameters"/>
+
+</xsd:schema>

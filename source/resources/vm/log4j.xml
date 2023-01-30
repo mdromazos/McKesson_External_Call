@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  Log4j Configuration                                                  -->
+<!--                                                                       -->
+<!--  For more information and examples see the                            -->
+<!--  website: http://jakarta.apache.org/log4j                             -->
+<!-- ===================================================================== -->
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+
+    <!-- ================================= -->
+    <!-- Preserve messages in a local file -->
+    <!-- ================================= -->
+
+    <!-- Simple file appender -->
+    <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+        <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+        <param name="File" value="C:/infamdm/server/logs/bes_ext_call.log"/>
+        <param name="Append" value="true"/>
+        <param name="MaxFileSize" value="25MB"/>
+        <param name="MaxBackupIndex" value="5"/>
+        <param name="Threshold" value="DEBUG"/>
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- The default pattern: Date Priority [Category] Thread Message -->
+            <param name="ConversionPattern" value="%d{ISO8601} %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE_ERR" class="org.apache.log4j.RollingFileAppender">
+        <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+        <param name="File" value="C:/infamdm/server/logs/logs/bes_ext_call_err.log"/>
+        <param name="Append" value="true"/>
+        <param name="MaxFileSize" value="10MB"/>
+        <param name="MaxBackupIndex" value="5"/>
+        <param name="Threshold" value="ERROR"/>
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- The default pattern: Date Priority [Category] Thread Message -->
+            <param name="ConversionPattern" value="%d{ISO8601} %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FILE_INFO" class="org.apache.log4j.RollingFileAppender">
+        <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+        <param name="File" value="C:/infamdm/server/logs/logs/bes_ext_call_perf.log"/>
+        <param name="Append" value="true"/>
+        <param name="MaxFileSize" value="10MB"/>
+        <param name="MaxBackupIndex" value="2"/>
+        <param name="Threshold" value="INFO"/>
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- The default pattern: Date Priority [Category] Thread Message -->
+            <param name="ConversionPattern" value="%d{ISO8601} %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+    
+   
+    <!-- ============================== -->
+    <!-- Append messages to the console -->
+    <!-- ============================== -->
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <errorHandler class="org.apache.log4j.helpers.OnlyOnceErrorHandler"/>
+        <param name="Target" value="System.out"/>
+        <param name="Threshold" value="ERROR"/>
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- The default pattern: Date Priority [Category] Message -->
+            <param name="ConversionPattern" value="[%d{ISO8601}] [%t] [%-5p] %c: %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- ============================== -->
+    <!-- Use an async appender for      -->
+    <!-- performance and to prevent     -->
+    <!-- the console from blocking the  -->
+    <!-- server                         -->
+    <!-- ============================== -->
+    <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="100000"/>
+        <param name="Blocking" value="false"/>
+        <appender-ref ref="CONSOLE"/>	       
+    </appender>
+    
+    
+    <appender name="BESAsync" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="100000"/>
+        <param name="Blocking" value="false"/>
+        <appender-ref ref="FILE"/>               
+        <appender-ref ref="FILE_ERR"/>  
+        <appender-ref ref="FILE_INFO"/> 
+    </appender>
+    
+
+    <!-- ================ -->
+    <!-- Limit categories -->
+    <!-- ================ -->
+
+    <!-- Limit the org.apache category to INFO for commons and Tomcat -->
+    <category name="org.apache">
+        <priority value="INFO"/>
+    </category>
+
+    <!-- Limit JBoss categories to WARN -->
+    <category name="org.jboss">
+        <priority value="WARN"/>
+    </category>
+    <!-- Allow for the "Server Up message" -->
+    <category name="org.jboss.system.server.Server">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.jboss.cache">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.jgroups">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.apache.axis">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.apache.commons.digester">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.apache.commons.beanutils">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.springframework">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.ajax4jsf">
+        <priority value="INFO"/>
+    </category>
+
+    <category name="org.hibernate">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="org.ajax4jsf">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="org.richfaces">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="com.exadel">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="com.sun">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="org.exolab">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="com.exolab">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="httpclient.wire">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="com.delos">
+        <priority value="DEBUG"/>
+    </category>
+
+    <category name="com.siperian">
+        <priority value="DEBUG"/>
+    </category>
+
+    <category name="com.informatica">
+        <priority value="DEBUG"/>
+    </category>
+    
+    <category name="com.informatica.mdm.bes" additivity="true">
+        <priority value="DEBUG"/>
+        <appender-ref ref="BESAsync"/>
+    </category>
+    
+    
+    <!-- ======================= -->
+    <!-- Setup the Root category -->
+    <!-- ======================= -->
+
+    <root>
+        <appender-ref ref="ASYNC"/>
+    </root>
+
+</log4j:configuration>

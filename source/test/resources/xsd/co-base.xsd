@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="urn:co-base.informatica.mdm"
+            xmlns:sdo="commonj.sdo"
+            xmlns:sdoJava="commonj.sdo/java"
+            xmlns:sdoXML="commonj.sdo/xml"
+            xmlns:rest="urn:cs-rest.informatica.mdm"
+            xmlns:cs="urn:cs-base.informatica.mdm"
+            xmlns="urn:co-base.informatica.mdm" elementFormDefault="qualified"
+            sdoJava:package="com.informatica.mdm.sdo.co.base">
+
+    <xsd:import namespace="commonj.sdo"/>
+    <xsd:import schemaLocation="cs-base.xsd" namespace="urn:cs-base.informatica.mdm"/>
+    <xsd:import schemaLocation="cs-rest.xsd" namespace="urn:cs-rest.informatica.mdm"/>
+
+    <xsd:complexType name="Pager" abstract="true">
+        <xsd:sequence>
+            <xsd:element name="link" type="rest:Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="firstRecord" type="xsd:int"/>
+        <xsd:attribute name="recordCount" type="xsd:int"/>
+        <xsd:attribute name="pageSize" type="xsd:int"/>
+        <xsd:attribute name="searchToken" type="xsd:string"/>
+    </xsd:complexType>
+    <xsd:complexType name="One" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="Child"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Root" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="BaseObject"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="CompositeObjectBase" abstract="true">
+        <xsd:sequence>
+            <!-- aggregate ENTITY -->
+            <xsd:element name="sourceSystem" type="SourceSystem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Lookup" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="BaseObject"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Relationship" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="BaseObject"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Child" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="BaseObject"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Many" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="Child"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="BaseObject" abstract="true">
+        <xsd:sequence>
+            <xsd:element name="link" type="rest:Link" minOccurs="0" maxOccurs="unbounded"/>
+
+            <xsd:element name="key" type="cs:Key" minOccurs="0" maxOccurs="1"/>
+
+            <!-- aggregate RECORD -->
+            <xsd:element name="sourceSystem" type="SourceSystem" minOccurs="0" maxOccurs="unbounded"/>
+
+            <xsd:element name="rowidObject" type="xsd:string" minOccurs="0" sdoXML:aliasName="ROWID_OBJECT"/>
+            <xsd:element name="creator" type="xsd:string" minOccurs="0" sdoXML:aliasName="CREATOR"/>
+            <xsd:element name="createDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"
+                         minOccurs="0" sdoXML:aliasName="CREATE_DATE"/>
+            <xsd:element name="updatedBy" type="xsd:string" minOccurs="0" sdoXML:aliasName="UPDATED_BY"/>
+            <xsd:element name="lastUpdateDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"
+                         minOccurs="0" sdoXML:aliasName="LAST_UPDATE_DATE"/>
+            <xsd:element name="consolidationInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="CONSOLIDATION_IND"/>
+            <xsd:element name="deletedInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="DELETED_IND"/>
+            <xsd:element name="deletedBy" type="xsd:string" minOccurs="0" sdoXML:aliasName="DELETED_BY"/>
+            <xsd:element name="deletedDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"
+                         minOccurs="0" sdoXML:aliasName="DELETED_DATE"/>
+            <xsd:element name="lastRowidSystem" type="xsd:string" minOccurs="0" sdoXML:aliasName="LAST_ROWID_SYSTEM"/>
+            <xsd:element name="dirtyIndicator" type="xsd:int" minOccurs="0" sdoXML:aliasName="DIRTY_IND"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0" sdoXML:aliasName="INTERACTION_ID"/>
+            <xsd:element name="hubStateInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="HUB_STATE_IND"/>
+            <xsd:element name="cmDirtyInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="CM_DIRTY_IND"/>
+
+            <xsd:element name="MATCH" type="MatchedRecord.Pager" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="MERGE" type="MergedRecord.Pager" minOccurs="0" maxOccurs="1"/>
+
+            <xsd:element name="effectivePeriod" type="cs:EffectivePeriod" minOccurs="0"/>
+            <xsd:element name="pendingProtected" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="label" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="CompositeObjectBase.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="item" type="CompositeObjectBase" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="BaseObject.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="item" type="BaseObject" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="XREF" abstract="true">
+        <xsd:sequence>
+            <xsd:element name="rowidXref" type="xsd:int" minOccurs="0" sdoXML:aliasName="ROWID_XREF" />
+            <xsd:element name="pkeySrcObject" type="xsd:string" minOccurs="0" sdoXML:aliasName="PKEY_SRC_OBJECT" />
+            <xsd:element name="systemName" type="xsd:string" minOccurs="0" sdoXML:aliasName="SYSTEM_NAME" />
+            <xsd:element name="rowidObject" type="xsd:string" minOccurs="0" sdoXML:aliasName="ROWID_OBJECT" />
+            <xsd:element name="origRowidObject" type="xsd:string" minOccurs="0" sdoXML:aliasName="ORIG_ROWID_OBJECT" />
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0" sdoXML:aliasName="INTERACTION_ID" />
+            <xsd:element name="hubStateInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="HUB_STATE_IND" />
+            <xsd:element name="srcLud" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"
+                sdoXML:aliasName="SRC_LUD" />
+            <xsd:element name="periodStartDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"
+                sdoXML:aliasName="PERIOD_START_DATE" />
+            <xsd:element name="periodEndDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"
+                sdoXML:aliasName="PERIOD_END_DATE" />
+            <xsd:element name="creator" type="xsd:string" minOccurs="0" sdoXML:aliasName="CREATOR" />
+            <xsd:element name="createDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"
+                sdoXML:aliasName="CREATE_DATE" />
+            <xsd:element name="updatedBy" type="xsd:string" minOccurs="0" sdoXML:aliasName="UPDATED_BY" />
+            <xsd:element name="lastUpdateDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"
+                sdoXML:aliasName="LAST_UPDATE_DATE" />
+            <xsd:element name="deletedInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="DELETED_IND" />
+            <xsd:element name="deletedBy" type="xsd:string" minOccurs="0" sdoXML:aliasName="DELETED_BY" />
+            <xsd:element name="deletedDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="0"
+                sdoXML:aliasName="DELETED_DATE" />
+            <xsd:element name="putUpdateMergeInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="PUT_UPDATE_MERGE_IND" />
+            <xsd:element name="isEditXref" type="xsd:boolean" minOccurs="0" default="false" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HISTORY" abstract="true">
+        <xsd:sequence>
+            <xsd:element name="histCreateDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"
+                         minOccurs="0" sdoXML:aliasName="HIST_CREATE_DATE"/>
+            <xsd:element name="rowidObject" type="xsd:string" minOccurs="0" sdoXML:aliasName="ROWID_OBJECT"/>
+            <xsd:element name="creator" type="xsd:string" minOccurs="0" sdoXML:aliasName="CREATOR"/>
+            <xsd:element name="createDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"
+                         minOccurs="0" sdoXML:aliasName="CREATE_DATE"/>
+            <xsd:element name="updatedBy" type="xsd:string" minOccurs="0" sdoXML:aliasName="UPDATED_BY"/>
+            <xsd:element name="lastUpdateDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"
+                         minOccurs="0" sdoXML:aliasName="LAST_UPDATE_DATE"/>
+            <xsd:element name="consolidationInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="CONSOLIDATION_IND"/>
+            <xsd:element name="deletedInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="DELETED_IND"/>
+            <xsd:element name="deletedBy" type="xsd:string" minOccurs="0" sdoXML:aliasName="DELETED_BY"/>
+            <xsd:element name="deletedDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date"
+                         minOccurs="0" sdoXML:aliasName="DELETED_DATE"/>
+            <xsd:element name="lastRowidSystem" type="xsd:string" minOccurs="0" sdoXML:aliasName="LAST_ROWID_SYSTEM"/>
+            <xsd:element name="dirtyIndicator" type="xsd:int" minOccurs="0" sdoXML:aliasName="DIRTY_IND"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0" sdoXML:aliasName="INTERACTION_ID"/>
+            <xsd:element name="hubStateInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="HUB_STATE_IND"/>
+            <xsd:element name="cmDirtyInd" type="xsd:int" minOccurs="0" sdoXML:aliasName="CM_DIRTY_IND"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RelatedEntity">
+        <xsd:sequence>
+             <xsd:element name="businessEntity" type="CompositeObjectBase" minOccurs="1" maxOccurs="1"/>
+             <xsd:element name="entityLabel" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+             <xsd:element name="relationshipLabel" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+             <xsd:element name="relationship" type="BaseObject" minOccurs="0" maxOccurs="1"/>
+             <xsd:element name="entityType" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+             <xsd:element name="relationshipType" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RelatedEntity.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="relatedEntity" type="RelatedEntity" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="MatchedEntity">
+        <xsd:sequence>
+            <xsd:element name="businessEntity" type="CompositeObjectBase" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="matchRule" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="matchScore" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="link" type="rest:Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MatchPair">
+        <xsd:sequence>
+            <xsd:element name="businessEntity" type="CompositeObjectBase" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="matchedEntity" type="MatchedEntity" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MatchPair.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="matchPair" type="MatchPair" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="MatchedEntity.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="matchedEntity" type="MatchedEntity" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="facet" type="Facet" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="KeysAndOverrides">
+        <xsd:sequence>
+            <xsd:element name="keys" type="cs:Key" maxOccurs="unbounded" minOccurs="0"/>
+            <xsd:element name="overrides" type="CompositeObjectBase" maxOccurs="1" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SearchSuggestions">
+    	<xsd:sequence>
+        	<xsd:element name="term" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    	</xsd:sequence>
+	</xsd:complexType>
+
+    <xsd:complexType name="FacetEntry">
+        <xsd:sequence>
+            <xsd:element name="label" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="count" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Facet">
+        <xsd:sequence>
+            <xsd:element name="field" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="entry" type="FacetEntry" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SmartSearch.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="facet" type="Facet" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="CompositeObjectBase.SmartSearch.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="SmartSearch.Pager">
+                <xsd:sequence>
+                    <xsd:element name="item" type="CompositeObjectBase" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="BVT" abstract="true">
+    </xsd:complexType>
+
+    <xsd:complexType name="TRUST" abstract="true">
+    </xsd:complexType>
+
+    <xsd:complexType name="TrustData">
+      <xsd:all>
+        <xsd:element name="score" type="xsd:double" />
+        <xsd:element name="valid" type="xsd:boolean" />
+        <xsd:element name="downgradePerCent" type="xsd:double" minOccurs="0"/>
+        <xsd:element name="trustSetting" type="TrustSetting" minOccurs="0"/>
+      </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="TrustSetting">
+      <xsd:all>
+        <xsd:element name="custom" type="xsd:boolean" />
+        <xsd:element name="maximumTrust" type="xsd:integer" />
+        <xsd:element name="minimumTrust" type="xsd:integer" />
+        <xsd:element name="timeUnit" type="xsd:string"/>
+        <xsd:element name="maximumTimeUnits" type="xsd:integer"/>
+        <xsd:element name="graphType" type="xsd:string"/>
+      </xsd:all>
+    </xsd:complexType>
+
+    <xsd:element name="sourceSystem" type="SourceSystem" />
+    <xsd:complexType name="SourceSystem">
+        <xsd:sequence>
+            <xsd:element name="name" type="xsd:string" minOccurs="1"/>
+            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="xrefCount" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="srcLud" type="xsd:dateTime" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="ChangeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="BO"/>
+            <xsd:enumeration value="XREF"/>
+            <xsd:enumeration value="BVT"/>
+            <xsd:enumeration value="MERGE"/>
+            <xsd:enumeration value="MERGE_AS_SOURCE"/>
+            <xsd:enumeration value="MERGE_AS_TARGET"/>
+            <xsd:enumeration value="UNMERGE_AS_SOURCE"/>
+            <xsd:enumeration value="UNMERGE_AS_TARGET"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ChangeType.List">
+        <xsd:sequence>
+            <xsd:element name="changeType" type="ChangeType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HistoryItem.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:choice>
+                    <xsd:element name="group" type="HistoryGroup" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="event" type="HistoryEvent" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:choice>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="HistoryEvent">
+        <xsd:sequence>
+            <xsd:element name="eventId" type="xsd:string" maxOccurs="1" minOccurs="1"/>
+            <xsd:element name="eventDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="user" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="changeType" type="ChangeType" minOccurs="1" maxOccurs="unbounded"/>
+            <xsd:element name="changedObject" type="ChangedObject" minOccurs="1" maxOccurs="unbounded"/>
+            <xsd:element name="link" type="rest:Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ChangedObject">
+        <xsd:complexContent>
+            <xsd:extension base="cs:BusinessEntityKey">
+                <xsd:attribute name="label" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="HistoryGroup">
+        <xsd:sequence>
+            <xsd:element name="period" type="cs:EffectivePeriod" maxOccurs="1" minOccurs="1"/>
+            <xsd:element name="eventCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="link" type="rest:Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HistoryEntity">
+        <xsd:complexContent>
+            <xsd:extension base="HistoryEvent">
+                <xsd:sequence>
+                    <xsd:element name="businessEntity" type="CompositeObjectBase" minOccurs="1" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="MergedRecord">
+        <xsd:sequence>
+            <xsd:element name="key" type="cs:Key" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="source" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="MERGE_ORIGIN" type="cs:BusinessEntityPath" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MergedRecord.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="source" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="item" type="MergedRecord" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="MERGE_ORIGIN" type="cs:BusinessEntityPath" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="MatchedRecord">
+        <xsd:sequence>
+            <xsd:element name="key" type="cs:Key" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="matchRule" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="interactionId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MatchedRecord.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="lockedByInteractionId" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="item" type="MatchedRecord" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="DaaSEntity">
+        <xsd:sequence>
+            <xsd:element name="businessEntity" type="CompositeObjectBase" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="label" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="systemName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="score" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DaaSEntity.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="item" type="DaaSEntity" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="DaaSChange" abstract="true">
+    </xsd:complexType>
+
+    <xsd:complexType name="R2HEntity">
+        <xsd:sequence>
+            <xsd:element name="object" type="CompositeObjectBase" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="errors" type="cs:R2HError" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="R2HEntity.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="item" type="R2HEntity" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="BulkEditPreviewRecord">
+        <xsd:sequence>
+            <xsd:element name="origin" type="cs:BusinessEntityPath"/>
+            <xsd:element name="found" type="xsd:boolean"/>
+            <xsd:element name="record" type="BaseObject"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="BulkEditPreviewRecord.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="foundRecords" type="xsd:int"/>
+                    <xsd:element name="item" type="BulkEditPreviewRecord" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="RelatedEntityPath">
+        <xsd:complexContent>
+            <xsd:extension base="RelatedEntity">
+                <xsd:sequence>
+                    <xsd:element name="depth" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+                    <xsd:element name="object" type="RelatedEntityPath" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Timeline.Pager">
+        <xsd:annotation>
+            <xsd:documentation>Collection (Pager) of time line periods. contains either groups of period or period themselves.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:choice>
+                    <xsd:element name="group" type="TimelineGroup" minOccurs="0" maxOccurs="unbounded"/>
+                    <xsd:element name="period" type="TimelinePeriod" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:choice>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="TimelinePeriod">
+        <xsd:annotation>
+            <xsd:documentation>
+                Represents one period on a timeline.
+                periodId        - for now is a start date of effectivePeriod.
+                effectivePeriod - start/end dates
+                object          - same as in history, identifies the object related to the effectivePeriod. Can be BE root record or child node record
+                link            - link to get details (data).
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="periodId" type="xsd:string" maxOccurs="1" minOccurs="1"/>
+            <xsd:element name="effectiveDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="effectivePeriod" type="cs:EffectivePeriod" maxOccurs="1" minOccurs="1"/>
+            <xsd:element name="object" type="ChangedObject" minOccurs="1" maxOccurs="unbounded"/>
+            <xsd:element name="link" type="rest:Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TimelineGroup">
+        <xsd:annotation>
+            <xsd:documentation>
+                Group of timeline periods in case result was groupped using some granularity.
+                range          - start/end date of the group.
+                periodCount    - number of effective Periods in the group
+                link           - link to get list of period for this group.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="range" type="cs:EffectivePeriod" maxOccurs="1" minOccurs="1"/>
+            <xsd:element name="periodCount" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="link" type="rest:Link" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RelatedEntityPath.Pager">
+        <xsd:complexContent>
+            <xsd:extension base="Pager">
+                <xsd:sequence>
+                    <xsd:element name="item" type="RelatedEntityPath" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="RboRelType">
+        <xsd:complexContent>
+            <xsd:extension base="BaseObject">
+                <xsd:sequence>
+                    <xsd:element name="relTypeCode" type="xsd:string" minOccurs="0" sdoXML:aliasName="REL_TYPE_CODE"/>
+                    <xsd:element name="displayName" type="xsd:string" minOccurs="0" sdoXML:aliasName="DISPLAY_NAME"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="RboBoClass">
+        <xsd:complexContent>
+            <xsd:extension base="BaseObject">
+                <xsd:sequence>
+                    <xsd:element name="boClassCode" type="xsd:string" minOccurs="0" sdoXML:aliasName="BO_CLASS_CODE"/>
+                    <xsd:element name="displayName" type="xsd:string" minOccurs="0" sdoXML:aliasName="DISPLAY_NAME"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="RboHierarchy">
+        <xsd:complexContent>
+            <xsd:extension base="BaseObject">
+                <xsd:sequence>
+                    <xsd:element name="hierarchyCode" type="xsd:string" minOccurs="0" sdoXML:aliasName="HIERARCHY_CODE"/>
+                    <xsd:element name="displayName" type="xsd:string" minOccurs="0" sdoXML:aliasName="DISPLAY_NAME"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+
+</xsd:schema>

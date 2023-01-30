@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<project name="BES External Call" default="build" basedir=".">
+
+    <property environment="env"/>
+    <!-- ***** COMMAND LINE ARGUMENTS DEMOED HERE -->
+    <property name="build_type" value= "${env.build_type}"/>
+	<!-- ***** END OF COMMAND LINE ARG **** -->
+	
+    <!--
+        Run the JUnit Test Classes
+    -->
+	<target name="junit" depends="war">
+
+	    <junit printsummary="yes" haltonfailure="no">
+
+		<classpath refid="lib" />
+			
+		<classpath location="com.informatica.mdm.bes.validate" />
+			
+		<test name="com.informatica.mdm.bes.validate.MatchbookAPIValidateIT" 
+			haltonfailure="no" todir="${report.dir}">
+			<formatter type="plain" />
+			<formatter type="xml" />
+		</test>
+			
+	  </junit>
+	</target>
+	
+
+    <!--
+        Clean the output directory by removing all compiled code and output files
+    -->
+    <target name="clean" description="Cleans up all files created by the build">
+        <delete dir="build" failonerror="false"/>
+    </target>
+
+    <!--
+        Build the application
+    -->
+    <target name="build" depends="war">
+    </target>
+
+    <target name="war" depends="compile">
+        <mkdir dir="build/war"/>
+        <copy todir="build/war">
+            <fileset dir="source/resources/webapp">
+                <include name="**/*"/>
+            </fileset>
+        </copy>
+        <copy todir="build/war/WEB-INF/classes">
+            <fileset dir="source/resources">
+                <include name="bes-client.properties"/>
+            	<include name="log4j.xml"/>
+                <include name="log4j.dtd"/>
+            </fileset>
+        </copy>
+        <mkdir dir="build/war/WEB-INF/lib"/>
+        <copy todir="build/war/WEB-INF/lib">
+            <fileset dir="lib">
+                <include name="commonj.sdo_2.1.1.v201112051852.jar"/>
+                <include name="commons-lang-2.5.jar"/>
+                <include name="commons-httpclient-2.0.jar"/>
+                <include name="eclipselink-2.6.3.jar"/>
+                <include name="mdm-spi.jar"/>
+                <include name="siperian-api.jar"/>
+                <include name="siperian-common.jar"/>
+            	<include name="jackson-annotations-2.13.0.jar"/>
+            	<include name="jackson-core-2.13.0.jar"/>
+            	<include name="jackson-databind-2.13.0.jar"/>
+                <include name="siperian-server-pkiutil.jar"/>
+                <include name="informatica-bpm-adapter.jar"/>
+                <include name="jaxws-rt.jar"/>
+                <include name="jaxb-core.jar"/>
+                <include name="jaxb-impl.jar"/>
+                <include name="resolver.jar"/>
+                <include name="streambuffer.jar"/>
+                <include name="policy.jar"/>
+                <include name="stax-ex.jar"/>
+                <include name="gmbal-api-only.jar"/>
+                <include name="management-api.jar"/>
+                <include name="ha-api.jar"/>
+            	<include name="okhttp-4.9.2.jar"/>
+            	<include name="log4j-1.2.16.jar"/>
+            	<include name="kotlin-stdlib-1.6.0-M1.jar"/>
+            	<include name="okio-2.10.0.jar"/>
+            </fileset>
+        </copy>
+        <mkdir dir="build/war/WEB-INF/wsdl"/>
+        <unzip src="lib/mdm-spi.jar" dest="build/war/WEB-INF/wsdl">
+            <patternset>
+                <include name="xsd/bes-external-call.xsd"/>
+            </patternset>
+        </unzip>
+        <war basedir="build/war" warfile="build/bes-external-call.war">
+        </war>
+        <ear basedir="source/resources/ear" appxml="source/resources/ear/META-INF/application.xml"
+             earfile="build/bes-external-call.ear">
+            <fileset dir="build">
+                <include name="*.war"/>
+            </fileset>
+        </ear>
+    </target>
+
+
+    <target name="compile" depends="clean">
+        <mkdir dir="build/war/WEB-INF/classes"/>
+        <javac destdir="build/war/WEB-INF/classes" debug="on" optimize="off" deprecation="on">
+
+            <src path="source/java"/>
+
+            <classpath>
+                <fileset dir="lib" >
+                    <include name="commonj.sdo_2.1.1.v201112051852.jar"/>
+                    <include name="commons-lang-2.5.jar"/>
+                    <include name="eclipselink-2.6.3.jar"/>
+                    <include name="mdm-spi.jar"/>
+                    <include name="siperian-api.jar"/>
+                    <include name="siperian-common.jar"/>
+                	<include name="jackson-annotations-2.13.0.jar"/>
+                	<include name="jackson-core-2.13.0.jar"/>
+                	<include name="jackson-databind-2.13.0.jar"/>
+                	<include name="okhttp-4.9.2.jar"/>
+                	<include name="log4j-1.2.16.jar"/>
+                	<include name="okhttp-4.9.2.jar"/>
+                	<include name="kotlin-stdlib-1.6.0-M1.jar"/>
+                	<include name="okio-2.10.0.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+</project>

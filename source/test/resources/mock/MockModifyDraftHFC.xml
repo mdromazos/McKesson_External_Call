@@ -1,0 +1,89 @@
+<ns6:ExHFC_HEP_CustomerOrgView xmlns:ns5="urn:co-types.informatica.mdm" xmlns:ns0="urn:cs-rest.informatica.mdm" xmlns:ns1="urn:cs-base.informatica.mdm" xmlns:ns2="urn:co-base.informatica.mdm" xmlns:ns6="urn:co-ors.informatica.mdm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns6:ExHFC_HEP_CustomerOrgView">
+   <ns6:ExHFC_HEP_CustomerOrgView label="Matt 3">
+      <ns2:key>
+         <ns1:rowid>80003</ns1:rowid>
+      </ns2:key>
+      <ns2:rowidObject>80003</ns2:rowidObject>
+      <ns2:creator>treq</ns2:creator>
+      <ns2:createDate>2021-10-25T20:30:28.654Z</ns2:createDate>
+      <ns2:updatedBy>treq</ns2:updatedBy>
+      <ns2:lastUpdateDate>2021-10-25T20:30:28.654Z</ns2:lastUpdateDate>
+      <ns2:consolidationInd>4</ns2:consolidationInd>
+      <ns2:lastRowidSystem>SYS0          </ns2:lastRowidSystem>
+      <ns2:interactionId>120002018000</ns2:interactionId>
+      <ns2:hubStateInd>0</ns2:hubStateInd>
+      <ns2:pendingProtected>false</ns2:pendingProtected>
+      <ns6:ExVndrMDMId>80003         </ns6:ExVndrMDMId>
+      <ns6:ExBusinessName>Matt 3</ns6:ExBusinessName>
+      <ns6:ExParentEntity>
+         <ns6:ExParentEtityCd>HFC_HEP</ns6:ExParentEtityCd>
+         <ns6:ExParentEntityDesc>HFC / HEP</ns6:ExParentEntityDesc>
+      </ns6:ExParentEntity>
+      <ns6:ExVendorType>
+         <ns6:ExParentEntyVndrTypCnct>HFC_HEP - Crude</ns6:ExParentEntyVndrTypCnct>
+         <ns6:ExVendorTypeDesc>Crude</ns6:ExVendorTypeDesc>
+      </ns6:ExVendorType>
+      <ns6:ExVendorSubType>
+         <ns6:ExVndrTypSubTypCnct>HFC_HEP - Crude - Crude</ns6:ExVndrTypSubTypCnct>
+         <ns6:ExVendorSubTypeDesc>Crude inventory purchases</ns6:ExVendorSubTypeDesc>
+      </ns6:ExVendorSubType>
+      <ns6:ExAddressLn1>12471 Hayes Ct</ns6:ExAddressLn1>
+      <ns6:ExCity>Fairfax</ns6:ExCity>
+      <ns6:ExState>
+         <ns6:stateCd>VA</ns6:stateCd>
+         <ns6:stateDesc>Virginia</ns6:stateDesc>
+      </ns6:ExState>
+      <ns6:ExCountry>
+         <ns6:cntryCd>US</ns6:cntryCd>
+         <ns6:cntryDesc>United States</ns6:cntryDesc>
+      </ns6:ExCountry>
+      <ns6:ExZipCode>22033</ns6:ExZipCode>
+      <ns6:ExTaxjurisdiction>VA0000000</ns6:ExTaxjurisdiction>
+      <ns6:ExPymntTerm>
+         <ns6:PaymentTermCd>FREIGHT-N10I</ns6:PaymentTermCd>
+         <ns6:PaymentTermDesc>N10I - Net 10 days from Invoice date</ns6:PaymentTermDesc>
+      </ns6:ExPymntTerm>
+      <ns6:ExVndrApprover>
+         <ns6:ExApproverName>Not Available</ns6:ExApproverName>
+         <ns6:ExApproverFullNm>Not Available</ns6:ExApproverFullNm>
+      </ns6:ExVndrApprover>
+      <ns6:ExFullName>Matt 3</ns6:ExFullName>
+      <ns6:ExDrftSts>false</ns6:ExDrftSts>
+      <ns6:ExDupChk>
+         <ns6:ExDupCode>No Duplicate Found</ns6:ExDupCode>
+      </ns6:ExDupChk>
+      <ns6:ExPortalState_1_consolidationInd>4</ns6:ExPortalState_1_consolidationInd>
+      <ns6:ExPortalState_1_creator>treq</ns6:ExPortalState_1_creator>
+      <ns6:ExPortalState_1_interactionId>120002018000</ns6:ExPortalState_1_interactionId>
+      <ns6:ExPortalState_1_updatedBy>treq</ns6:ExPortalState_1_updatedBy>
+      <ns6:ExPortalState_1_lastUpdateDate>2021-10-25T20:30:28.654Z</ns6:ExPortalState_1_lastUpdateDate>
+      <ns6:ExPortalState_1_lastRowidSystem>SYS0          </ns6:ExPortalState_1_lastRowidSystem>
+      <ns6:ExPortalState_1_hubStateInd>0</ns6:ExPortalState_1_hubStateInd>
+      <ns6:ExPortalState_1_rowidObject>80003         </ns6:ExPortalState_1_rowidObject>
+      <ns6:ExPortalState_1_createDate>2021-10-25T20:30:28.654Z</ns6:ExPortalState_1_createDate>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_consolidationInd>4</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_consolidationInd>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_creator>treq</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_creator>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_interactionId>120002018000</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_interactionId>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_updatedBy>treq</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_updatedBy>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_lastUpdateDate>2021-10-25T20:30:28.654Z</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_lastUpdateDate>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_lastRowidSystem>SYS0          </ns6:ExPrimaryCommunication_1_ExPrimaryAddress_lastRowidSystem>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_hubStateInd>0</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_hubStateInd>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_rowidObject>80003         </ns6:ExPrimaryCommunication_1_ExPrimaryAddress_rowidObject>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_createDate>2021-10-25T20:30:28.654Z</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_createDate>
+      <ns6:ExPrimaryCommunication_1_consolidationInd>4</ns6:ExPrimaryCommunication_1_consolidationInd>
+      <ns6:ExPrimaryCommunication_1_creator>treq</ns6:ExPrimaryCommunication_1_creator>
+      <ns6:ExPrimaryCommunication_1_interactionId>120002018000</ns6:ExPrimaryCommunication_1_interactionId>
+      <ns6:ExPrimaryCommunication_1_updatedBy>treq</ns6:ExPrimaryCommunication_1_updatedBy>
+      <ns6:ExPrimaryCommunication_1_lastUpdateDate>2021-10-25T20:30:28.654Z</ns6:ExPrimaryCommunication_1_lastUpdateDate>
+      <ns6:ExPrimaryCommunication_1_lastRowidSystem>SYS0          </ns6:ExPrimaryCommunication_1_lastRowidSystem>
+      <ns6:ExPrimaryCommunication_1_hubStateInd>0</ns6:ExPrimaryCommunication_1_hubStateInd>
+      <ns6:ExPrimaryCommunication_1_rowidObject>60003         </ns6:ExPrimaryCommunication_1_rowidObject>
+      <ns6:ExPrimaryCommunication_1_createDate>2021-10-25T20:30:28.654Z</ns6:ExPrimaryCommunication_1_createDate>
+   </ns6:ExHFC_HEP_CustomerOrgView>
+   <ns6:changeSummary logging="false" create="#/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExState #/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExCountry #/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExPymntTerm" xmlns:sdo="commonj.sdo">
+      <ns6:ExHFC_HEP_CustomerOrgView sdo:ref="#/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView" sdo:unset="ExAddressLn1 ExCity ExState ExCountry ExZipCode ExPymntTerm">
+         <ns6:ExTaxjurisdiction>0000000</ns6:ExTaxjurisdiction>
+         <ns6:ExDrftSts>true</ns6:ExDrftSts>
+      </ns6:ExHFC_HEP_CustomerOrgView>
+   </ns6:changeSummary>
+</ns6:ExHFC_HEP_CustomerOrgView>

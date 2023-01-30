@@ -1,0 +1,65 @@
+<ns6:ExHFC_HEP_CustomerOrgView xmlns:ns5="urn:co-types.informatica.mdm" xmlns:ns0="urn:cs-rest.informatica.mdm" xmlns:ns1="urn:cs-base.informatica.mdm" xmlns:ns2="urn:co-base.informatica.mdm" xmlns:ns6="urn:co-ors.informatica.mdm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns6:ExHFC_HEP_CustomerOrgView">
+   <ns6:ExHFC_HEP_CustomerOrgView>
+      <ns6:ExParentEntity>
+         <ns6:ExParentEtityCd>HFC_HEP</ns6:ExParentEtityCd>
+         <ns6:ExParentEntityDesc>HFC / HEP</ns6:ExParentEntityDesc>
+      </ns6:ExParentEntity>
+      <ns6:ExVendorType>
+         <ns6:ExParentEntyVndrTypCnct>HFC_HEP - Crude</ns6:ExParentEntyVndrTypCnct>
+         <ns6:ExVendorTypeDesc>Crude</ns6:ExVendorTypeDesc>
+      </ns6:ExVendorType>
+      <ns6:ExVendorSubType>
+         <ns6:ExVndrTypSubTypCnct>HFC_HEP - Crude - Crude</ns6:ExVndrTypSubTypCnct>
+         <ns6:ExVendorSubTypeDesc>Crude inventory purchases</ns6:ExVendorSubTypeDesc>
+      </ns6:ExVendorSubType>
+      <ns6:ExAddressLn1>5395 STEELES AVE W</ns6:ExAddressLn1>
+      <ns6:ExCity>Ontario</ns6:ExCity>
+      <ns6:ExState>
+         <ns6:stateCd>NY</ns6:stateCd>
+         <ns6:stateDesc>NORTH YORK</ns6:stateDesc>
+      </ns6:ExState>
+      <ns6:ExCountry>
+         <ns6:cntryCd>CA</ns6:cntryCd>
+         <ns6:cntryDesc>Canada</ns6:cntryDesc>
+      </ns6:ExCountry>
+      <ns6:ExZipCode>M91</ns6:ExZipCode>
+      <ns6:ExTaxjurisdiction>NE0000000</ns6:ExTaxjurisdiction>
+      <ns6:ExPymntTerm>
+         <ns6:PaymentTermCd>FREIGHT-N10I</ns6:PaymentTermCd>
+         <ns6:PaymentTermDesc>N10I - Net 10 days from Invoice date</ns6:PaymentTermDesc>
+      </ns6:ExPymntTerm>
+      <ns6:ExVndrApprover>
+         <ns6:ExApproverName>1-vendorapprover2</ns6:ExApproverName>
+         <ns6:ExApproverFullNm>vendorapprover2</ns6:ExApproverFullNm>
+      </ns6:ExVndrApprover>
+      <ns6:ExValidate>false</ns6:ExValidate>
+      <ns6:ExFullName>1409071 ONTARIO LIMITED</ns6:ExFullName>
+      <ns6:ExPrtlState>
+         <ns6:prtyRleStsVal>New</ns6:prtyRleStsVal>
+      </ns6:ExPrtlState>
+      <ns6:ExDrftSts>false</ns6:ExDrftSts>
+      <ns6:ExTax xmlns:ns7="urn:co-meta.informatica.mdm" xmlns:ns8="urn:task-base.informatica.mdm">
+         <ns6:item>
+            <ns6:ExTaxType>
+               <ns2:key xsi:type="ns6:ExHFC_HEP_CustomerOrgView.Key">
+                  <ns1:rowid>2             </ns1:rowid>
+               </ns2:key>
+               <ns2:rowidObject>2             </ns2:rowidObject>
+               <ns2:creator>admin</ns2:creator>
+               <ns2:createDate>2021-10-11T10:09:28.537-07:00</ns2:createDate>
+               <ns2:updatedBy>admin</ns2:updatedBy>
+               <ns2:lastUpdateDate>2021-10-11T10:09:28.537-07:00</ns2:lastUpdateDate>
+               <ns2:consolidationInd>4</ns2:consolidationInd>
+               <ns2:lastRowidSystem>LOOKUP        </ns2:lastRowidSystem>
+               <ns2:hubStateInd>1</ns2:hubStateInd>
+               <ns6:taxNumTypCd>EIN</ns6:taxNumTypCd>
+            </ns6:ExTaxType>
+            <ns6:ExTaxNum>872314125</ns6:ExTaxNum>
+            <ns6:EXWitholdingTaxReq>false</ns6:EXWitholdingTaxReq>
+         </ns6:item>
+      </ns6:ExTax>
+   </ns6:ExHFC_HEP_CustomerOrgView>
+   <ns6:changeSummary logging="false" create="#/ns6:object/ns6:ExHFC_HEP_CustomerOrgView" xmlns:sdo="commonj.sdo">
+      <ns9:object sdo:ref="#/ns6:object" sdo:unset="ExHFC_HEP_CustomerOrgView" xmlns:ns9="urn:cs-ors.informatica.mdm"/>
+   </ns6:changeSummary>
+</ns6:ExHFC_HEP_CustomerOrgView>

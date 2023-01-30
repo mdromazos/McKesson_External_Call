@@ -1,0 +1,116 @@
+<wsdl:definitions name="CustomLogicService"
+                  targetNamespace="http://cs.sample.mdm.informatica.com/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://cs.sample.mdm.informatica.com/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                    targetNamespace="urn:bes-external-call.informatica.mdm"
+                    xmlns:exc="urn:bes-external-call.informatica.mdm">
+
+            <xsd:complexType name="ExternalCallRequest">
+                <xsd:sequence>
+                    <xsd:element name="header" type="exc:Header" maxOccurs="1"/>
+                    <xsd:element name="trigger" type="exc:Trigger" maxOccurs="1"/>
+                    <xsd:element name="serviceCall" type="exc:ServiceCall" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="ExternalCallResponse">
+                <xsd:choice>
+                    <xsd:element name="serviceCall" type="exc:ServiceCall" maxOccurs="1"/>
+                    <xsd:element name="serviceError" type="exc:ServiceError" maxOccurs="1"/>
+                </xsd:choice>
+            </xsd:complexType>
+
+            <xsd:complexType name="Password">
+                <xsd:sequence>
+                    <xsd:element name="password" type="xsd:string" maxOccurs="1"/>
+                    <xsd:element name="encrypted" type="xsd:boolean" maxOccurs="1" default="false"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="Header">
+                <xsd:sequence>
+                    <xsd:element name="orsId" type="xsd:string" maxOccurs="1"/>
+                    <xsd:element name="user" type="xsd:string" maxOccurs="1"/>
+                    <xsd:element name="password" type="exc:Password" maxOccurs="1"/>
+                    <xsd:element name="payload" type="xsd:string" maxOccurs="1"/>
+                    <xsd:element name="reposVersion" type="xsd:string" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="Trigger">
+                <xsd:sequence>
+                    <xsd:element name="businessEntity" type="xsd:string" maxOccurs="1"/>
+                    <xsd:element name="servicePhase" type="xsd:string" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="ServiceCall">
+                <xsd:sequence>
+                    <xsd:element name="objectXml" type="xsd:string" maxOccurs="1"/>
+                    <xsd:element name="parameter" type="exc:Parameter" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="ServiceError">
+                <xsd:sequence>
+                    <xsd:element name="code" type="xsd:string" maxOccurs="1"/>
+                    <xsd:element name="message" type="xsd:string" maxOccurs="1"/>
+                    <xsd:element name="detailsXml" type="xsd:string" maxOccurs="1"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="Parameter">
+                <xsd:choice minOccurs="0" maxOccurs="1">
+                    <xsd:element name="stringValue" type="xsd:string"/>
+                    <xsd:element name="intValue" type="xsd:int"/>
+                    <xsd:element name="doubleValue" type="xsd:double"/>
+                    <xsd:element name="dateValue" type="xsd:dateTime"/>
+                    <xsd:element name="booleanValue" type="xsd:boolean"/>
+                    <xsd:element name="xmlValue" type="xsd:string"/>
+                </xsd:choice>
+                <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+        </xsd:schema>
+
+        <xsd:schema targetNamespace="http://cs.sample.mdm.informatica.com/"
+                    xmlns:exc="urn:bes-external-call.informatica.mdm">
+            <xsd:import namespace="urn:bes-external-call.informatica.mdm"/>
+
+            <xsd:element name="validate" type="exc:ExternalCallRequest"/>
+            <xsd:element name="validateResponse" type="exc:ExternalCallResponse"/>
+
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="validate">
+        <wsdl:part name="parameters" element="tns:validate"/>
+    </wsdl:message>
+    <wsdl:message name="validateResponse">
+        <wsdl:part name="parameters" element="tns:validateResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="CustomLogicService">
+        <wsdl:operation name="validate">
+            <wsdl:input message="tns:validate"/>
+            <wsdl:output message="tns:validateResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CustomLogicServicePortBinding" type="tns:CustomLogicService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="validate">
+            <soap:operation soapAction=""/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CustomLogicService">
+        <wsdl:port name="CustomLogicServicePort" binding="tns:CustomLogicServicePortBinding">
+            <soap:address location="http://localhost:8080/bes-external-call/customLogicService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

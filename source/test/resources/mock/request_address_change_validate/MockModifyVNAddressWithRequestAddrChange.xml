@@ -1,0 +1,113 @@
+<ns6:ExHFC_HEP_CustomerOrgView 
+	xmlns:ns5="urn:co-types.informatica.mdm" 
+	xmlns:ns0="urn:cs-rest.informatica.mdm" 
+	xmlns:ns1="urn:cs-base.informatica.mdm" 
+	xmlns:ns2="urn:co-base.informatica.mdm" 
+	xmlns:ns6="urn:co-ors.informatica.mdm" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:type="ns6:ExHFC_HEP_CustomerOrgView">
+   <ns6:ExHFC_HEP_CustomerOrgView label="Matt">
+      <ns2:key>
+         <ns1:rowid>1</ns1:rowid>
+      </ns2:key>
+      <ns2:rowidObject>1</ns2:rowidObject>
+      <ns2:creator>admin</ns2:creator>
+      <ns2:createDate>2021-10-11T17:29:33.51Z</ns2:createDate>
+      <ns2:updatedBy>admin</ns2:updatedBy>
+      <ns2:lastUpdateDate>2021-10-19T23:46:13.518Z</ns2:lastUpdateDate>
+      <ns2:consolidationInd>4</ns2:consolidationInd>
+      <ns2:lastRowidSystem>SYS0          </ns2:lastRowidSystem>
+      <ns2:hubStateInd>1</ns2:hubStateInd>
+      <ns2:pendingProtected>false</ns2:pendingProtected>
+      <ns6:ExVndrMDMId>1             </ns6:ExVndrMDMId>
+      <ns6:ExBusinessName>Matt</ns6:ExBusinessName>
+      <ns6:ExParentEntity>
+         <ns6:ExParentEtityCd>HFC_HEP</ns6:ExParentEtityCd>
+         <ns6:ExParentEntityDesc>HFC / HEP</ns6:ExParentEntityDesc>
+      </ns6:ExParentEntity>
+      <ns6:ExVendorType>
+         <ns6:ExParentEntyVndrTypCnct>HFC_HEP - Crude</ns6:ExParentEntyVndrTypCnct>
+         <ns6:ExVendorTypeDesc>Crude</ns6:ExVendorTypeDesc>
+      </ns6:ExVendorType>
+      <ns6:ExVendorSubType>
+         <ns6:ExVndrTypSubTypCnct>HFC_HEP - Crude - Crude</ns6:ExVndrTypSubTypCnct>
+         <ns6:ExVendorSubTypeDesc>Crude inventory purchases</ns6:ExVendorSubTypeDesc>
+      </ns6:ExVendorSubType>
+      <ns6:ExAddressLn1>12471 Hayes Ct</ns6:ExAddressLn1>
+      <ns6:ExCity>Herndon</ns6:ExCity>
+      <ns6:ExState>
+         <ns6:stateCd>VA</ns6:stateCd>
+         <ns6:stateDesc>Virginia</ns6:stateDesc>
+      </ns6:ExState>
+      <ns6:ExCountry>
+         <ns6:cntryCd>US</ns6:cntryCd>
+         <ns6:cntryDesc>United States</ns6:cntryDesc>
+      </ns6:ExCountry>
+      <ns6:ExZipCode>22033</ns6:ExZipCode>
+      <ns6:ExTaxjurisdiction>VA0000000</ns6:ExTaxjurisdiction>
+      <ns6:ExUseCleanseAddrInd>true</ns6:ExUseCleanseAddrInd>
+      <ns6:ExCleansedAddrLn1>12471 HAYES CT</ns6:ExCleansedAddrLn1>
+      <ns6:ExCleansedCity>FAIRFAX</ns6:ExCleansedCity>
+      <ns6:ExCleansedState>VA</ns6:ExCleansedState>
+      <ns6:ExCleansedCountry>US</ns6:ExCleansedCountry>
+      <ns6:ExCleansedZipCode>22033-4298</ns6:ExCleansedZipCode>
+      <ns6:ExAddressvalidationStatus>Valid Address</ns6:ExAddressvalidationStatus>
+      <ns6:ExPymntTerm>
+         <ns6:PaymentTermCd>FREIGHT-N10I</ns6:PaymentTermCd>
+         <ns6:PaymentTermDesc>N10I - Net 10 days from Invoice date</ns6:PaymentTermDesc>
+      </ns6:ExPymntTerm>
+      <ns6:ExVndrApprover>
+         <ns6:ExApproverName>1-vendorapprover2</ns6:ExApproverName>
+         <ns6:ExApproverFullNm>vendorapprover2</ns6:ExApproverFullNm>
+      </ns6:ExVndrApprover>
+      <ns6:ExValidate>false</ns6:ExValidate>
+      <ns6:ExFullName>Matt</ns6:ExFullName>
+      <ns6:ExDrftSts>false</ns6:ExDrftSts>
+      <ns6:ExPortalState_1_consolidationInd>4</ns6:ExPortalState_1_consolidationInd>
+      <ns6:ExPortalState_1_creator>admin</ns6:ExPortalState_1_creator>
+      <ns6:ExPortalState_1_updatedBy>admin</ns6:ExPortalState_1_updatedBy>
+      <ns6:ExPortalState_1_lastUpdateDate>2021-10-11T17:29:33.51Z</ns6:ExPortalState_1_lastUpdateDate>
+      <ns6:ExPortalState_1_lastRowidSystem>SYS0          </ns6:ExPortalState_1_lastRowidSystem>
+      <ns6:ExPortalState_1_hubStateInd>1</ns6:ExPortalState_1_hubStateInd>
+      <ns6:ExPortalState_1_rowidObject>1             </ns6:ExPortalState_1_rowidObject>
+      <ns6:ExPortalState_1_createDate>2021-10-11T17:29:33.51Z</ns6:ExPortalState_1_createDate>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_consolidationInd>4</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_consolidationInd>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_creator>admin</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_creator>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_updatedBy>admin</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_updatedBy>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_lastUpdateDate>2021-10-11T17:29:33.51Z</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_lastUpdateDate>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_lastRowidSystem>SYS0          </ns6:ExPrimaryCommunication_1_ExPrimaryAddress_lastRowidSystem>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_hubStateInd>1</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_hubStateInd>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_rowidObject>1             </ns6:ExPrimaryCommunication_1_ExPrimaryAddress_rowidObject>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryAddress_createDate>2021-10-11T17:29:33.51Z</ns6:ExPrimaryCommunication_1_ExPrimaryAddress_createDate>
+      <ns6:ExPrimaryCommunication_1_consolidationInd>4</ns6:ExPrimaryCommunication_1_consolidationInd>
+      <ns6:ExPrimaryCommunication_1_creator>admin</ns6:ExPrimaryCommunication_1_creator>
+      <ns6:ExPrimaryCommunication_1_updatedBy>admin</ns6:ExPrimaryCommunication_1_updatedBy>
+      <ns6:ExPrimaryCommunication_1_lastUpdateDate>2021-10-11T17:29:33.51Z</ns6:ExPrimaryCommunication_1_lastUpdateDate>
+      <ns6:ExPrimaryCommunication_1_lastRowidSystem>SYS0          </ns6:ExPrimaryCommunication_1_lastRowidSystem>
+      <ns6:ExPrimaryCommunication_1_hubStateInd>1</ns6:ExPrimaryCommunication_1_hubStateInd>
+      <ns6:ExPrimaryCommunication_1_rowidObject>1             </ns6:ExPrimaryCommunication_1_rowidObject>
+      <ns6:ExPrimaryCommunication_1_createDate>2021-10-11T17:29:33.51Z</ns6:ExPrimaryCommunication_1_createDate>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_consolidationInd>4</ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_consolidationInd>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_creator>admin</ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_creator>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_updatedBy>admin</ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_updatedBy>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_lastUpdateDate>2021-10-11T17:29:33.51Z</ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_lastUpdateDate>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_lastRowidSystem>SYS0          </ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_lastRowidSystem>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_hubStateInd>1</ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_hubStateInd>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_rowidObject>1             </ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_rowidObject>
+      <ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_createDate>2021-10-11T17:29:33.51Z</ns6:ExPrimaryCommunication_1_ExPrimaryPymntDtls_createDate>
+	  <ns6:ExRequest xmlns:ns7="urn:co-meta.informatica.mdm" xmlns:ns8="urn:task-base.informatica.mdm">
+         <ns6:item>
+            <ns6:ExAddressChange>true</ns6:ExAddressChange>
+            <ns6:ExContactedWho>test</ns6:ExContactedWho>
+            <ns6:ExContactedWhen>2021-10-19T07:00:00Z</ns6:ExContactedWhen>
+            <ns6:ExContactedHow>Email</ns6:ExContactedHow>
+            <ns6:ExSendToPrtl>false</ns6:ExSendToPrtl>
+         </ns6:item>
+      </ns6:ExRequest>
+   </ns6:ExHFC_HEP_CustomerOrgView>
+   <ns6:changeSummary logging="false" xmlns:sdo="commonj.sdo">
+      <ns6:ExHFC_HEP_CustomerOrgView sdo:ref="#/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView">
+         <ns6:ExCity>Fairfax</ns6:ExCity>
+      </ns6:ExHFC_HEP_CustomerOrgView>
+   </ns6:changeSummary>
+</ns6:ExHFC_HEP_CustomerOrgView>

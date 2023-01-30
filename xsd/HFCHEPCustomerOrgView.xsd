@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="urn:bes-external-call.informatica.mdm"
+            xmlns:exc="urn:bes-external-call.informatica.mdm">
+   <xsd:import namespace="commonj.sdo/java"/>
+
+   <xsd:complexType name="ExHFC_HEP_CustomerOrgView">
+      <xsd:sequence>
+      	<xsd:element name="ExFullName" type="xsd:string"
+      		minOccurs="0" />
+      	<xsd:element name="ExState" type="exc:ExState"></xsd:element>
+      	<xsd:element name="ExPI" type="ExHFC_HEP_CustomerOrgView.ExPI.Pager" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+
+   <xsd:complexType name="ExState">
+   	<xsd:sequence>
+   		<xsd:element name="stateCd" type="xsd:string"></xsd:element>
+   		<xsd:element name="stateDesc" type="xsd:string"></xsd:element>
+   	</xsd:sequence>
+   </xsd:complexType>
+	<xsd:complexType name="ExHFC_HEP_CustomerOrgView.ExPI.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="ExHFC_HEP_CustomerOrgView.ExPI" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="Pager" abstract="true">
+        <xsd:attribute name="firstRecord" type="xsd:int"/>
+        <xsd:attribute name="recordCount" type="xsd:int"/>
+        <xsd:attribute name="pageSize" type="xsd:int"/>
+        <xsd:attribute name="searchToken" type="xsd:string"/>
+   </xsd:complexType>
+</xsd:schema>

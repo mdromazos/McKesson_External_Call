@@ -1,0 +1,73 @@
+{
+    "ExParentEntity": {
+        "ExParentEtityCd": "HFC_HEP",
+        "ExParentEntityDesc": "HFC / HEP"
+    },
+    "ExPrtlState": {
+        "prtyRleStsVal": "New"
+    },
+    "ExCountry": {
+        "cntryCd": "NL",
+        "cntryDesc": "Netherlands"
+    },
+    "ExZipCode": "M91",
+    "ExVendorType": {
+        "ExParentEntyVndrTypCnct": "HFC_HEP - Crude",
+        "ExVendorTypeDesc": "Crude"
+    },
+    "ExVendorSubType": {
+        "ExVndrTypSubTypCnct": "HFC_HEP - Crude - Crude",
+        "ExVendorSubTypeDesc": "Crude inventory purchases"
+    },
+    "ExFullName": "IMPERIAL LOGISTICS BV",
+    "ExAddressLn1": "BUTAANWEG, 7, F",
+    "ExCity": "VONDELINGENPLAAT RT",
+    "ExTaxjurisdiction": "NE0000000",
+    "ExDrftSts": "false",
+    "ExPymntTerm": {
+        "PaymentTermCd": "FREIGHT-N10I",
+        "PaymentTermDesc": "N10I - Net 10 days from Invoice date"
+    },
+    "ExVndrApprover": {
+        "ExApproverName": "1-vendorapprover2",
+        "ExApproverFullNm": "vendorapprover2"
+    },
+    "ExValidate": "false",
+    "ExTax": {
+        "item": [
+            {
+                "ExTaxType": {
+                    "key": {
+                        "rowid": "2             "
+                    },
+                    "rowidObject": "2             ",
+                    "creator": "admin",
+                    "createDate": "2021-10-11T10:09:28.537-07:00",
+                    "updatedBy": "admin",
+                    "lastUpdateDate": "2021-10-11T10:09:28.537-07:00",
+                    "consolidationInd": 4,
+                    "lastRowidSystem": "LOOKUP        ",
+                    "hubStateInd": 1,
+                    "taxNumTypCd": "EIN"
+                },
+                "EXWitholdingTaxReq": "false",
+                "ExTaxNum": "NL802855751B01"
+            }
+        ],
+        "$original": {
+            "item": [
+                null
+            ]
+        }
+    },
+    "ExPI": {
+        "item": [
+            {}
+        ],
+        "$original": {
+            "item": [
+                null
+            ]
+        }
+    }
+}

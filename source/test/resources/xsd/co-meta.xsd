@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:co-meta.informatica.mdm"
+			xmlns="urn:co-meta.informatica.mdm"
+			xmlns:sdo="commonj.sdo"
+			xmlns:sdoJava="commonj.sdo/java"
+			xmlns:sdoXML="commonj.sdo/xml"
+			elementFormDefault="qualified"
+			xmlns:rest="urn:cs-rest.informatica.mdm"
+			xmlns:co="urn:co-base.informatica.mdm"
+			sdoJava:package="com.informatica.mdm.sdo.co.meta">
+
+	<xsd:import schemaLocation="cs-rest.xsd" namespace="urn:cs-rest.informatica.mdm" />
+	<xsd:import schemaLocation="co-base.xsd" namespace="urn:co-base.informatica.mdm" />
+
+	<xsd:complexType name="ObjectMetadata">
+		<xsd:sequence>
+			<xsd:element name="operations" type="ObjectOperations" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="objectType" type="ObjectType" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="timeline" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="viewOf" type="xsd:string" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="object" type="NodeMetadata" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="ObjectType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ENTITY" />
+			<xsd:enumeration value="LOOKUP" />
+			<xsd:enumeration value="RELATIONSHIP" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="NodeMetadata">
+		<xsd:sequence>
+			<xsd:element name="operations" type="NodeOperations" minOccurs="1" maxOccurs="1" />
+			<xsd:element ref="rest:link" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="field" type="FieldMetadata" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="child" type="NodeMetadata" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="contentMetadata" type="NodeMetadata" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" />
+		<xsd:attribute name="label" type="xsd:string" />
+		<xsd:attribute name="existsFormat" type="xsd:string" />
+		<xsd:attribute name="many" type="xsd:boolean" />
+		<xsd:attribute name="color" type="xsd:string" />
+	</xsd:complexType>
+
+	<xsd:complexType name="FieldMetadata">
+		<xsd:sequence>
+			<xsd:element name="operations" type="FieldOperations" minOccurs="1" maxOccurs="1" />
+			<xsd:choice maxOccurs="1">
+				<xsd:element name="allowedValues" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element name="forbiddenValues" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:choice>
+			<xsd:choice maxOccurs="1">
+				<xsd:element name="defaultValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:choice>
+			<xsd:element name="searchable" minOccurs="0" maxOccurs="1">
+				<xsd:complexType>
+					<xsd:attribute name="filterable" type="xsd:boolean" />
+					<xsd:attribute name="facet" type="xsd:boolean" />
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" />
+		<xsd:attribute name="label" type="xsd:string" />
+		<xsd:attribute name="dataType" type="xsd:string" />
+		<xsd:attribute name="length" type="xsd:int" />
+		<xsd:attribute name="totalDigits" type="xsd:int" />
+		<xsd:attribute name="fractionDigits" type="xsd:int" />
+		<xsd:attribute name="readOnly" type="xsd:boolean" default="false" />
+		<xsd:attribute name="required" type="xsd:boolean" default="false" />
+		<xsd:attribute name="system" type="xsd:boolean" default="false" />
+		<xsd:attribute name="parents" type="stringlist" />
+		<xsd:attribute name="dependents" type="stringlist" />
+		<xsd:attribute name="trust" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="applyNullValues" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="displayFormat" type="xsd:string" default="false"/>
+		<xsd:attribute name="filterable" type="xsd:boolean"/>
+		<xsd:attribute name="sortable" type="xsd:boolean"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="ObjectOperations">
+		<xsd:sequence>
+			<xsd:element name="read" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="search" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="create" type="TriggerOperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="update" type="TriggerOperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="merge" type="TriggerOperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="delete" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="unmerge" type="TriggerOperationMetadata" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NodeOperations">
+		<xsd:sequence>
+			<xsd:element name="read" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="create" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="update" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="merge" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="delete" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="unmerge" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FieldOperations">
+		<xsd:sequence>
+			<xsd:element name="read" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="create" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="update" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+    <xsd:complexType name="HierarchyOperations">
+		<xsd:sequence>
+			<xsd:element name="read" type="OperationMetadata" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="update" type="TriggerOperationMetadata" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="TriggerOperationMetadata">
+		<xsd:complexContent>
+			<xsd:extension base="OperationMetadata">
+				<xsd:sequence>
+					<xsd:element name="task" type="TaskMetadata" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="OperationMetadata">
+		<xsd:sequence>
+			<xsd:element name="allowed" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TaskMetadata">
+		<xsd:sequence>
+			<xsd:element name="template" type="TaskTemplate" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="comment" type="Relevancy" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="attachment" type="Relevancy" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TaskTemplate">
+		<xsd:sequence>
+			<xsd:element name="title" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="priority" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="dueDate" type="xsd:dateTime" sdoXML:dataType="sdo:Date" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="taskType" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="comment" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="Relevancy">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="REQUIRED" />
+			<xsd:enumeration value="OPTIONAL" />
+			<xsd:enumeration value="NOT_APPLICABLE" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="BELookupMetadata">
+		<xsd:complexContent>
+			<xsd:extension base="FieldMetadata">
+				<xsd:sequence>
+					<xsd:element name="lookup" type="LookupMetadata" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="CodeLookupMetadata">
+		<xsd:complexContent>
+			<xsd:extension base="FieldMetadata">
+				<xsd:sequence>
+					<xsd:element name="lookup" type="LookupMetadata" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="LookupMetadata">
+		<xsd:sequence>
+			<xsd:element ref="rest:link" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="field" minOccurs="0" maxOccurs="unbounded" type="FieldMetadata"/>
+		</xsd:sequence>
+		<xsd:attribute name="object" type="xsd:string" />
+		<xsd:attribute name="key" type="xsd:string" />
+		<xsd:attribute name="value" type="xsd:string" />
+	</xsd:complexType>
+
+	<xsd:complexType name="RelationshipMetadata">
+		<xsd:complexContent>
+			<xsd:extension base="NodeMetadata">
+				<xsd:sequence>
+					<xsd:element name="direction" type="xsd:string" maxOccurs="1" />
+					<xsd:element name="bidirectional" type="xsd:boolean" maxOccurs="1" />
+                    <xsd:element name="from" type="CodeLookupMetadata" maxOccurs="1" />
+                    <xsd:element name="to" type="CodeLookupMetadata" maxOccurs="1" />
+                    <xsd:element name="relTypeField" type="xsd:string" maxOccurs="1" />
+					<xsd:element name="hierarchy" type="xsd:string" minOccurs="0" maxOccurs="1" />
+                </xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="HierarchyMetadata">
+		<xsd:sequence>
+			<xsd:element name="relationship" minOccurs="0" maxOccurs="unbounded" type="RelationshipMetadata"/>
+            <xsd:element name="operations" type="HierarchyOperations" minOccurs="1" maxOccurs="1" />
+        </xsd:sequence>
+		<xsd:attribute name="root" type="xsd:string" />
+		<xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="label" type="xsd:string" />
+		<xsd:attribute name="description" type="xsd:string"/>
+	</xsd:complexType>
+
+	<xsd:complexType name="HierarchyMetadata.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="co:Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="HierarchyMetadata" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:simpleType name="stringlist">
+		<xsd:list itemType="xsd:string" />
+	</xsd:simpleType>
+
+	<xsd:complexType name="ObjectMetadata.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="co:Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="ObjectMetadata" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="MetadataFilter">
+		<xsd:choice>
+			<xsd:element name="relFilter" type="RelationshipFilter" />
+		</xsd:choice>
+	</xsd:complexType>
+
+	<xsd:complexType name="RelationshipFilter">
+		<xsd:sequence>
+			<xsd:element name="start" type="xsd:string" minOccurs="0" />
+			<xsd:element name="finish" type="xsd:string" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="DaaSMetadata">
+		<xsd:sequence>
+			<xsd:element name="providerName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="providerType" type="xsd:string" minOccurs="0" />
+			<xsd:element name="businessEntity" type="xsd:string" minOccurs="0" />
+			<xsd:element name="systemName" type="xsd:string" minOccurs="0" />
+			<xsd:element name="requiredFields" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="NodePath">
+		<xsd:sequence>
+			<xsd:element name="object" type="NodePath" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" />
+		<xsd:attribute name="label" type="xsd:string" />
+	</xsd:complexType>
+
+	<xsd:complexType name="MatchRuleDetails">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="ruleSet" type="xsd:string"/>
+			<xsd:element name="ruleNumber" type="xsd:int"/>
+			<xsd:element name="autoMerge" type="xsd:boolean"/>
+			<xsd:element name="matchPurpose" type="xsd:string"/>
+			<xsd:element name="matchLevel" type="xsd:string"/>
+			<xsd:element name="matchColumns" type="MatchColumnDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="matchOptions" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MatchColumnDetails">
+		<xsd:sequence>
+			<xsd:element name="name" type="xsd:string"/>
+			<xsd:element name="hubObject" type="xsd:string"/>
+			<xsd:element name="object" type="NodePath" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="fuzzy" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>
