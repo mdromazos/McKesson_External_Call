@@ -4,6 +4,10 @@ import java.util.List;
 
 
 
+
+
+
+
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -19,8 +23,9 @@ import commonj.sdo.DataObject;
 import commonj.sdo.helper.HelperContext;
 import com.informatica.mdm.bes.config.Constants;
 import com.informatica.mdm.bes.customlogic.BeCustomLogicImpl;
-import com.informatica.mdm.bes.customlogic.PortalRegnCustomLogicImpl;
+import com.informatica.mdm.bes.customlogic.BeReadCustomLogicImpl;
 import com.informatica.mdm.bes.customlogic.PortalViewCustomLogicImpl;
+import com.informatica.mdm.bes.customlogic.RegistViewCustomLogicImpl;
 import com.informatica.mdm.bes.customlogic.ViewCustomLogicImpl;
 import com.informatica.mdm.bes.domain.BusinessRules;
 
@@ -58,6 +63,8 @@ public class CustomLogicFactoryImpl implements CustomLogicFactory {
         switch (phase) {
             case PREVIEW_MERGE_CO_BEFORE_EVERYTHING:
             	break;
+            case WRITE_CO_BEFORE_EVERYTHING:
+            	break;
             case WRITE_CO_BEFORE_VALIDATE:
                 break;
             case WRITE_CO_AFTER_VALIDATE:
@@ -69,13 +76,19 @@ public class CustomLogicFactoryImpl implements CustomLogicFactory {
             case WRITE_VIEW_AFTER_VALIDATE:
             	if (Constants.BE_TRADE_SUPPLIER_VIEW.equals(businessEntity) || Constants.BE_NON_TRADE_SUPPLIER_VIEW.equals(businessEntity)) {
             		return new ViewCustomLogicImpl(businessEntity, phase, externalCallRequest, callContext, besClient, roles);
-            	} else if (Constants.BE_TRADE_PORTAL_REG.equals(businessEntity) || Constants.BE_NON_TRADE_PORTAL_REG.equals(businessEntity)) {
-            		return new PortalRegnCustomLogicImpl(businessEntity, phase, externalCallRequest, callContext, besClient, roles); 
+            	} else if (Constants.BE_TRADE_REGIST_VIEW.equals(businessEntity) || Constants.BE_NONTRADE_REGIST_VIEW.equals(businessEntity)) {
+            		return new RegistViewCustomLogicImpl(businessEntity, phase, externalCallRequest, callContext, besClient, roles); 
             	} else if (Constants.BE_TRADE_PORTAL_VIEW.equals(businessEntity) || Constants.BE_NON_TRADE_PORTAL_VIEW.equals(businessEntity)) {
             		return new PortalViewCustomLogicImpl(businessEntity, phase, externalCallRequest, callContext, besClient, roles); 
             	}
             case WRITE_VIEW_BEFORE_EVERYTHING:
             	break;
+            case WRITE_VIEW_AFTER_EVERYTHING:
+            	break;
+            case READ_VIEW_AFTER_EVERYTHING:
+        		break;
+            case READ_CO_AFTER_EVERYTHING:
+        		return new BeReadCustomLogicImpl(businessEntity, phase, externalCallRequest, callContext, besClient, roles);
             default:
                 
         }

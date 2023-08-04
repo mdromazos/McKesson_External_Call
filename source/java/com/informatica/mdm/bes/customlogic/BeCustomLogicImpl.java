@@ -2,6 +2,9 @@ package com.informatica.mdm.bes.customlogic;
 
 import java.time.Instant;
 
+
+
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,24 +17,26 @@ import org.eclipse.persistence.sdo.SDOChangeSummary;
 
 import com.informatica.mdm.bes.config.VendorMainConstants;
 import com.informatica.mdm.bes.automate.BackOrderIndAutomate;
-import com.informatica.mdm.bes.automate.DefaultsByCompanyCodeAutomate;
+import com.informatica.mdm.bes.automate.BusinessRulesAutomate;
 import com.informatica.mdm.bes.automate.PSTRegisteredAutomate;
 import com.informatica.mdm.bes.automate.PaymentTermsAutomate;
-import com.informatica.mdm.bes.automate.PostingBlockAutomate;
-import com.informatica.mdm.bes.config.BusinessEntityConstants;
+import com.informatica.mdm.bes.automate.ProfileAutomate;
+import com.informatica.mdm.bes.automate.RequiredDocumentAutomate;
+import com.informatica.mdm.bes.automate.SequenceNumberAutomate;
+import com.informatica.mdm.bes.automate.VendorInactivateAutomate;
 import com.informatica.mdm.bes.config.Constants;
 import com.informatica.mdm.bes.config.ErrorConstants;
-import com.informatica.mdm.bes.dataobjecthelper.DataObjectHelperContext;
 import com.informatica.mdm.bes.dataobjecthelper.ErrorHelper;
-import com.informatica.mdm.bes.helper.VendorSDOHelper;
+import com.informatica.mdm.bes.validate.MaintenanceRequiredDocumentsValidate;
+import com.informatica.mdm.bes.validate.RequestValidate;
+import com.informatica.mdm.bes.validate.RoutingSwiftFormatValidate;
+import com.informatica.mdm.bes.validate.ShortFullNameValidate;
 import com.informatica.mdm.cs.CallContext;
 import com.informatica.mdm.cs.client.CompositeServiceClient;
 import com.informatica.mdm.sdo.cs.base.ValidationError;
 import com.informatica.mdm.spi.cs.StepException;
 import com.informatica.mdm.spi.externalcall.ExternalCallRequest;
-import com.informatica.mdm.spi.externalcall.Parameter;
 import com.informatica.mdm.spi.externalcall.ServicePhase;
-import com.siperian.sif.client.EjbSiperianClient;
 import com.siperian.sif.client.SiperianCommunicationException;
 
 import commonj.sdo.DataObject;
@@ -60,7 +65,9 @@ public class BeCustomLogicImpl extends CustomLogicImpl {
 	@Override
 	public DataObject process(HelperContext helperContext, DataObject inputSDO, Map<String, Object> inParams, Map<String, Object> outParams)
 			throws StepException {
-
+		if (isRequestComingFromMuleSoft() || isRequestComingFromAvos())
+			return inputSDO;
+		
 		startTime = Instant.now();
 		try {
 			dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, inputSDO);
@@ -85,22 +92,40 @@ public class BeCustomLogicImpl extends CustomLogicImpl {
 	 * or if it is a call coming from ActiveVOS.
 	 */
 	protected boolean decideBusinessRules(HelperContext helperContext, DataObject inputSDO, Map<String, Object> inParams, Map<String, Object> outParams) {
-		logger.info("INSIDE DECIDE BUSINESS RULES");
+		
 		DataObject inputSDOBe = inputSDO.getDataObject(businessEntity);
 		String rowidObject = inputSDOBe.getString(Constants.ROWID_OBJECT);
-		boolean validateOnly = (boolean) inParams.get(Constants.VALIDATE_ONLY);
+//		boolean validateOnly = (boolean) inParams.get(Constants.VALIDATE_ONLY);
 		String interactionId = (String) inParams.get(Constants.INTERACTION_ID);
-		if (interactionId == null) {
-			interactionId = inputSDOBe.getString(Constants.INTERACTION_ID);	
-		}
 		
-		
+		boolean gotRecords = getRecordFromDatabase(helperContext, interactionId, rowidObject);
 		boolean newVendor = inputSDO.getChangeSummary().isCreated(inputSDOBe) && (interactionId == null || interactionId.isEmpty());
-		parallelBusinessRules.addAutomation(new BackOrderIndAutomate(), 0);
-		parallelBusinessRules.addAutomation(new DefaultsByCompanyCodeAutomate(), 0);
-		parallelBusinessRules.addAutomation(new PaymentTermsAutomate(), 0);
-		parallelBusinessRules.addAutomation(new PostingBlockAutomate(), 0);
-		parallelBusinessRules.addAutomation(new PSTRegisteredAutomate(), 0);
+
+		if (gotRecords) {
+			if (newVendor) {
+				parallelBusinessRules.addAutomation(new ProfileAutomate(), 0);
+				parallelBusinessRules.addAutomation(new SequenceNumberAutomate(), 1);
+				parallelBusinessRules.addAutomation(new BusinessRulesAutomate(), 1);
+				parallelBusinessRules.addAutomation(new RequiredDocumentAutomate(), 2);
+			} else {
+				parallelBusinessRules.addAutomation(new SequenceNumberAutomate(), 0);
+				parallelBusinessRules.addAutomation(new PSTRegisteredAutomate(),1);
+				parallelBusinessRules.addAutomation(new BusinessRulesAutomate(), 1);
+				parallelBusinessRules.addAutomation(new VendorInactivateAutomate(), 2);
+
+				parallelBusinessRules.addValidation(new RequestValidate(), 0);
+				parallelBusinessRules.addValidation(new ShortFullNameValidate(), 0);
+				parallelBusinessRules.addValidation(new RoutingSwiftFormatValidate(), 1);
+				parallelBusinessRules.addValidation(new MaintenanceRequiredDocumentsValidate(roles), 1);
+			}
+			
+//			parallelBusinessRules.addAutomation(new BackOrderIndAutomate(), 0);
+//			parallelBusinessRules.addAutomation(new DefaultsByCompanyCodeAutomate(), 0);
+//			parallelBusinessRules.addAutomation(new PaymentTermsAutomate(), 0);
+//			parallelBusinessRules.addAutomation(new PostingBlockAutomate(), 0);
+//			parallelBusinessRules.addAutomation(new PSTRegisteredAutomate(), 0);
+//			parallelBusinessRules.addValidation(new RequireCompanyCodeValidate(), 0);
+		}
 
 		return true;
 	}
@@ -112,8 +137,21 @@ public class BeCustomLogicImpl extends CustomLogicImpl {
 	 * @param businessEntity
 	 * @return whether or not the request is coming from avos.
 	 */
-	public boolean isRequestComingFromAvos(DataObject inputSDO, String businessEntity) {
+	public boolean isRequestComingFromAvos() {
 		if (roles.contains(Constants.ROLE_AVOS_SERVICE_ADMIN))
+			return true;
+		return false;
+	}
+	
+	/**
+	 * Determines if the user sending the request is AVOS.  It determines it by seeing if the user is part of the internal AVOS role.
+	 * 
+	 * @param inputSDO
+	 * @param businessEntity
+	 * @return whether or not the request is coming from avos.
+	 */
+	public boolean isRequestComingFromMuleSoft() {
+		if (roles.contains(Constants.ROLE_MULESOFT_SERVICE_ADMIN))
 			return true;
 		return false;
 	}
@@ -130,13 +168,16 @@ public class BeCustomLogicImpl extends CustomLogicImpl {
 	private boolean getRecordFromDatabase(HelperContext helperContext, String interactionId, String rowidObject) {
 		ValidationError validationError = null;
 		try {
-			logger.info("GRABBING RECORDS FROM THE DATABASE");
-			
-			promotePreviewSDO = businessEntityServiceClient.readPromotePreview(interactionId, callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);
-			logger.info("PRINTING OUT SDO GRABBED FROM DATABASE");
-			dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, orsSDO);
-			logger.info("PRINTING OUT PROMOTE PREVIEW");
-			dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, promotePreviewSDO);
+//			logger.info("GRABBING RECORDS FROM THE DATABASE");
+			if (interactionId != null) {
+				promotePreviewSDO = businessEntityServiceClient.readPromotePreview(interactionId, callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);	
+			} else {
+				promotePreviewSDO = businessEntityServiceClient.readExistingRecord(callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);
+			}
+//			logger.info("PRINTING OUT SDO GRABBED FROM DATABASE");
+//			dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, orsSDO);
+//			logger.info("PRINTING OUT PROMOTE PREVIEW");
+//			dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, promotePreviewSDO);
 		} catch (SiperianCommunicationException siperianCommunicationException) {
 			validationError = createError(ErrorConstants.CANT_COMMUNICATE_WITH_MDM_ERROR_CODE, ErrorConstants.CANT_COMMUNICATE_WITH_MDM_ERROR_MESSAGE, 
 					businessEntity, helperContext.getDataFactory());

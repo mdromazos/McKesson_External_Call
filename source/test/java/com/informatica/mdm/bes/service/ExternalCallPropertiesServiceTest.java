@@ -13,16 +13,16 @@ import org.junit.Test;
  */
 public class ExternalCallPropertiesServiceTest {
 	
-	ExternalCallPropertiesService externalCallPropertiesService;
+//	ExternalCallPropertiesService externalCallPropertiesService;
 	
-	@Test
-	public void WhenCreateRunMatchbookTrue_ThenGetRunMatchbookTrue() {
-		externalCallPropertiesService = new ExternalCallPropertiesService();
-		
-		boolean expectedResult = true;
-		boolean response = externalCallPropertiesService.getRunMatchbook();
-		
-		assertEquals(expectedResult, response);
-	}
+//	@Test
+//	public void WhenCreateRunMatchbookTrue_ThenGetRunMatchbookTrue() {
+//		externalCallPropertiesService = new ExternalCallPropertiesService();
+//		
+//		boolean expectedResult = true;
+//		boolean response = externalCallPropertiesService.getRunMatchbook();
+//		
+//		assertEquals(expectedResult, response);
+//	}
 
 }

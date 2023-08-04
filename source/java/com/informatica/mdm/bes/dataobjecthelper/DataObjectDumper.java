@@ -27,11 +27,13 @@ public class DataObjectDumper {
  			String xml = helperContext.getXMLHelper().save(
  	                dataObject,
  	                dataObject.getType().getURI(),
- 	                dataObject.getType().getName());
-
+ 	                dataObject.getType().getName()
+                );
+ 			
  	        logger.debug(title);
  	        logger.debug(xml);
  	        logger.debug("");
+ 	        System.out.println(xml);
 
  		}   
     }

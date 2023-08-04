@@ -1,0 +1,41 @@
+<ns6:ExTradeSupplierAvosView xmlns:ns5="urn:co-types.informatica.mdm" xmlns:ns0="urn:cs-rest.informatica.mdm" xmlns:ns1="urn:cs-base.informatica.mdm" xmlns:ns2="urn:co-base.informatica.mdm" xmlns:ns6="urn:co-ors.informatica.mdm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns6:ExHFC_HEP_CustomerOrgView">
+   <ns6:ExTradeSupplierAvosView label="Matt 3">
+      <ns2:key>
+         <ns1:rowid>80003</ns1:rowid>
+      </ns2:key>
+      <ns2:rowidObject>80003</ns2:rowidObject>
+      <ns2:creator>treq</ns2:creator>
+      <ns2:createDate>2021-10-25T20:30:28.654Z</ns2:createDate>
+      <ns2:updatedBy>treq</ns2:updatedBy>
+      <ns2:lastUpdateDate>2021-10-25T20:30:28.654Z</ns2:lastUpdateDate>
+      <ns2:consolidationInd>4</ns2:consolidationInd>
+      <ns2:lastRowidSystem>SYS0          </ns2:lastRowidSystem>
+      <ns2:interactionId>120002018000</ns2:interactionId>
+      <ns2:hubStateInd>0</ns2:hubStateInd>
+      <ns6:SupplierCompanyCode xmlns:ns7="urn:co-meta.informatica.mdm" xmlns:ns8="urn:task-base.informatica.mdm">
+         <ns6:item>
+            <ns6:cmpnyCd>
+               <ns2:key xsi:type="ns6:ExHFC_HEP_CustomerOrgView.Key">
+                  <ns1:rowid>2             </ns1:rowid>
+               </ns2:key>
+               <ns2:rowidObject>2             </ns2:rowidObject>
+               <ns2:creator>admin</ns2:creator>
+               <ns2:createDate>2021-10-11T10:09:28.537-07:00</ns2:createDate>
+               <ns2:updatedBy>admin</ns2:updatedBy>
+               <ns2:lastUpdateDate>2021-10-11T10:09:28.537-07:00</ns2:lastUpdateDate>
+               <ns2:consolidationInd>4</ns2:consolidationInd>
+               <ns2:lastRowidSystem>LOOKUP        </ns2:lastRowidSystem>
+               <ns2:hubStateInd>1</ns2:hubStateInd>
+               <ns6:coCd>8080</ns6:coCd>
+            </ns6:cmpnyCd>
+            <ns6:pymntTrms>123456789</ns6:pymntTrms>
+         </ns6:item>
+      </ns6:SupplierCompanyCode>
+   </ns6:ExTradeSupplierAvosView>
+   <ns6:changeSummary logging="false" create="#/ns6:ExTradeSupplierAvosView/ns6:ExTradeSupplierAvosView/ns6:ExState #/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExCountry #/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExPymntTerm" xmlns:sdo="commonj.sdo">
+      <ns6:ExTradeSupplierAvosView sdo:ref="#/ns6:ExHFC_HEP_CustomerOrgView/ns6:ExHFC_HEP_CustomerOrgView" sdo:unset="pymntTrms">
+         <ns6:ExTaxjurisdiction>0000000</ns6:ExTaxjurisdiction>
+         <ns6:ExDrftSts>true</ns6:ExDrftSts>
+      </ns6:ExTradeSupplierAvosView>
+   </ns6:changeSummary>
+</ns6:ExTradeSupplierAvosView>

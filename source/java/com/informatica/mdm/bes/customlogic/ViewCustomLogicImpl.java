@@ -1,18 +1,28 @@
 package com.informatica.mdm.bes.customlogic;
 
 import java.time.Instant;
-
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
 import com.informatica.mdm.bes.automate.Automate;
+import com.informatica.mdm.bes.automate.BackOrderIndAutomate;
+import com.informatica.mdm.bes.automate.PSTRegisteredAutomate;
 import com.informatica.mdm.bes.config.VendorMainConstants;
 import com.informatica.mdm.bes.config.Constants;
 import com.informatica.mdm.bes.dataobjecthelper.DataObjectHelperContext;
 import com.informatica.mdm.bes.dataobjecthelper.ErrorHelper;
+import com.informatica.mdm.bes.validate.ANIDValidate;
+import com.informatica.mdm.bes.validate.BackOrderIndValidate;
+import com.informatica.mdm.bes.validate.COIValidate;
+import com.informatica.mdm.bes.validate.ContactPhoneEmailValidate;
+import com.informatica.mdm.bes.validate.ESIGEmailValidate;
+import com.informatica.mdm.bes.validate.MaintenanceRequiredDocumentsValidate;
+import com.informatica.mdm.bes.validate.RequestValidate;
 import com.informatica.mdm.cs.CallContext;
 import com.informatica.mdm.cs.api.CompositeServiceException;
 import com.informatica.mdm.cs.client.CompositeServiceClient;
@@ -51,7 +61,10 @@ public class ViewCustomLogicImpl extends CustomLogicImpl {
 	@Override
 	public DataObject process(HelperContext helperContext, DataObject inputSDO, Map<String, Object> inParams, Map<String, Object> outParams)
 			throws StepException {
-		logger.info("STARTING PROCESS OF HFCViewCustomerLogicImpl");
+
+		if (isRequestComingFromAvos())
+			return inputSDO;
+		
 		startTime = Instant.now();
 		try {
 			dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, inputSDO);
@@ -66,6 +79,7 @@ public class ViewCustomLogicImpl extends CustomLogicImpl {
 		ErrorHelper.throwErrorList(errorList, helperContext.getDataFactory(), startTime, null);	
 
 		
+		
 		return inputSDO;
 	}
 
@@ -75,48 +89,50 @@ public class ViewCustomLogicImpl extends CustomLogicImpl {
 	 * or if it is a call coming from ActiveVOS.
 	 */
 	protected boolean decideBusinessRules(HelperContext helperContext, DataObject inputSDO, Map<String, Object> inParams, Map<String, Object> outParams) {
-		logger.info("INSIDE DECIDE BUSINESS RULES");
+
 		DataObject inputSDOBe = inputSDO.getDataObject(businessEntity);
 		String rowidObject = inputSDOBe.getString(Constants.ROWID_OBJECT);
-		Boolean draftSts = getDraftStsView(inputSDO, businessEntity, helperContext, rowidObject);  
-		boolean validateOnly = (boolean) inParams.get(Constants.VALIDATE_ONLY);
+//		Boolean draftSts = getDraftStsView(inputSDO, businessEntity, helperContext, rowidObject);  
+//		boolean validateOnly = (boolean) inParams.get(Constants.VALIDATE_ONLY);
 		boolean newVendor = inputSDO.getChangeSummary().isCreated(inputSDOBe);
 		String interactionId = (String) inParams.get(Constants.INTERACTION_ID);
 		
-		logger.info("INSIDE DECIDE BUSINESS RULES : newVendor : " + newVendor);
-		logger.info("DRAFT STATUS IS :" + draftSts);
-				
-		// Always run when 
-//		if (!newVendor && !validateOnly) {
-//			boolean gotRecords = getRecordFromDatabase(inputSDOBe, helperContext, interactionId, rowidObject);
-//			if (!gotRecords)
-//				return false;
-//			
-//			parallelBusinessRules.addValidation(new SyncRequestDataChangeValidate(), 0);
-//			
-//			if (!draftSts) {;
-//				
-//				parallelBusinessRules.addValidation(new PaymentMethodTermValidate(), 0);
-//				parallelBusinessRules.addValidation(new APQuestionsValidate(roles), 0);
-//				parallelBusinessRules.addValidation(new DuplicateVendorValidate(), 0);
-//				parallelBusinessRules.addValidation(new PIExistsValidate(), 0);
-//				parallelBusinessRules.addValidation(new RemitToBankValidate(), 0);
-//				parallelBusinessRules.addValidation(new RemitToAddressValidate(), 0);
-//				parallelBusinessRules.addValidation(new OrderFromAddressValidate(), 0);
-//				
-//				parallelBusinessRules.addValidation(new RemitToPaymentValidate(roles), 1);
-//				parallelBusinessRules.addValidation(new SCACValidate(roles), 1);
-//				parallelBusinessRules.addValidation(new SpendAnnualVendorCatValidate(), 1);
-//				parallelBusinessRules.addValidation(new TaxExistsValidate(), 1);
-//				
-//				parallelBusinessRules.addValidation(new TaxQuestionsValidate(roles), 2);
-//				parallelBusinessRules.addValidation(new SendToPortalEligibleValidate(), 2);
-//				parallelBusinessRules.addValidation(new VNPIOAAddressValidate(), 2);
-//				parallelBusinessRules.addValidation(new VNPIOAStateRegionValidate(), 2);
-//				parallelBusinessRules.addValidation(new W8W9Validate(), 2);
-//			}
-//		}
+		boolean gotRecords = getRecordFromDatabase(inputSDOBe, helperContext, interactionId, rowidObject);
+//		List<String> buList = getBus(inputSDO, helperContext);
+		
+		if (!newVendor) {
+			parallelBusinessRules.addValidation(new ANIDValidate(), 0);
+			parallelBusinessRules.addValidation(new COIValidate(), 0);
+			parallelBusinessRules.addValidation(new BackOrderIndValidate(), 1);
+			parallelBusinessRules.addAutomation(new BackOrderIndAutomate(), 1);
+			
+			
+//			parallelBusinessRules.addValidation(new ContactPhoneEmailValidate(), 0);
+		}
+
 		return true;
+	}
+	
+	public List<String> getBus(DataObject inputSDO, HelperContext helperContext) {
+
+		DataObject promoteSDOBe = promotePreviewSDO != null ? promotePreviewSDO.getDataObject(businessEntity) : null;
+		List<DataObject> inputPromoteCompanyCodeList = vendorSDOHelper.getCombinedList(inputSDO, promoteSDOBe, VendorMainConstants.COMPANY_CODE, inputSDO, helperContext);
+		return inputPromoteCompanyCodeList.parallelStream().map((DataObject inputPromoteCoCd) -> {
+			return inputPromoteCoCd.getString(VendorMainConstants.COMPANY_CODE_BUSINESS_UNIT);
+		}).collect(Collectors.toList());
+	}
+	
+	/**
+	 * Determines if the user sending the request is AVOS.  It determines it by seeing if the user is part of the internal AVOS role.
+	 * 
+	 * @param inputSDO
+	 * @param businessEntity
+	 * @return whether or not the request is coming from avos.
+	 */
+	public boolean isRequestComingFromAvos() {
+		if (roles.contains(Constants.ROLE_AVOS_SERVICE_ADMIN))
+			return true;
+		return false;
 	}
 	
 	/**
@@ -128,13 +144,16 @@ public class ViewCustomLogicImpl extends CustomLogicImpl {
 	 * @param rowidObject
 	 */
 	private boolean getRecordFromDatabase(DataObject inputSDOBe, HelperContext helperContext, String interactionId, String rowidObject) {
-		logger.info("GRABBING RECORDS FROM THE DATABASE");
+//		logger.info("GRABBING RECORDS FROM THE DATABASE");
+		if (interactionId != null) {
+			promotePreviewSDO = businessEntityServiceClient.readPromotePreview(interactionId, callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);
+		} else {
+			promotePreviewSDO = businessEntityServiceClient.readExistingRecord(callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);
+		}
+//		dbSDO = businessEntityServiceClient.readDBExistingRecord(callContext, compositeServiceClient, externalCallRequest, helperContext, businessEntity, rowidObject);
 		
-		promotePreviewSDO = businessEntityServiceClient.readPromotePreview(interactionId, callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);
-		dbSDO = businessEntityServiceClient.readDBExistingRecord(callContext, compositeServiceClient, externalCallRequest, helperContext, businessEntity, rowidObject);
-		
-		logger.info("PRINTING OUT PROMOTE PREVIEW");
-		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, promotePreviewSDO);
+//		logger.info("PRINTING OUT PROMOTE PREVIEW");
+//		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, promotePreviewSDO);
 		
 		return true;
 	}

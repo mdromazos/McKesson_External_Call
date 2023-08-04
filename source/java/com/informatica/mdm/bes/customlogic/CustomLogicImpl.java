@@ -176,8 +176,8 @@ public abstract class CustomLogicImpl implements CustomLogic {
 				logger.info("STARTING AUTOMATION: " + automate.getClass().getName());
 				Thread validationThread = new Thread(() -> {
 					try {
-						automate.doAutomate(inputSDO, helperContext, 
-								inParams, outParams, businessEntity, promotePreviewSDO, callContext, compositeServiceClient);
+						appendErrors(automate.doAutomate(inputSDO, helperContext, 
+								inParams, outParams, businessEntity, promotePreviewSDO, callContext, compositeServiceClient), helperContext);
 					} catch (Exception e) {
 						logger.error("ERROR while running automation " + automate.getClass().getName());
 						logger.error(e.toString());
@@ -283,8 +283,8 @@ public abstract class CustomLogicImpl implements CustomLogic {
 		} else {
 			try {
 				orsSDOBare = dataObjectHelperContext.getDataObjectReader().readRootORS(callContext, compositeServiceClient, helperContext, businessEntity, rowidObject, 0);
-				logger.info("PRINTING ROOT ORS");
-				dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, orsSDOBare);
+//				logger.info("PRINTING ROOT ORS");
+//				dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, orsSDOBare);
 				draftSts = orsSDOBare.getBoolean(businessEntity + "/" + BusinessEntityConstants.DRAFT_STS);
 			} catch (Exception e) {
 				draftSts = false;
@@ -321,7 +321,6 @@ public abstract class CustomLogicImpl implements CustomLogic {
 	}
 	
 	protected void getRecordFromDatabase(HelperContext helperContext, String interactionId, String rowidObject, boolean readExisting, boolean readPromote, boolean readDbSdo) {
-		logger.info("GRABBING RECORDS FROM THE DATABASE");
 		List<Thread> readThreads = new ArrayList<Thread>();
 		if (readExisting)
 			readThreads.add(readExistingRecord(helperContext, rowidObject));
@@ -349,7 +348,7 @@ public abstract class CustomLogicImpl implements CustomLogic {
 	protected Thread readExistingRecord(HelperContext helperContext, String rowidObject) {
 		Thread readThread = new Thread(() -> {
 			orsSDO = businessEntityServiceClient.readExistingRecord(callContext, compositeServiceClient, 
-					externalCallRequest, helperContext, businessEntity, rowidObject);
+					helperContext, businessEntity, rowidObject);
 		});
 		return readThread;
 	}

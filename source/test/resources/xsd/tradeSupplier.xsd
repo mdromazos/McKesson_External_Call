@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="urn:bes-external-call.informatica.mdm"
+            xmlns:sdo="commonj.sdo">
+   <xsd:import namespace="commonj.sdo/java"/>
+	
+   <xsd:complexType name="object">
+      <xsd:sequence>
+      	<xsd:element name="ExTradeSupplier" type="ExTradeSupplier"></xsd:element>
+      	<xsd:element name="changeSummary" type="sdo:ChangeSummaryType" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="ExTradeSupplier">
+      <xsd:sequence>
+		<xsd:element name="fullNm" type="xsd:string" minOccurs="0" />
+      	<xsd:element name="ExState" type="ExState"></xsd:element>
+      	<xsd:element name="Address" type="ExTradeSupplier.Address.Pager" minOccurs="0"/>
+      	<xsd:element name="Contacts" type="ExTradeSupplier.Contacts.Pager" minOccurs="0"/>
+      	<xsd:element name="SupplierLocation" type="ExTradeSupplier.SupplierLocation.Pager" minOccurs="0"/>
+      	<xsd:element name="BankDetails" type="ExTradeSupplier.BankDetails.Pager" minOccurs="0"/>
+      	<xsd:element name="CompanyCode" type="ExTradeSupplier.CompanyCode.Pager" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+
+   <xsd:complexType name="ExState">
+   	<xsd:sequence>
+   		<xsd:element name="stateCd" type="xsd:string"></xsd:element>
+   		<xsd:element name="stateDesc" type="xsd:string"></xsd:element>
+   	</xsd:sequence>
+   </xsd:complexType>
+	<xsd:complexType name="ExTradeSupplier.Address.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="ExTradeSupplier.Address" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+   <xsd:complexType name="ExTradeSupplier.Address">
+      <xsd:sequence>
+		  	<xsd:element name="rowidObject" type="xsd:string"
+      		minOccurs="0" />
+			<xsd:element name="PostalAddress" type="ExTradeSupplier.Address.PostalAddress" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ExTradeSupplier.Address.PostalAddress">
+      <xsd:sequence>
+		<xsd:element name="rowidObject" type="xsd:string"
+      		minOccurs="0" />
+      	<xsd:element name="seqNum" type="xsd:string"
+      		minOccurs="0" />
+      	<xsd:element name="city" type="xsd:string"
+      		minOccurs="0" />
+      	<xsd:element name="addrLn1" type="xsd:string"
+      		minOccurs="0" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   	<xsd:complexType name="ExTradeSupplier.SupplierLocation.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="ExTradeSupplier.SupplierLocation" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ExTradeSupplier.BankDetails.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="ExTradeSupplier.BankDetails" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ExTradeSupplier.BankDetails">
+      <xsd:sequence>
+		  	<xsd:element name="rowidObject" type="xsd:string"
+      			minOccurs="0" />
+			<xsd:element name="seqNum" type="xsd:string"
+      					minOccurs="0" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   	<xsd:complexType name="ExTradeSupplier.CompanyCode.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="ExTradeSupplier.CompanyCode" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ExTradeSupplier.CompanyCode">
+      <xsd:sequence>
+		  	<xsd:element name="rowidObject" type="xsd:string"
+      			minOccurs="0" />
+      		<xsd:element name="bsnsUnit" type="ExLookupBusinessUnit" minOccurs="0" maxOccurs="unbounded"/>
+      		<xsd:element name="subTeam" type="ExLookupSubTeam" minOccurs="0" maxOccurs="unbounded"/>
+
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   	<xsd:complexType name="ExLookupBusinessUnit">
+      <xsd:sequence>
+		  	<xsd:element name="bsnsUnitCd" type="xsd:string"
+      			minOccurs="0" />
+			<xsd:element name="bsnsUnitDesc" type="xsd:string"
+      					minOccurs="0" />
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ExLookupSubTeam">
+      <xsd:sequence>
+		  	<xsd:element name="subTeamCd" type="xsd:string"
+      			minOccurs="0" />
+			<xsd:element name="subTeamDesc" type="xsd:string"
+      					minOccurs="0" />
+      </xsd:sequence>
+   </xsd:complexType>
+	
+	<xsd:complexType name="ExTradeSupplier.SupplierLocation.Location.LocationBank.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="ExTradeSupplier.SupplierLocation.Location.LocationBank" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+   <xsd:complexType name="ExTradeSupplier.SupplierLocation.Location.LocationBank">
+      <xsd:sequence>
+		  	<xsd:element name="rowidObject" type="xsd:string"
+      			minOccurs="0" />
+			<xsd:element name="seqNum" type="xsd:string"
+      					minOccurs="0" />
+      </xsd:sequence>
+   </xsd:complexType>
+	
+   <xsd:complexType name="ExTradeSupplier.SupplierLocation">
+      <xsd:sequence>
+		  	<xsd:element name="rowidObject" type="xsd:string"
+      		minOccurs="0" />
+			<xsd:element name="Location" type="ExTradeSupplier.SupplierLocation.Location" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ExTradeSupplier.SupplierLocation.Location">
+      <xsd:sequence>
+		<xsd:element name="rowidObject" type="xsd:string"
+      		minOccurs="0" />
+      	<xsd:element name="seqNum" type="xsd:string"
+      		minOccurs="0" />
+      	<xsd:element name="LocationBank" type="ExTradeSupplier.SupplierLocation.Location.LocationBank.Pager" minOccurs="0"/>
+
+      </xsd:sequence>
+   </xsd:complexType>
+   
+  	<xsd:complexType name="ExTradeSupplier.Contacts.Pager">
+		<xsd:complexContent>
+			<xsd:extension base="Pager">
+				<xsd:sequence>
+					<xsd:element name="item" type="ExTradeSupplier.Contacts" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+   <xsd:complexType name="ExTradeSupplier.Contacts">
+      <xsd:sequence>
+		  	<xsd:element name="rowidObject" type="xsd:string"
+      		minOccurs="0" />
+			<xsd:element name="contacts" type="ExTradeSupplier.Contacts.contacts" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+   <xsd:complexType name="ExTradeSupplier.Contacts.contacts">
+      <xsd:sequence>
+		<xsd:element name="rowidObject" type="xsd:string"
+      		minOccurs="0" />
+      	<xsd:element name="seqNum" type="xsd:string"
+      		minOccurs="0" />
+      </xsd:sequence>
+   </xsd:complexType>
+	
+	<xsd:complexType name="Pager" abstract="true">
+        <xsd:attribute name="firstRecord" type="xsd:int"/>
+        <xsd:attribute name="recordCount" type="xsd:int"/>
+        <xsd:attribute name="pageSize" type="xsd:int"/>
+        <xsd:attribute name="searchToken" type="xsd:string"/>
+   </xsd:complexType>
+</xsd:schema>

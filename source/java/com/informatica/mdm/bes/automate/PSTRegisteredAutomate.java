@@ -24,10 +24,12 @@ public class PSTRegisteredAutomate extends Automate {
 	public static final String PST = "PST";
 
 	@Override
-	public ValidationError doAutomate(DataObject inputSDO, HelperContext helperContext, Map<String, Object> inParams,
+	public List<ValidationError> doAutomate(DataObject inputSDO, HelperContext helperContext, Map<String, Object> inParams,
 			Map<String, Object> outParams, String businessEntity, DataObject promoteSDO,
 			CallContext callContext, CompositeServiceClient besClient) {
+
 		SDOChangeSummary inputSDOChangeSummary = (SDOChangeSummary) inputSDO.getChangeSummary();
+		inputSDOChangeSummary.pauseLogging();
 		
 		// Grab Business Entity Data Object
 		DataObject inputSDOBe = inputSDO.getDataObject(businessEntity);
@@ -51,12 +53,11 @@ public class PSTRegisteredAutomate extends Automate {
 					DataObject promoteTax = null;
 					if (inputPromoteTaxRowid != null && promoteTaxList != null)
 						promoteTax = dataObjectHelperContext.getDataObjectSearcher().searchDataObjectList(promoteTaxList, inputPromoteTaxRowid);
-	
 					
-					DataObject taxType = vendorSDOHelper.getDataObject(inputPromoteTax, promoteTax, BusinessEntityConstants.TAX_TAX_TYPE);
-					if (taxType != null && taxType.getString(BusinessEntityConstants.TAX_TAX_TYPE_CD).equals(PST)) {
+					String taxNumTyp = vendorSDOHelper.getString(inputPromoteTax, promoteTax, BusinessEntityConstants.TAX_TAX_TYPE_CD);
+					if (taxNumTyp != null && taxNumTyp.equals(PST))
 						return true;
-					}
+					
 				}
 				return false;
 			});

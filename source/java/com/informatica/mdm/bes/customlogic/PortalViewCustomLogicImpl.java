@@ -13,6 +13,8 @@ import com.informatica.mdm.bes.config.Constants;
 import com.informatica.mdm.bes.dataobjecthelper.DataObjectHelperContext;
 import com.informatica.mdm.bes.dataobjecthelper.ErrorHelper;
 import com.informatica.mdm.bes.factory.CompositeServiceClientFactoryImpl;
+import com.informatica.mdm.bes.validate.RequiredDocumentValidate;
+import com.informatica.mdm.bes.validate.StateLicensingValidate;
 import com.informatica.mdm.cs.CallContext;
 import com.informatica.mdm.cs.client.CompositeServiceClient;
 import com.informatica.mdm.spi.cs.StepException;
@@ -77,6 +79,12 @@ public class PortalViewCustomLogicImpl extends CustomLogicImpl {
 		boolean newVendor = inputSDO.getChangeSummary().isCreated(inputSDOBe);
 		String interactionId = (String) inParams.get(Constants.INTERACTION_ID);
 		String rowidObject = inputSDOBe.getString(Constants.ROWID_OBJECT);
+		boolean gotRecords = getRecordFromDatabase(inputSDOBe, helperContext, interactionId, rowidObject);
+		if (!gotRecords)
+			return false;
+		
+		parallelBusinessRules.addValidation(new StateLicensingValidate(), 0);
+		parallelBusinessRules.addValidation(new RequiredDocumentValidate(), 0);
 		
 //		if (!newVendor) {
 //			boolean gotRecords = getRecordFromDatabase(inputSDOBe, helperContext, interactionId, rowidObject);
@@ -104,11 +112,15 @@ public class PortalViewCustomLogicImpl extends CustomLogicImpl {
 	 * @param rowidObject
 	 */
 	private boolean getRecordFromDatabase(DataObject inputSDOBe, HelperContext helperContext, String interactionId, String rowidObject) {
-		promotePreviewSDO = businessEntityServiceClient.readPromotePreview(interactionId, callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);
-		logger.info("PRINTING OUT SDO GRABBED FROM DATABASE");
-		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, orsSDO);
-		logger.info("PRINTING OUT PROMOTE PREVIEW");
-		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, promotePreviewSDO);
+		if (interactionId != null) {
+			promotePreviewSDO = businessEntityServiceClient.readPromotePreview(interactionId, callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);			
+		} else {
+			promotePreviewSDO = businessEntityServiceClient.readExistingRecord(callContext, compositeServiceClient, helperContext, businessEntity, rowidObject);
+		}
+//		logger.info("PRINTING OUT SDO GRABBED FROM DATABASE");
+//		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, orsSDO);
+//		logger.info("PRINTING OUT PROMOTE PREVIEW");
+//		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, businessEntity, promotePreviewSDO);
 		return true;
 	}
 

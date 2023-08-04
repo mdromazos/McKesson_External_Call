@@ -8,7 +8,7 @@
 	
     <!--
         Run the JUnit Test Classes
-    -->
+   
 	<target name="junit" depends="war">
 
 	    <junit printsummary="yes" haltonfailure="no">
@@ -25,6 +25,7 @@
 			
 	  </junit>
 	</target>
+	 -->
 	
 
     <!--
@@ -50,6 +51,7 @@
         <copy todir="build/war/WEB-INF/classes">
             <fileset dir="source/resources">
                 <include name="bes-client.properties"/>
+            	<include name="externalcall.properties"/>
             	<include name="log4j.xml"/>
                 <include name="log4j.dtd"/>
             </fileset>
@@ -83,6 +85,8 @@
             	<include name="log4j-1.2.16.jar"/>
             	<include name="kotlin-stdlib-1.6.0-M1.jar"/>
             	<include name="okio-2.10.0.jar"/>
+            	<include name="javax.annotation-api.jar"/>
+            	<include name="ojdbc7.jar"/>
             </fileset>
         </copy>
         <mkdir dir="build/war/WEB-INF/wsdl"/>
@@ -104,7 +108,8 @@
 
     <target name="compile" depends="clean">
         <mkdir dir="build/war/WEB-INF/classes"/>
-        <javac destdir="build/war/WEB-INF/classes" debug="on" optimize="off" deprecation="on">
+        <javac destdir="build/war/WEB-INF/classes" debug="on" optimize="off" deprecation="on"
+        	compiler="javac1.8" executable="C:\Program Files\Java\jdk1.8.0_333\bin">
 
             <src path="source/java"/>
 
@@ -124,6 +129,9 @@
                 	<include name="okhttp-4.9.2.jar"/>
                 	<include name="kotlin-stdlib-1.6.0-M1.jar"/>
                 	<include name="okio-2.10.0.jar"/>
+                	<include name="javax.annotation-api.jar"/>
+                	<include name="jaxws-rt.jar"/>
+                	<include name="ojdbc7.jar"/>
                 </fileset>
             </classpath>
         </javac>

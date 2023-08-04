@@ -1,5 +1,6 @@
 package com.informatica.mdm.bes.automate;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.persistence.sdo.SDOChangeSummary;
@@ -23,7 +24,7 @@ public abstract class Automate extends ExternalCallProcess {
 	
 	public Automate() { }
 	
-	public abstract ValidationError doAutomate(DataObject inputSDO, HelperContext helperContext,
+	public abstract List<ValidationError> doAutomate(DataObject inputSDO, HelperContext helperContext,
 			Map<String, Object> inParams, Map<String, Object> outParams, String businessEntity, DataObject promoteSDO, CallContext callContext
  			,CompositeServiceClient besClient);
 

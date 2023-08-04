@@ -17,8 +17,10 @@ public class ExternalCallPropertiesService {
 	
 	private static final String PROPERTIES_NAME = "/externalcall.properties";
 	
-	private static final String RUN_MATCHBOOK_PROP_NAME = "externalcall.run.matchbook";
-	private static final String IDQ_DEFAULTS_URL_NAME = "idq.defaults.url";
+	private static final String DATABASE_JDBC_URL = "database.jdbc.url";
+	private static final String DATABASE_JDBC_USERNAME = "database.jdbc.username";
+	private static final String DATABASE_JDBC_PASSWORD = "database.jdbc.password";
+	private static final String AVS_REST_URL = "avs.rest.url";
 	
 	private InputStream exernalCallProperties;
 	
@@ -28,20 +30,35 @@ public class ExternalCallPropertiesService {
 		loadProperties();
 	}
 	
-	public boolean getRunMatchbook() {
-		if (this.config == null)
-			return true;
-		String property = this.config.getProperty(RUN_MATCHBOOK_PROP_NAME);
-		if (property == null)
-			return true;
-		return property.equals("true");
-	}
-	
-	public String getIdqDefaultsUrl() {
+	public String getDatabaseJdbcUrl() {
 		if (this.config == null)
 			return null;
-		return this.config.getProperty(IDQ_DEFAULTS_URL_NAME);
+		String property = this.config.getProperty(DATABASE_JDBC_URL);
+		return property;
 	}
+	
+	public String getDatabaseJdbcUsername() {
+		if (this.config == null)
+			return null;
+		String property = this.config.getProperty(DATABASE_JDBC_USERNAME);
+		return property;
+	}
+	
+	public String getDatabaseJdbcPassword() {
+		if (this.config == null)
+			return null;
+		String property = this.config.getProperty(DATABASE_JDBC_PASSWORD);
+		return property;
+	}
+	
+	public String getAvsUrl() {
+		if (this.config == null)
+			return null;
+		String property = this.config.getProperty(AVS_REST_URL);
+		return property;
+	}
+	
+	
 	
 	private void loadProperties() {
         try {

@@ -24,9 +24,11 @@ public class AccountNumberValidate extends Validate {
 			Map<String, Object> inParams, Map<String, Object> outParams, String businessEntity,
 			DataObject promotePreviewSDO, CallContext callContext, CompositeServiceClient besClient, DataObject dbSDO) {
 		// TODO Auto-generated method stub
-		
+		pauseLogging(inputSDO);
 		
 		return null;
 	}
 
+	
+	
 }

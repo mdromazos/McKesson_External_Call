@@ -61,20 +61,41 @@ public class Constants {
     public static final String PENDING = "PENDING";
     public static final String VALIDATE_ONLY = "validateOnly";
     public static final String INTERACTION_ID = "interactionId";
+    public static final String RECORD_STATE = "recordState";
     public static final String ROWID_OBJECT = "rowidObject";
 
  	public static final String ROLE_APP_ADMIN = "ApplicationAdministrator";
  	public static final String ROLE_AVOS_SERVICE_ADMIN = "AvosServiceAdmin";
+ 	public static final String ROLE_MULESOFT_SERVICE_ADMIN = "MuleSoftServiceAdmin";
  	
  	public static final String BE_TRADE_SUPPLIER = "ExTradeSupplier";
  	public static final String BE_NON_TRADE_SUPPLIER = "ExNonTradeSupplier";
  	
- 	public static final String BE_TRADE_SUPPLIER_VIEW = "ExTradeSupplier";
- 	public static final String BE_NON_TRADE_SUPPLIER_VIEW = "ExNonTradeSupplier";
+ 	public static final String BE_TRADE_SUPPLIER_VIEW = "ExTradeSupplierAvosView";
+ 	public static final String BE_NON_TRADE_SUPPLIER_VIEW = "ExNonTradeSupplierView";
  	
- 	public static final String BE_TRADE_PORTAL_REG = "ExTradeSupplier";
- 	public static final String BE_NON_TRADE_PORTAL_REG = "ExNonTradeSupplier";
+ 	public static final String BE_TRADE_REGIST_VIEW = "ExTradeSupplierRegistrationView";
+ 	public static final String BE_NONTRADE_REGIST_VIEW = "ExNonTradeSupplierRegistrationView";
+
  	
- 	public static final String BE_TRADE_PORTAL_VIEW = "ExTradeSupplier";
- 	public static final String BE_NON_TRADE_PORTAL_VIEW = "ExNonTradeSupplier";
-}
+ 	public static final String BE_TRADE_PORTAL_VIEW = "ExTradeSupplierPortalView";
+ 	public static final String BE_NON_TRADE_PORTAL_VIEW = "ExNonTradeSupplierPortalView";
+ 	
+ 	public static final String BE_SUPPLIER_ATTRIBUTE_APPROVER = "ExSupplierAttributeApprover";
+	public static final String BE_SUPPLIER_BU_APPROVER = "ExSupplierBusinessUnitApprover";
+
+ 	
+ 	public static final String BU_PSAS = "PSAS";
+ 	public static final String BU_USON = "USON";
+ 	public static final String BU_MMS = "MMS";
+ 	public static final String BU_WELLCA = "WELLCA";
+ 	public static final String BU_PHARMA = "PHARMA";
+ 	public static final String BU_RETAIL = "RETAIL";
+ 	public static final String BU_MSD = "MSD";
+ 	public static final String BU_CMM = "CMM";
+ 	public static final String BU_TECH_SOLUTIONS = "TECH SOLUTIONS";
+ 	
+ 	public static final String DOC_TYPE_COI_APPROVAL = "COI Approval";
+
+//	if (businessUnitList.contains("PSAS") || businessUnitList.contains("Non-Trade")) {
+ }

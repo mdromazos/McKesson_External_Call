@@ -1,5 +1,6 @@
 package com.informatica.mdm.bes.automate;
 
+import java.util.List;
 import java.util.Map;
 
 import com.informatica.mdm.cs.CallContext;
@@ -18,7 +19,7 @@ import commonj.sdo.helper.HelperContext;
 public class PaymentTermsAutomate extends Automate {
 
 	@Override
-	public ValidationError doAutomate(DataObject inputSDO, HelperContext helperContext, Map<String, Object> inParams,
+	public List<ValidationError> doAutomate(DataObject inputSDO, HelperContext helperContext, Map<String, Object> inParams,
 			Map<String, Object> outParams, String businessEntity, DataObject promoteSDO,
 			CallContext callContext, CompositeServiceClient besClient) {
 		// TODO Auto-generated method stub

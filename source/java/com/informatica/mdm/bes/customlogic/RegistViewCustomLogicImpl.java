@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.informatica.mdm.bes.customlogic;
 
 import java.time.Instant;
@@ -18,7 +15,7 @@ import com.informatica.mdm.bes.dataobjecthelper.DataObjectHelperContext;
 import com.informatica.mdm.bes.dataobjecthelper.ErrorHelper;
 import com.informatica.mdm.bes.factory.CompositeServiceClientFactoryImpl;
 import com.informatica.mdm.bes.validate.ContactPhoneEmailValidate;
-import com.informatica.mdm.bes.validate.RequiredDocumentsValidate;
+import com.informatica.mdm.bes.validate.MaintenanceRequiredDocumentsValidate;
 import com.informatica.mdm.cs.CallContext;
 import com.informatica.mdm.cs.client.CompositeServiceClient;
 import com.informatica.mdm.spi.cs.StepException;
@@ -34,10 +31,10 @@ import commonj.sdo.helper.HelperContext;
  * @author Matthew Dromazos
  * @version 1.0 1/10/2022
  */
-public class PortalRegnCustomLogicImpl extends CustomLogicImpl {
-	private static Logger logger = Logger.getLogger(PortalRegnCustomLogicImpl.class.getName());
+public class RegistViewCustomLogicImpl extends CustomLogicImpl {
+	private static Logger logger = Logger.getLogger(RegistViewCustomLogicImpl.class.getName());
 	
-	public PortalRegnCustomLogicImpl(String businessEntity, 
+	public RegistViewCustomLogicImpl(String businessEntity, 
 										ServicePhase phase,
 										ExternalCallRequest externalCallRequest, 
 										CallContext callContext,
@@ -78,8 +75,8 @@ public class PortalRegnCustomLogicImpl extends CustomLogicImpl {
 		if (!validateOnly) {
 //			parallelBusinessRules.addValidation(new SendToPortalEligibleValidate(), 0);
 		}
-		parallelBusinessRules.addValidation(new RequiredDocumentsValidate(), 0);
-		parallelBusinessRules.addValidation(new ContactPhoneEmailValidate(), 0);
+//		parallelBusinessRules.addValidation(new MaintenanceRequiredDocumentsValidate(), 0);
+//		parallelBusinessRules.addValidation(new ContactPhoneEmailValidate(), 0);
 		
 		return true;
 	}

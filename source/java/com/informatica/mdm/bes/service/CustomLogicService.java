@@ -1,6 +1,9 @@
 package com.informatica.mdm.bes.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
+
 
 
 
@@ -58,6 +61,8 @@ public class CustomLogicService implements Provider<Source> {
     @Override
     public Source invoke(Source request) {
     	log.info("ENTER CUSTOM LOGIC SERVICE");
+        CompositeServiceClient compositeServiceClient = createCompositeServiceClient();
+
         CustomLogicFactory customLogicFactory = new CustomLogicFactoryImpl(compositeServiceClient);
         String appName = Constants.APP_USERNAME; // replace with proper application user name
         // create processor instance ond let it do the job.
@@ -67,5 +72,16 @@ public class CustomLogicService implements Provider<Source> {
                  new ExternalCallProcessor(compositeServiceClient,appName,customLogicFactory);
 
         return externalCallProcessor.invoke(request);
+    }
+    
+    private static CompositeServiceClient createCompositeServiceClient() {
+        InputStream resourceAsStream = CustomLogicService.class.getResourceAsStream(Constants.BES_CLIENT_FILEPATH);
+        Properties config = new Properties();
+        try {
+            config.load(resourceAsStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return CompositeServiceClient.newCompositeServiceClient(config);
     }
 }

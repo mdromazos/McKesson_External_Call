@@ -27,6 +27,8 @@
 				</xsd:sequence>
 			</xsd:extension>
 		</xsd:complexContent>
+		
+		
 	</xsd:complexType>
 	<xsd:element name="exHFC_HEP_PortalView.ExCommunication.Key" type="ExHFC_HEP_PortalView.ExCommunication.Key"/>
 	<xsd:complexType name="ExHFC_HEP_CustomerOrg.ExSAPAttributes.XREF.Pager">

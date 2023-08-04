@@ -95,6 +95,55 @@ public abstract class Validate extends ExternalCallProcess {
     }
     
     /**
+   	* createErrors - Function used to create a a list of ValidationErros's
+   	*   
+	* @param  {String} errorCode - String containing the error code
+	* @param  {String} errorMessage - String containing the error message
+	* @param  {String} errorField - String containing view location to point the error 
+	* @param  {DataFactory} dataFactory - DataFactory for creating ValidationError Objects 
+	* 
+   	* @returns {ValidationError} - Validation Error if error condition(s) found
+   	*/
+    public List<ValidationError> createErrors(String errorCode, String errorMessage, String errorField, DataFactory dataFactory,String errorLevel) {
+    	List<ValidationError> validationErrors = new ArrayList<ValidationError>();
+    	try {
+    		
+	    	ValidationError error = createError(errorCode, errorMessage, errorField, dataFactory,errorLevel);
+	    	validationErrors.add(error);
+	        
+	        return validationErrors;
+    	} catch (Exception e) {
+			logger.error("createError had an error: " + e.getMessage(), e);
+ 		}
+		return null;
+    }
+    
+    /**
+   	* createError - Function used to create a ValidationError Object
+   	*   
+	* @param  {String} errorCode - String containing the error code
+	* @param  {String} errorMessage - String containing the error message
+	* @param  {String} errorField - String containing view location to point the error 
+	* @param  {DataFactory} dataFactory - DataFactory for creating ValidationError Objects 
+	* 
+   	* @returns {ValidationError} - Validation Error if error condition(s) found
+   	*/
+    public ValidationError createError (String errorCode, String errorMessage, String errorField, DataFactory dataFactory,String errorLevel) {
+    	try {
+	    	ValidationError error = (ValidationError) dataFactory.create(ValidationError.class);
+	        error.setCode(errorCode);
+	        error.setMessage(errorMessage);
+	        error.setLevel(errorLevel);
+	        error.setField(Collections.singletonList(errorField));
+	        
+	        return error;
+    	} catch (Exception e) {
+			logger.error("createError had an error: " + e.getMessage(), e);
+ 		}
+		return null;
+    }
+    
+    /**
    	* createError - Function used to create a ValidationError Object
    	*   
 	* @param  {DataFactory} dataFactory - DataFactory for creating ValidationError Objects 

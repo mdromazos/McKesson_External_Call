@@ -19,11 +19,11 @@ import commonj.sdo.helper.HelperContext;
 public class BackOrderIndAutomate extends Automate {
 
 	@Override
-	public ValidationError doAutomate(DataObject inputSDO, HelperContext helperContext, Map<String, Object> inParams,
+	public List<ValidationError> doAutomate(DataObject inputSDO, HelperContext helperContext, Map<String, Object> inParams,
 			Map<String, Object> outParams, String businessEntity, DataObject promoteSDO,
 			CallContext callContext, CompositeServiceClient besClient) {
 		SDOChangeSummary inputSDOChangeSummary = (SDOChangeSummary) inputSDO.getChangeSummary();
-		
+		inputSDOChangeSummary.pauseLogging();
 		// Grab Business Entity Data Object
 		DataObject inputSDOBe = inputSDO.getDataObject(businessEntity);
 		DataObject promoteSDOBe = promoteSDO.getDataObject(businessEntity);

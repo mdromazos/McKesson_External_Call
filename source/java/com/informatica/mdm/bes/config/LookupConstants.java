@@ -7,4 +7,6 @@ package com.informatica.mdm.bes.config;
  */
 public class LookupConstants {
 
+	public static final String ACCNT_GRP_VICO_K = "VICO";
+	public static final String ACCNT_GRP_VHOM = "VHOM";
 }

@@ -3,12 +3,16 @@ package com.informatica.mdm.bes.service;
 import java.io.BufferedReader;
 
 
+
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ import com.informatica.mdm.cs.CallContext;
 import com.informatica.mdm.cs.api.CompositeServiceException;
 import com.informatica.mdm.cs.client.CompositeServiceClient;
 import com.informatica.mdm.sdo.cs.base.Pager;
+import com.informatica.mdm.sdo.cs.rest.FileMetadata;
 import com.informatica.mdm.sdo.cs.base.BusinessEntityKey;
 import com.informatica.mdm.sdo.cs.base.CoFilter;
 import com.informatica.mdm.sdo.cs.base.CoFilterNode;
@@ -43,20 +48,26 @@ import commonj.sdo.helper.DataFactory;
 import commonj.sdo.helper.HelperContext;
 import mdm.informatica.cs_ors.PromotePreview;
 import mdm.informatica.cs_ors.PromotePreviewParameters;
+import mdm.informatica.cs_ors.QueryCO;
+import mdm.informatica.cs_ors.QueryCOParameters;
+import mdm.informatica.cs_ors.QueryCOReturn;
 import mdm.informatica.cs_ors.ReadEntity;
 import mdm.informatica.cs_ors.ReadEntityParameters;
+import mdm.informatica.cs_ors.SearchEntity;
+import mdm.informatica.cs_ors.SearchEntityParameters;
+import mdm.informatica.cs_ors.GetMetadata;
+import mdm.informatica.cs_ors.GetMetadataParameters;
 import mdm.informatica.cs_ors.MatchCO;
 import mdm.informatica.cs_ors.MatchCOParameters;
 import mdm.informatica.cs_ors.MatchCOReturn;
 import mdm.informatica.cs_ors.MatchCOReturnImpl;
 import com.informatica.mdm.sdo.cs.base.FuzzyFilter;
 
-
 public class BusinessEntityServiceClient {
 	
 	private static Logger logger = Logger.getLogger(BusinessEntityServiceClient.class.getName());
 	
-	public DataObject readExistingRecord(CallContext callContext, CompositeServiceClient client, ExternalCallRequest externalCallRequest,
+	public DataObject readExistingRecord(CallContext callContext, CompositeServiceClient client,
 			HelperContext helperContext, String businessEntity, String rowid) {
 		
 		if (rowid != null && !rowid.trim().isEmpty()) {
@@ -80,9 +91,6 @@ public class BusinessEntityServiceClient {
 			coFilterNode.setList("recordState", recordStates);
 			
 			try {
-				CallContext hardcodedcallContext = new CallContext(externalCallRequest.getHeader().getOrsId(),
-						"admin",Base64.getEncoder().encodeToString(("admin:hollyfront@4a4a").getBytes(StandardCharsets.UTF_8)));
-				
 				DataObject readBEResponse = client.process(callContext, readBERequest);
 
 				return readBEResponse.getDataObject(Constants.OBJECT);
@@ -209,6 +217,132 @@ public class BusinessEntityServiceClient {
 		return null;   
     }
  	
+ 	public DataObject searchBE (CallContext callContext, CompositeServiceClient besClient, 
+ 			HelperContext helperContext,String businessEntity, String filter) {
+ 		return searchBE(callContext, besClient, helperContext, businessEntity, filter, 10);
+ 	}
+ 	
+ 	public DataObject searchBE (CallContext callContext, CompositeServiceClient besClient, 
+ 			HelperContext helperContext,String businessEntity, String filter, int numChild) {
+    	try {
+
+    		String encodedFilter = filter;
+
+	    	logger.debug("INSIDE searchBE");
+	    	logger.debug("filter: " + filter); 
+	    	logger.debug("Encoded filter: " + encodedFilter); 
+	    	logger.debug("businessEntity: " + businessEntity); 
+	    	if (StringHelper.stringExists(filter)) {
+		    	DataFactory dataFactory  = helperContext.getDataFactory();
+		    	QueryCOParameters queryCOParameters = (QueryCOParameters) dataFactory.create(QueryCOParameters.class);
+		    	CoFilter coFilter = (CoFilter) dataFactory.create(CoFilter.class);
+		    	CoFilterNode coFilterNode = (CoFilterNode) dataFactory.create(CoFilterNode.class);
+		    	QueryCO queryCO = (QueryCO) dataFactory.create(QueryCO.class);
+		    	QueryCOReturn queryCOReturn = (QueryCOReturn) dataFactory.create(QueryCOReturn.class);
+		    	
+		    	
+		    	queryCOParameters.setDefaultPageSize(BigInteger.valueOf(Integer.valueOf(numChild)));
+
+		    	coFilterNode.setName(businessEntity);
+		    	coFilterNode.setSuppress(false);
+		    	coFilterNode.setFilter(encodedFilter);
+		    	
+		    	coFilterNode.setRecordState(Arrays.asList("ACTIVE","PENDING"));
+		    	coFilterNode.setDepth(4);
+		    	coFilter.setObject(coFilterNode);
+		    	
+				queryCOParameters.setCoFilter(coFilter);
+		    	
+				queryCO.setParameters(queryCOParameters);
+		
+		       // dump(helperContext, "readPromotePreview", (DataObject) readPromotePreview);
+		    	
+		        logger.debug("Execute Search Entity");
+		        Instant startreadSupplier = Instant.now(); 
+		        
+		        queryCOReturn = (QueryCOReturn) besClient.process(callContext, (DataObject) queryCO);
+		        
+		        
+		        TimeHelper.getDuration(startreadSupplier, "Duration for searchEntity ");
+		        if (queryCOReturn != null ) {		        	
+		        	logger.debug("Found readPromotePreview");
+		        	return (DataObject) queryCOReturn;
+		        } else {
+		        	logger.debug("NULL** readPromotePreviewReturn");
+		        }  
+	    	} else {
+  	    		logger.error("rootRowid is required for function readPromotePreview");
+	    	}
+    	} catch (Exception e) {
+    		logger.error(" readPromotePreview had an error: " + e.getMessage(),e);
+    	}
+		return null;   
+    }
+ 	
+ 	
+ 	public DataObject searchBEList (CallContext callContext, CompositeServiceClient besClient, 
+ 			HelperContext helperContext,String businessEntity, String filter, int numChild, String childName) {
+    	try {
+
+    		String encodedFilter = filter;
+
+	    	logger.debug("INSIDE searchBE");
+	    	logger.debug("filter: " + filter); 
+	    	logger.debug("Encoded filter: " + encodedFilter); 
+	    	logger.debug("businessEntity: " + businessEntity + " : Child - " + childName); 
+	    	if (StringHelper.stringExists(filter)) {
+		    	DataFactory dataFactory  = helperContext.getDataFactory();
+		    	QueryCOParameters queryCOParameters = (QueryCOParameters) dataFactory.create(QueryCOParameters.class);
+		    	CoFilter coFilter = (CoFilter) dataFactory.create(CoFilter.class);
+		    	CoFilterNode coFilterNode = (CoFilterNode) dataFactory.create(CoFilterNode.class);
+		    	QueryCO queryCO = (QueryCO) dataFactory.create(QueryCO.class);
+		    	QueryCOReturn queryCOReturn = (QueryCOReturn) dataFactory.create(QueryCOReturn.class);
+		    	
+		    	
+		    	queryCOParameters.setDefaultPageSize(BigInteger.valueOf(Integer.valueOf(numChild)));
+
+		    	coFilterNode.setName(businessEntity);
+		    	coFilterNode.setSuppress(false);
+		    	coFilterNode.setFilter(encodedFilter);
+		    	
+		    	coFilterNode.setRecordState(Arrays.asList("ACTIVE","PENDING"));
+		    	coFilterNode.setDepth(4);
+		    	coFilter.setObject(coFilterNode);
+		    	
+		    	// Set Child Node
+		    	CoFilterNode childCoFilterNode = (CoFilterNode) dataFactory.create(CoFilterNode.class);
+		    	childCoFilterNode.setName(childName);
+		    	childCoFilterNode.setDepth(1);
+		    	List<CoFilterNode> childCoFilterNodes = new ArrayList<CoFilterNode>();
+		    	childCoFilterNodes.add(childCoFilterNode);
+		    	coFilterNode.setObject(childCoFilterNodes);
+		    	
+				queryCOParameters.setCoFilter(coFilter);
+		    	
+				queryCO.setParameters(queryCOParameters);
+		    	
+		        logger.debug("Execute Search Entity");
+		        Instant startreadSupplier = Instant.now(); 
+		        
+		        queryCOReturn = (QueryCOReturn) besClient.process(callContext, (DataObject) queryCO);
+		        
+		        
+		        TimeHelper.getDuration(startreadSupplier, "Duration for searchEntity ");
+		        if (queryCOReturn != null ) {		        	
+		        	logger.debug("Found readPromotePreview");
+		        	return (DataObject) queryCOReturn;
+		        } else {
+		        	logger.debug("NULL** readPromotePreviewReturn");
+		        }  
+	    	} else {
+  	    		logger.error("rootRowid is required for function readPromotePreview");
+	    	}
+    	} catch (Exception e) {
+    		logger.error(" readPromotePreview had an error: " + e.getMessage(),e);
+    	}
+		return null;   
+    }
+ 	
  	public DataObject searchMatch(String businessEntity, CallContext callContext, CompositeServiceClient compositeServiceClient, DataFactory dataFactory, Map<String, String> fuzzyFilters, String filter) {
  		try {
  			MatchCO matchCO = (MatchCO) dataFactory.create(MatchCO.class);
@@ -289,4 +423,33 @@ public class BusinessEntityServiceClient {
 		}
 		return null;
 	}
+ 	
+ 	public DataObject uploadFileContent (CallContext callContext, CompositeServiceClient besClient, 
+ 			HelperContext helperContext,String businessEntity, String filter) {
+ 		DataFactory dataFactory = helperContext.getDataFactory();
+ 		
+ 		GetMetadata getMetadata = (GetMetadata) dataFactory.create(GetMetadata.class);
+ 		GetMetadataParameters getMetadataParam = (GetMetadataParameters) dataFactory.create(GetMetadataParameters.class);
+
+ 		
+
+		try {
+			DataObject readBEResponse = besClient.process(callContext, (DataObject) getMetadata);
+
+			return readBEResponse.getDataObject(Constants.OBJECT);
+
+		} catch (CompositeServiceException e) {
+			logger.error("Error while reading existing records for Business entity " + e.getMessage());
+			e.printStackTrace();
+		} catch(Exception e) {
+			logger.error("Error while reading existing records for Business entity " + e.getMessage());
+			e.printStackTrace();
+		}
+ 		
+ 		return null;
+ 	}
+ 	
+ 	private String encodeValue(String value) throws UnsupportedEncodingException {
+ 	    return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+ 	}
 }

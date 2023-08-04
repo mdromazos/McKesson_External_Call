@@ -43,6 +43,7 @@ public class ErrorHelper {
         	logger.debug("errorCode: " +  errorCode);
 
         	errors.setError(errorList);
+        	DataObject inputSDSO;
         	TimeHelper.getDuration(startTime, "Full Duration Till Exception");
         	throw new StepException((DataObject) errors,errorCode);
         } 			

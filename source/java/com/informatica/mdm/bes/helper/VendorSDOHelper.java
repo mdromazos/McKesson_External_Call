@@ -135,6 +135,31 @@ public class VendorSDOHelper {
 		return stringValue;
 	}
 	
+	public float getFloat(DataObject parentInputSDO, DataObject parentOrsSDO, String path) {
+		//String stringValue = parentInputSDO.getString(path);
+		float value = parentInputSDO.getFloat(path);
+		if(Float.compare(value, 0)==0) 
+			value = parentOrsSDO.getFloat(path);
+		return value;
+	}
+	
+	public double getDouble(DataObject parentInputSDO, DataObject parentOrsSDO, String path) {
+		//String stringValue = parentInputSDO.getString(path);
+		double value = parentInputSDO.getDouble(path);
+		if (parentInputSDO != null && !parentInputSDO.isSet(path))
+			value = parentOrsSDO.getDouble(path);
+
+		return value;
+	}
+	
+	public int getInt(DataObject parentInputSDO, DataObject parentOrsSDO, String path) {
+		//String stringValue = parentInputSDO.getString(path);
+		int value = parentInputSDO.getInt(path);
+		if(Float.compare(value, 0)==0) 
+			value = parentOrsSDO.getInt(path);
+		return value;
+	}
+	
 	public String getString(DataObject parentInputSDO, DataObject promoteSDO, DataObject parentOrsSDO, String path) {
 		String stringValue = null;
 		if (parentInputSDO != null)
@@ -185,17 +210,14 @@ public class VendorSDOHelper {
 	}
 	
 	public DataObject getRequestByInteractionId(DataObject dataObject, String interactionId) {
-		logger.info("DATAOBJECT: " + dataObject);
 		if (dataObject == null)
 			return null;
 		
 		List<DataObject> requests = dataObject.getList(VendorMainConstants.REQUEST + "/item");
-		logger.info("DATAOBJECT REQUESTS: " + requests);
 		if (requests == null || requests.isEmpty())
 			return null;
 		
 		List<DataObject> requestsByInteractionId = dataObjectHelperContext.getDataObjectSearcher().filterByInteractionId(requests, interactionId);
-		logger.info("REQUESTS BY INTERACTION ID : " + requestsByInteractionId);
 		if (requestsByInteractionId == null || requestsByInteractionId.isEmpty())
 			return null;
 		
@@ -211,11 +233,13 @@ public class VendorSDOHelper {
 	public Map<String, List<SDODataObject>> getDataObjectsByType(List<SDODataObject> promoteDataObjects, List<SDODataObject> inputDataObjects) {
 		Map<String, List<SDODataObject>> dataObjectsByType = new HashMap<String, List<SDODataObject>>();
 		
-		for (SDODataObject promoteDataObject : promoteDataObjects) {
-			String[] nameSplit = promoteDataObject.getType().getName().split("\\.");
-			String key = nameSplit[nameSplit.length-1];
-			dataObjectsByType.putIfAbsent(key, new ArrayList<SDODataObject>());
-			dataObjectsByType.get(key).add(promoteDataObject);
+		if (promoteDataObjects != null) {
+			for (SDODataObject promoteDataObject : promoteDataObjects) {
+				String[] nameSplit = promoteDataObject.getType().getName().split("\\.");
+				String key = nameSplit[nameSplit.length-1];
+				dataObjectsByType.putIfAbsent(key, new ArrayList<SDODataObject>());
+				dataObjectsByType.get(key).add(promoteDataObject);
+			}
 		}
 		
 		for (SDODataObject inputDataObject : inputDataObjects) {
@@ -230,12 +254,9 @@ public class VendorSDOHelper {
 	public boolean didFieldChangeToNull(DataObject inputSdoParent, SDOChangeSummary inputSdoChangeSummary, String fieldName) {
 		boolean didFieldChangeToNull = false;
 		Object fieldValue = inputSdoParent.get(fieldName);
-		logger.info("FIELD VALUE: " + fieldValue);
 		if (fieldValue == null) {
 			Property fieldProperty = inputSdoParent.getInstanceProperty(fieldName);
-			logger.info("FIELD PROPERTY: " + fieldProperty);
 			Setting oldValue = inputSdoChangeSummary.getOldValue(inputSdoParent, fieldProperty);
-			logger.info("OLD VALUE: " + oldValue);
 			if (oldValue != null && oldValue.getValue() != null) {
 				didFieldChangeToNull = true;
 			}
@@ -247,12 +268,9 @@ public class VendorSDOHelper {
 	public boolean didFieldChangeFromYToN(DataObject inputSdoParent, SDOChangeSummary inputSdoChangeSummary, String fieldName) {
 		boolean didFieldChangeFromYToNo = false;
 		Object fieldValue = inputSdoParent.get(fieldName);
-		logger.info("FIELD VALUE: " + fieldValue);
 		if (fieldValue != null && fieldValue.equals("N")) {
 			Property fieldProperty = inputSdoParent.getInstanceProperty(fieldName);
-			logger.info("FIELD PROPERTY: " + fieldProperty);
 			Setting oldValue = inputSdoChangeSummary.getOldValue(inputSdoParent, fieldProperty);
-			logger.info("OLD VALUE: " + oldValue);
 			if (oldValue != null && oldValue.getValue().equals("Y")) {
 				didFieldChangeFromYToNo = true;
 			}
@@ -264,12 +282,9 @@ public class VendorSDOHelper {
 	public boolean didFieldChangeFrom(DataObject inputSdoParent, SDOChangeSummary inputSdoChangeSummary, String fieldName, Object didFieldChangeFrom, Object didFieldChangeTo) {
 		boolean didFieldChangeFromYToNo = false;
 		Object fieldValue = inputSdoParent.get(fieldName);
-		logger.info("FIELD VALUE: " + fieldValue);
 		if (fieldValue != null && fieldValue.equals(didFieldChangeTo)) {
 			Property fieldProperty = inputSdoParent.getInstanceProperty(fieldName);
-			logger.info("FIELD PROPERTY: " + fieldProperty);
 			Setting oldValue = inputSdoChangeSummary.getOldValue(inputSdoParent, fieldProperty);
-			logger.info("OLD VALUE: " + oldValue);
 			if (oldValue != null && oldValue.getValue().equals(didFieldChangeFrom)) {
 				didFieldChangeFromYToNo = true;
 			}
