@@ -129,7 +129,7 @@ public class ESIGEmailValidate extends Validate {
 							.searchDataObjectList(promoteEtrncAddrList, inputPromoteEtrncAddrRowid);
 				String etrncAddrTyp = vendorSDOHelper.getString(inputPromoteEtrncAddr, promoteEtrncAddr,
 						VendorMainConstants.ELECTRONIC_ADDR_ETRNC_TYP);
-				logger.info("etrnc Id Type : " + etrncAddrTyp);
+
 				if (etrncAddrTyp != null && etrncAddrTyp.equals(ETRNC_ADDR_TYP_ESIG))
 					return true;
 			}

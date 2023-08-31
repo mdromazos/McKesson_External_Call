@@ -20,6 +20,15 @@ import commonj.sdo.ChangeSummary.Setting;
 import commonj.sdo.helper.DataFactory;
 import commonj.sdo.helper.HelperContext;
 
+/**
+ * 
+ * @author Matthew Dromazos
+ *
+ ** Maintenance Levels
+ *	1 - Purchase Org
+ *	2 - Company Code
+ *	3 - Supplier
+ */
 public class BusinessRulesAutomate extends Automate {
 	private static Logger logger = Logger.getLogger(ProfileAutomate.class.getName());
 
@@ -33,7 +42,7 @@ public class BusinessRulesAutomate extends Automate {
 	public static final String DISPLAY = "Display";
 	public static final String DEPENDS_ON = "dependsOn";
 	
-	private static final boolean ONLY_ON_CREATE = true;
+	private static final boolean ONLY_ON_CREATE = false;
 
 	
 	@SuppressWarnings("unchecked")
@@ -91,10 +100,10 @@ public class BusinessRulesAutomate extends Automate {
 			List<DataObject> rootRules = getRootRules(businessRules, inputPromoteCompanyCodeList, promoteCompanyCodeList);
 
 			validationErrors = new ArrayList<ValidationError>();
-			List<ValidationError> cmpnyCdValidationErrors = validateChild(inputPromoteCompanyCodeList, promoteCompanyCodeList, companyCodeRuleAttributes,
+			List<ValidationError> cmpnyCdValidationErrors = validateChild(inputSDOBe, inputPromoteCompanyCodeList, promoteCompanyCodeList, companyCodeRuleAttributes,
 					helperContext.getDataFactory(), sdoChangeSummary, businessEntity, "cmpnyCd/coCd", BusinessEntityConstants.COMPANY_CODE);
 			
-			List<ValidationError> prchOrgValidationErrors = validateChild(inputPromotePurchaseOrgList, promotePurchaseOrgList, prchOrgRuleAttributes,
+			List<ValidationError> prchOrgValidationErrors = validateChild(inputSDOBe, inputPromotePurchaseOrgList, promotePurchaseOrgList, prchOrgRuleAttributes,
 					helperContext.getDataFactory(), sdoChangeSummary, businessEntity, BusinessEntityConstants.PURCHASE_ORG_PORG_CD, BusinessEntityConstants.PURCHASE_ORG);
 			
 			List<ValidationError> rootErrors = validateRoot(inputSDOBe, promoteSDOBe, rootRules, helperContext.getDataFactory(), sdoChangeSummary, businessEntity);
@@ -121,13 +130,13 @@ public class BusinessRulesAutomate extends Automate {
 				continue;
 			
 			String attrNm = businessRuleAttribute.getString(ATTR_NM);
-			logger.info("ATTRIBUTE NAME: " + attrNm);
 			String property = null;
 			String dflt = null;
 			property = businessRuleAttribute.getString(GLOBAL_PROPERTY);
 			dflt = businessRuleAttribute.getString(GLOBAL_DEFAULT);
 			
-			if (dflt != null) {
+			// Only run default rules on a newly created vendor
+			if (sdoChangeSummary.isCreated(inputSDOBe) && dflt != null) {
 				if (attrNm.split("/").length > 1) {
 					String lkpDataObjectNm = attrNm.split("/")[0];
 					String lkpCdNm = attrNm.split("/")[1];
@@ -143,7 +152,6 @@ public class BusinessRulesAutomate extends Automate {
 			
 			if (property != null && property.equals(REQUIRED)) {
 				if (vendorSDOHelper.get(inputSDOBe, promoteSDOBe, attrNm) == null) {
-					logger.info("ATTRIBUTE IS REQUIRED");
 					validationErrors.add(createError("CUSTOM-ERROR", "Attribute: " + attrNm + " is required to be populated.", businessEntity + "." + attrNm, dataFactory));
 				}
 			}
@@ -152,10 +160,8 @@ public class BusinessRulesAutomate extends Automate {
 		return validationErrors;
 	}
 	
-	public List<ValidationError> validateChild(List<DataObject> inputPromoteChildList, List<DataObject> promoteChildList, List<DataObject> businessRulesAttributeList,
+	public List<ValidationError> validateChild(DataObject inputSDOBe, List<DataObject> inputPromoteChildList, List<DataObject> promoteChildList, List<DataObject> businessRulesAttributeList,
 			DataFactory dataFactory, SDOChangeSummary sdoChangeSummary, String businessEntity, String mntncLvlFieldNm, String childName) {
-
-		logger.info("VALIDATE CHILD: " + mntncLvlFieldNm);
 		List<ValidationError> validationErrors = new ArrayList<ValidationError>();
 
 		if (inputPromoteChildList == null || inputPromoteChildList.isEmpty())
@@ -166,7 +172,7 @@ public class BusinessRulesAutomate extends Automate {
 			DataObject promoteChild = null;
 			if (inputPromoteChildRowid != null)
 				promoteChild = dataObjectHelperContext.getDataObjectSearcher().searchDataObjectList(promoteChildList, inputPromoteChildRowid);
-			List<ValidationError> brErrors = processBusinessRules(inputPromoteChild, promoteChild, businessRulesAttributeList,
+			List<ValidationError> brErrors = processBusinessRules(inputSDOBe, inputPromoteChild, promoteChild, businessRulesAttributeList,
 					dataFactory, sdoChangeSummary, businessEntity, mntncLvlFieldNm, childName);
 			if (brErrors != null)
 				validationErrors.addAll(brErrors);
@@ -175,19 +181,16 @@ public class BusinessRulesAutomate extends Automate {
 		return validationErrors;
 	}
 	
-	public List<ValidationError> processBusinessRules(DataObject inputChild, DataObject promoteChild, List<DataObject> businessRulesAttributeList, 
+	public List<ValidationError> processBusinessRules(DataObject inputSDOBe, DataObject inputChild, DataObject promoteChild, List<DataObject> businessRulesAttributeList, 
 			DataFactory dataFactory, SDOChangeSummary sdoChangeSummary, String businessEntity, String mntncLvlFieldNm, String childName) {
-		logger.info("PROCESS BUSINESS RULES");
 		List<ValidationError> validationErrors = new ArrayList<ValidationError>();
 
 		if (businessRulesAttributeList == null || businessRulesAttributeList.isEmpty())
 			return validationErrors;
 
 		List<String> changedAttributes = getChangedAttributes(inputChild, sdoChangeSummary);
-		logger.info("CHANGEDD ATTRIBUTES: " + changedAttributes);
 		for (DataObject businessRuleAttribute : businessRulesAttributeList) {
 			String attrNm = businessRuleAttribute.getString(ATTR_NM);
-			logger.info("ATTRIBUTE NAME: " + attrNm);
 			String property = null;
 			String dflt = null;
 			DataObject attributeRule = getAttributeRule(inputChild, promoteChild, businessRuleAttribute, mntncLvlFieldNm);
@@ -201,24 +204,19 @@ public class BusinessRulesAutomate extends Automate {
 			}
 			
 			String dependsOn = businessRuleAttribute.getString(DEPENDS_ON);
-			logger.info("PROPERTY: " + property);
-			logger.info("DEFAULT: " + dflt);
-			
-			
 			
 			if (property != null && property.equals(REQUIRED)) {
 				if (inputChild.get(attrNm) == null) {
-					logger.info("ATTRIBUTE IS REQUIRED");
 					validationErrors.add(createError("CUSTOM-ERROR", "Attribute: " + attrNm + " is required to be populated.", businessEntity + "." + childName, dataFactory));
 				}
 			} else if (property != null && property.equals(DISPLAY)) {
 				if (changedAttributes.contains(attrNm)) {
-					logger.info("ATTRIBUTE WAS CHANGED");
 					validationErrors.add(createError("CUSTOM-ERROR", "Attribute: " + attrNm + " is display only for this Maintenance Level.", businessEntity + "." + childName, dataFactory));
 				}
-			} 
+			}
 			
-			if (dflt != null) {
+			// Only run default rules on newly created Data Objects
+			if ((sdoChangeSummary.isCreated(inputSDOBe) || sdoChangeSummary.isCreated(inputChild)) && dflt != null) {
 				String dependsOnLkpVal = null;
 				if (dependsOn != null) {
 					dependsOnLkpVal = vendorSDOHelper.getString(inputChild, promoteChild, dependsOn);
@@ -275,7 +273,6 @@ public class BusinessRulesAutomate extends Automate {
 		
 		String filter = "BusinessRuleAssignment.accntGrp=" + accntGrp + " AND splrBsnsTyp=" + splrBsnsTyp;
 
-		logger.info("FILTER: " + filter);
 		DataObject businessRulesReturn = businessEntityServiceClient.searchBE(callContext, besClient, helperContext, "ExBusinessRule", filter,100);
 		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, "ExBusinessRule", businessRulesReturn);
 		return businessRulesReturn.getList("object/item");		
@@ -313,6 +310,13 @@ public class BusinessRulesAutomate extends Automate {
 		return prchOrgRules;
 	}
 	
+	/**
+	 * 
+	 * @param businessRules
+	 * @param inputPromoteCompanyCodeList
+	 * @param promoteCompanyCodeList
+	 * @return
+	 */
 	public List<DataObject> getRootRules(List<DataObject> businessRules, List<DataObject> inputPromoteCompanyCodeList, List<DataObject> promoteCompanyCodeList) {
 		List<DataObject> rootRules = new ArrayList<DataObject>();
 		if (businessRules == null || businessRules.isEmpty())
@@ -330,7 +334,6 @@ public class BusinessRulesAutomate extends Automate {
 				promoteCompanyCode = dataObjectHelperContext.getDataObjectSearcher().searchDataObjectList(promoteCompanyCodeList, companyCodeRowid);
 			String companyCode = vendorSDOHelper.getString(inputPromoteCompanyCode, promoteCompanyCode, BusinessEntityConstants.COMPANY_CODE_COMPANY_CODE_CD_LKP);
 			companyCode = companyCode != null ? companyCode.split("\\|")[1] : null;
-			logger.info("COMPANY CODE: " + companyCode);
 			if (companyCode != null)
 				companyCodes.add(companyCode);
 		}

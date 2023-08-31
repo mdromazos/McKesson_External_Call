@@ -85,6 +85,18 @@ public class BusinessEntityConstants {
 	public static final String COMPANY_CODE_SUB_TEAM_CD 		   = "subTeamCd";
 	public static final String COMPANY_CODE_PAYMENT_BLOCK 		   = "pymntBlck";
 	public static final String COMPANY_CODE_PAYMENT_TERMS		   = "pymntTrms/pymntTrmsCd";
+	public static final String COMPANY_CODE_PAYMENT_TERMS_LKP	   = "pymntTrms";
+	public static final String COMPANY_CODE_PAYMENT_TERMS_CD	   = "pymntTrmsCd";
+	
+	public static final String COMPANY_CODE_CREDIT_MEMO_PAYMENT_TERMS_LKP	   = "creditMemoPymntTrm";
+	public static final String COMPANY_CODE_CREDIT_MEMO_PAYMENT_TERMS_CD	   = "pymntTrmsCd";
+	
+	public static final String COMPANY_CODE_COMPANY_CODE_COUNTRY	   = "cmpnyCdCntry";
+	public static final String COMPANY_CODE_COMPANY_CODE_COUNTRY_CD	   = "countryCode";
+	
+	public static final String COMPANY_CODE_PAYMENT_METHOD	   	   = "pymntMtdh";
+	public static final String COMPANY_CODE_PAYMENT_METHOD_CD	   = "ExPymntMthdCd";
+
 	public static final String COMPANY_CODE_MBA_DELAY_DAYS		   = "mbaDlyDays";
 
 	public static final String COMPANY_CODE_POSTING_BLOCK		   = "pstngBlck";

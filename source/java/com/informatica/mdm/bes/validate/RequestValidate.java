@@ -47,9 +47,7 @@ public class RequestValidate extends Validate {
 		
 		Map<String, List<SDODataObject>> createdDataObjects = vendorSDOHelper.getDataObjectsByType(promoteDataObjects, inputSdoChangeSummary.getCreated());
 		boolean validateOnly = (boolean) inParams.get(Constants.VALIDATE_ONLY);
-		
-		logger.info("CREATED DATA OBJECTS: " + createdDataObjects);
-		
+				
 		if (validateOnly) {
 			if (createdDataObjects != null && createdDataObjects.get(BusinessEntityConstants.REQUEST) != null && 
 					createdDataObjects.get(BusinessEntityConstants.REQUEST).size() > 1) {
@@ -95,6 +93,21 @@ public class RequestValidate extends Validate {
 				requestSts.setString("reqStsCd", "OPEN");
 				inputSdoChangeSummary.pauseLogging();
 			}
+			
+//			if (createdDataObjects != null && createdDataObjects.get(BusinessEntityConstants.REQUEST) != null && createdDataObjects.get(BusinessEntityConstants.REQUEST).size() == 1) {
+//				List<DataObject> inputRequests = inputSDOBe.getList(BusinessEntityConstants.REQUEST + "/item");
+//				if (inputRequests != null && inputRequests.size() == 1) {
+//					DataObject requestItem = inputRequests.get(0);
+//					DataObject requestItem = requestPager.createDataObject("item");
+//					requestItem.setDate("startDt", new Date());
+//					DataObject requestType = requestItem.createDataObject("reqTyp");
+//					requestType.setString("reqTypCd", "MAINTENANCE");
+//					DataObject requestSts = requestItem.createDataObject("reqSts");
+//					requestSts.setString("reqStsCd", "OPEN");
+//					inputSdoChangeSummary.pauseLogging();
+//				}
+//
+//			}
 		}
 		
 		return validationErrors;

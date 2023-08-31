@@ -171,7 +171,7 @@ public class RequiredDocumentValidate extends Validate {
 		}
 		
 		DataObject buMaintenanceListReturn = businessEntityServiceClient.searchBE(callContext, besClient, helperContext, "ExBuMaintenance", filter);
-		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, "ExBuMaintenance", buMaintenanceListReturn);
+//		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, "ExBuMaintenance", buMaintenanceListReturn);
 
 		List<DataObject> buMaintenanceList = buMaintenanceListReturn.getList("object/item");
 		

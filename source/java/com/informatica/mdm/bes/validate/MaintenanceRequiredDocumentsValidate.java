@@ -118,7 +118,6 @@ public class MaintenanceRequiredDocumentsValidate extends Validate {
 		// Get a condensed list of all added Document Types
 		List<String> addedDocTypes = getAddedDocTypes(inputPromoteDocumentList, promoteDocumentList, inputSdoChangeSummary, promoteSdoChangeSummary, isSupplier);
 		
-		logger.info("ADDED DOC TYPES: " + addedDocTypes);
 		return validateDocuments(addedDocTypes, 
 				filteredAttributeApprovers, helperContext.getDataFactory(), businessEntity,
 				changedAttributes, inputSDO,
@@ -178,7 +177,6 @@ public class MaintenanceRequiredDocumentsValidate extends Validate {
 //		filter = filter.replace("|", "%7C");
 		
 		
-		logger.info("FILTER: " + filter);
 		DataObject businessUnitAttributeApprovers = businessEntityServiceClient.searchBE(callContext, besClient, helperContext, Constants.BE_SUPPLIER_BU_APPROVER, filter);
 		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, Constants.BE_SUPPLIER_BU_APPROVER, businessUnitAttributeApprovers);
 		List<DataObject> buAttrAprvList = businessUnitAttributeApprovers.getList("object/item");
@@ -332,11 +330,9 @@ public class MaintenanceRequiredDocumentsValidate extends Validate {
 			String initiator = attributeApprover.getString(Constants.BE_SUPPLIER_ATTRIBUTE_APPROVER + "/approvedRoles");
 			String attributeLabel = attributeApprover.getString(Constants.BE_SUPPLIER_ATTRIBUTE_APPROVER + "/attributeLabel");
 			
-			logger.info("ATTRIBUTE APPROVER: " + attributeApprover);
 			List<String> requiredDocTypes = getRequiredDocTypes(attributeApprover, inputSDO, promoteSDO, inputSdoChangeSummary);
 
 			for (String requiredDocType : requiredDocTypes) {
-				logger.info("REQUIRED DOC TYPE: " + requiredDocType);
 				
 				if (addedDocTypes == null || !addedDocTypes.contains(requiredDocType)) {
 					docsNotUploaded.add(requiredDocType);
@@ -458,10 +454,6 @@ public class MaintenanceRequiredDocumentsValidate extends Validate {
 		
 		String dataObjectTypeName = dataObject.getType().getName();
 		
-//		for (Setting oldValue : (List<Setting>)sdoChangeSummary.getOldValues(dataObject)) {
-//			oldValue.getProperty().getContainingType().getName().replaceAll(".Root", "");
-//		}
-		
 		List<String> changedAttributePaths = sdoChangeSummary.getOldValues(dataObject) == null ? new ArrayList<String>() 
 				: (List<String>) sdoChangeSummary.getOldValues(dataObject).stream().map(oldValue -> {
 					String path = ((Setting)oldValue).getProperty().getContainingType().getName().replaceAll(".Root", "");
@@ -471,7 +463,6 @@ public class MaintenanceRequiredDocumentsValidate extends Validate {
 		
 		List<String> unsetPropPaths = (List<String>) sdoChangeSummary.getUnsetProps(dataObject).stream().map(unsetProp -> dataObjectTypeName + "." + unsetProp).collect(Collectors.toList());
 		
-		logger.info("UNSET PROP PATHS: " + unsetPropPaths);
 		changedAttributePaths.addAll(unsetPropPaths);
 		
 		for (DataObject createdDo : (List<DataObject>)sdoChangeSummary.getCreated()) {
@@ -506,29 +497,25 @@ public class MaintenanceRequiredDocumentsValidate extends Validate {
 	 */
 	public List<String> getRequiredDocTypes(DataObject attributeApprover, DataObject inputSDO, DataObject promoteSDO, 
 			SDOChangeSummary inputSdoChangeSummary) {
-		logger.info("GET REQUIRED DOC TYPES");
+
 		List<String> requiredDocTypes = new ArrayList<String>();
 		if (attributeApprover.getString(Constants.BE_SUPPLIER_ATTRIBUTE_APPROVER + "/" + "hasAssociatedTyp") == null ||
 				attributeApprover.getString(Constants.BE_SUPPLIER_ATTRIBUTE_APPROVER + "/" + "hasAssociatedTyp").equals("N")) {
 			requiredDocTypes.add(attributeApprover.getString(Constants.BE_SUPPLIER_ATTRIBUTE_APPROVER + "/" + BusinessEntityConstants.SUPPLIER_BU_APPR_DOCUMENT_DOC_TYP));			
 		} else if (attributeApprover.getString(Constants.BE_SUPPLIER_ATTRIBUTE_APPROVER + "/" + "hasAssociatedTyp").equals("Y")) {
-			logger.info("HAS ASSOCIATED TYPE");
 			String typFieldNm = attributeApprover.getString(Constants.BE_SUPPLIER_ATTRIBUTE_APPROVER + "/typFieldNm");
 			
 			List<String> typesInInputSdo = new ArrayList<String>();
 			getTypes(typFieldNm, inputSDO, promoteSDO, typesInInputSdo);
-			logger.info("TYPES IN SDO 1: " + typesInInputSdo.get(0));
 			
 			List<DataObject> typMappingItems = attributeApprover.getList(Constants.BE_SUPPLIER_ATTRIBUTE_APPROVER + "/" + "typMapping" + "/" + "typMappingItms" + "/item");
-			logger.info("TYPE MAPPING ITEMS: " + typMappingItems);
+
 			if (typMappingItems == null || typMappingItems.isEmpty())
 				return null;
 			for (DataObject typMappingItem : typMappingItems) {
 				if (typMappingItem == null || typMappingItem.getString("typOneCd") == null || typMappingItem.getString("typTwoCd") == null)
 					continue;
 				
-				logger.info("TYPE MAPPING ONE: " +  typMappingItem.getString("typOneCd"));
-				logger.info("TYPE MAPPING TWO: " + typMappingItem.getString("typTwoCd"));
 				// See if any of the types added to the supplier record equals the type mapping
 				if (typesInInputSdo.contains(typMappingItem.getString("typOneCd"))) {
 					requiredDocTypes.add(typMappingItem.getString("typTwoCd"));
@@ -551,14 +538,8 @@ public class MaintenanceRequiredDocumentsValidate extends Validate {
 	private void getTypes(String attributePath,
 			DataObject inputSDO, DataObject promoteSDO, List<String> typesInSdo) {
 		String[] attributePathSplit = attributePath.split("\\.", 2);
-		logger.info("ATTRIBUTE PATH:  " + attributePath);
-		// I.E ExTradeSupplier.TaxInformation.taxNum
-
-		// TaxInformation.taxNum
 		
 		if (attributePathSplit.length == 1) {
-			logger.info("LENGTH 1");
-			logger.info("TYPE CODE: " + vendorSDOHelper.getString(inputSDO, promoteSDO, attributePath));
 			typesInSdo.add(vendorSDOHelper.getString(inputSDO, promoteSDO, attributePath));
 			return;
 		} else {

@@ -49,9 +49,17 @@
             </fileset>
         </copy>
         <copy todir="build/war/WEB-INF/classes">
+        	<!--
             <fileset dir="source/resources">
                 <include name="bes-client.properties"/>
             	<include name="externalcall.properties"/>
+            	<include name="log4j.xml"/>
+                <include name="log4j.dtd"/>
+            </fileset>
+            -->
+            <fileset dir="source/resources/${build_type}">
+            	<include name="bes-client.properties"/>
+                <include name="externalcall.properties"/>
             	<include name="log4j.xml"/>
                 <include name="log4j.dtd"/>
             </fileset>

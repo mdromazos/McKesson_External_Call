@@ -50,8 +50,6 @@ public class StateLicensingValidate extends Validate {
 		List<DataObject> inputDistributionList = inputSDOBe.getList(PortalViewConstants.DISTRIBUTION + "/item");
 		List<DataObject> inputPromoteDistributionList = vendorSDOHelper.getCombinedList(inputSDOBe, promoteSDOBe, PortalViewConstants.DISTRIBUTION, inputSDOBe, helperContext);
 		List<DataObject> promoteDistributionList = promoteSDOBe.getList(PortalViewConstants.DISTRIBUTION + "/item");
-		logger.info("INPUT PROMOTE DISTRIBUTION LIST: " + inputPromoteDistributionList);
-		logger.info("PRMOTE DISTRIBUTION LIST: " + promoteDistributionList);
 		
 		// If there are no licenses entered, then we do not need to perform this validation.
 		if (inputDistributionList == null || inputDistributionList.isEmpty() || inputPromoteDistributionList == null || promoteDistributionList.isEmpty())
@@ -62,11 +60,8 @@ public class StateLicensingValidate extends Validate {
 		List<DataObject> inputPromoteDocumentList = vendorSDOHelper.getCombinedList(inputSDOBe, promoteSDOBe, PortalViewConstants.DOCUMENT, inputSDOBe, helperContext);
 		List<DataObject> promoteDocumentList = promoteSDOBe.getList(PortalViewConstants.DOCUMENT + "/item");
 		
-		logger.info("INPUT PROMOTE DOCUMENT LIST: " + inputPromoteDocumentList);
-		logger.info("PRMOTE DOCUMENT LIST: " + promoteDocumentList);
 		// Get List of Distribution and Products
 //		List<ProductDistribution> distributionsProducts = getProductsAndDistributionsInUS(inputPromoteLicenseList, promoteLicenseList);
-//		logger.info("DISTRIBUTION PRODUCTS: " + distributionsProducts);
 		
 		// Call the API to get the list of License Maintenance
 		List<DataObject> licenseMaintenanceList = getLicenseMaintenance(inputPromoteDistributionList, promoteDistributionList, callContext, 
@@ -138,9 +133,7 @@ public class StateLicensingValidate extends Validate {
 				continue;
 			distributionsProducts.add(new ProductDistribution(distributionType, productType));
 		}
-		
-		logger.info("PRODUCTS AND DISTRIBUTIONS IN US: " + distributionsProducts);
-		
+				
 		return distributionsProducts;
 	}
 	
@@ -183,16 +176,12 @@ public class StateLicensingValidate extends Validate {
 			manufacturerProducts.get(manTyp).add("RX");
 			
 		}
-		
-		logger.info("manufacturerType TYPES: " + manTypList);
-		logger.info("PRODUCT TYPES: " + productTypesList);
 
 		String filter = "manufacturerType IN '[" + String.join(",", manTypList) + "]' AND productType IN [" + String.join(",", productTypesList) + "]";
 
-		logger.info("FILTER: " + filter);
 		// Call the BES API and get the return.
 		DataObject licenseMaintenenceReturn = businessEntityServiceClient.searchBE(callContext, compositeServiceClient, helperContext, "ExLicenseMaintenance", filter);
-		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, "ExLicenseMaintenance", licenseMaintenenceReturn);
+//		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, "ExLicenseMaintenance", licenseMaintenenceReturn);
 		licenseMaintenanceList = licenseMaintenenceReturn.getList("object/item");
 		
 		List<DataObject> licenseMaintenanceListFilt = new ArrayList<DataObject>();
@@ -200,8 +189,6 @@ public class StateLicensingValidate extends Validate {
 		for (DataObject licenseMaintenanceReturn : licenseMaintenanceList) {
 			String manTyp = licenseMaintenanceReturn.getString("ExLicenseMaintenance/manufacturerType/manufacturerTypCd");
 			String prdctTyp = licenseMaintenanceReturn.getString("ExLicenseMaintenance/productType/regulatoryProductTypCd");
-			logger.info("MANUFACTUERER TYPE: " + manTyp);
-			logger.info("PRODUCT TYPE: " + prdctTyp);
 			
 			if (manufacturerProducts.containsKey(manTyp) && manufacturerProducts.get(manTyp).contains(prdctTyp))
 				licenseMaintenanceListFilt.add(licenseMaintenanceReturn);
@@ -223,14 +210,11 @@ public class StateLicensingValidate extends Validate {
 	 */
 	public List<ValidationError> validateStateLicense(List<DataObject> licenseMaintenanceList, List<DataObject> inputPromoteDocumentList, 
 			List<DataObject> promoteDocumentList, DataFactory dataFactory, String businessEntity) {
-		logger.info("VALIDATING STATE LICENSE: " + licenseMaintenanceList);
 		List<ValidationError> validationErrors = new ArrayList<ValidationError>();
 		List<String> documentStateLicenceTypeList = getDocumentStatesLicenseType(inputPromoteDocumentList, promoteDocumentList);
-		logger.info("DOCUMENT STATE LICENSE UPLOADED LIST: " + documentStateLicenceTypeList);
 		
 		for (DataObject licenseMaintenance : licenseMaintenanceList) {
 			List<DataObject> stateLicenseMaintenanceList = licenseMaintenance.getList("ExLicenseMaintenance/StateLicenseMaintenance/item");
-			logger.info("STATE LICENSE MAINTENANCE LIST: " + stateLicenseMaintenanceList);
 			for (DataObject stateLicenseMaintenance : stateLicenseMaintenanceList) {
 				String state = stateLicenseMaintenance.getString("stateCd/stateCode");
 				String licenseType = stateLicenseMaintenance.getString("licenseType/lcnsTypCd");
@@ -267,7 +251,7 @@ public class StateLicensingValidate extends Validate {
 			String licenseType = vendorSDOHelper.getString(inputPromoteDocument, promoteDocument, PortalViewConstants.DOCUMENT_LICENSE_TYPE);
 			if (state == null || licenseType == null)
 				continue;
-			logger.info("ADDING DOCUMENT STATE LICENSE TYPE: " + state + licenseType);
+
 			documentStateLicenceTypeList.add(state + licenseType);
 		}
 		

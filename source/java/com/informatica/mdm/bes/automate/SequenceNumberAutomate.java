@@ -26,7 +26,7 @@ public class SequenceNumberAutomate extends Automate {
 			CompositeServiceClient besClient) {
 		SDOChangeSummary inputSdoChangeSummary = (SDOChangeSummary) inputSDO.getChangeSummary();
 		inputSdoChangeSummary.pauseLogging();
-		System.out.println("CHANGE SUMMARY: " + inputSdoChangeSummary);
+
 		DataObject inputSDOBe = inputSDO.getDataObject(businessEntity);
 		DataObject promoteSDOBe = null;
 		if (promoteSDO != null)
@@ -39,11 +39,6 @@ public class SequenceNumberAutomate extends Automate {
 		List<DataObject> inputContactList = inputSDOBe.getList(BusinessEntityConstants.CONTACT + "/item");
 		List<DataObject> inputBankList = inputSDOBe.getList(BusinessEntityConstants.BANK + "/item");
 
-		logger.info("INPUT ADDRESS: " + inputAddressList);
-		logger.info("INPUT LOC: " + inputLocList);
-		logger.info("INPUT CONTACT: " + inputContactList);
-		logger.info("INPUT BANK: " + inputBankList);
-
 		List<DataObject> promoteAddressList = null;
 		List<DataObject> promoteLocList = null;
 		List<DataObject> promoteContactList = null;
@@ -55,15 +50,6 @@ public class SequenceNumberAutomate extends Automate {
 			promoteContactList = promoteSDOBe.getList(BusinessEntityConstants.CONTACT + "/item");
 			promoteBankList = promoteSDOBe.getList(BusinessEntityConstants.BANK + "/item");
 		}
-		
-		logger.info("PROMOTE ADDRESS: " + promoteAddressList);
-		logger.info("PROMOTE LOC: " + promoteLocList);
-		logger.info("PROMOTE CONTACT: " + promoteContactList);
-		logger.info("PROMOTE CONTACT: " + promoteBankList);
-		System.out.println("PROMOTE ADDRESS: " + promoteAddressList);
-		System.out.println("PROMOTE LOC: " + promoteLocList);
-		System.out.println("PROMOTE CONTACT: " + promoteContactList);
-		System.out.println("PROMOTE Bank: " + promoteBankList);
 		
 		// Set Address Sequence Number
 		try {
@@ -127,15 +113,13 @@ public class SequenceNumberAutomate extends Automate {
 		
 		// Get the next highest sequence Number
 		int nextSeqNum = determineNextHighestSequenceChild(promoteChildList, childSeqNumFieldNm);
-		logger.info("NEXT HIGHEST SEQUENCE: " + nextSeqNum);
-		System.out.println("NEXT HIGHEST SEQUENCE: " + nextSeqNum);
+
 		for (DataObject inputChild : inputChildList) {
 			// The child may be null, if it is then skip 
 			// ?? TODO: Do we actually want to skip here?
 			if (inputChild == null)
 				continue;
-			System.out.println("INPUT CHILD: " + inputChild);
-			System.out.println("IS CREATED: " + inputSdoChangeSummary.isCreated(inputChild));
+
 			// If the child is not created, then we do not want to set its sequence number as it has already been set.
 			if (!inputSdoChangeSummary.isCreated(inputChild))
 				continue;
@@ -158,30 +142,25 @@ public class SequenceNumberAutomate extends Automate {
 	 */
 	public void setSequenceNumber(List<DataObject> inputChildList, List<DataObject> promoteChildList, String grandChildName,
 			SDOChangeSummary inputSdoChangeSummary, String childSeqNumFieldNm) {
-		System.out.println("STARTING : " + grandChildName);
 		// If input child list is null, then we cannot set any sequence numbers
 		if (inputChildList == null || inputChildList.isEmpty())
 			return;
 		
 		// Get the next highest sequence Number
 		int nextSeqNum = determineNextHighestSequence(promoteChildList, childSeqNumFieldNm, grandChildName);
-		logger.info("NEXT HIGHEST SEQUENCE: " + nextSeqNum);
-		System.out.println("NEXT HIGHEST SEQUENCE: " + nextSeqNum);
 		
 		for (DataObject inputChild : inputChildList) {
 			// The child may be null, if it is then skip 
 			// ?? TODO: Do we actually want to skip here?
 			if (inputChild == null)
 				continue;
-			System.out.println("INPUT CHILD: " + inputChild);
-			System.out.println("IS CREATED: " + inputSdoChangeSummary.isCreated(inputChild));
+
 			// If the child is not created, then we do not want to set its sequence number as it has already been set.
 			if (!inputSdoChangeSummary.isCreated(inputChild))
 				continue;
 			
 			// The sequence number lives in the grandchild data node
 			DataObject grandChild = inputChild.getDataObject(grandChildName);
-			System.out.println("GRNADHILCD: " + grandChild);
 			
 			// Format the sequence number as a 5 character string padded with 0's
 			String seqNumberString = String.format("%1$" + SEQ_LENGTH + "s", nextSeqNum).replace(' ', '0');
@@ -205,7 +184,6 @@ public class SequenceNumberAutomate extends Automate {
 	public void setGreatGrandchildSequenceNumber(List<DataObject> inputChildList, List<DataObject> promoteChildList, 
 			String grandChildName, SDOChangeSummary inputSdoChangeSummary, String greatGrandchildSeqNumFieldNm,
 			String greatGrandChildListName) {
-		System.out.println("STARTING : " + grandChildName + " : " + greatGrandChildListName);
 		// If input child list is null, then we cannot set any sequence numbers
 		if (inputChildList == null || inputChildList.isEmpty())
 			return;
@@ -233,10 +211,7 @@ public class SequenceNumberAutomate extends Automate {
 			
 			// Get the next highest sequence Number
 			int nextSeqNum = determineNextHighestSequenceChild(promoteGreatGrandchildList, greatGrandchildSeqNumFieldNm);
-			logger.info("NEXT HIGHEST SEQUENCE: " + nextSeqNum);
-			
-			// The sequence number lives in the grandchild data node
-			
+						
 			
 			if (greatGrandchildList == null || greatGrandchildList.isEmpty())
 				continue;
@@ -248,7 +223,6 @@ public class SequenceNumberAutomate extends Automate {
 				// If the child is not created, then we do not want to set its sequence number as it has already been set.
 				if (!inputSdoChangeSummary.isCreated(inputGreatGrandchild))
 					continue;
-				System.out.println("2. GREAT GRANDCHILD: " + inputGreatGrandchild);
 				// Format the sequence number as a 5 character string padded with 0's
 				String seqNumberString = String.format("%1$" + SEQ_LENGTH + "s", nextSeqNum).replace(' ', '0');
 				
@@ -280,7 +254,6 @@ public class SequenceNumberAutomate extends Automate {
 			if (promoteChildList == null)
 				continue;
 			int seqNum = promoteChild.getInt(childSeqNumFieldNm);
-			System.out.println("SEQUENCE NUMBER: " + seqNum);
 			// If the current sequence number is greater than the highest found so far, then set the highestSeqNum
 			if (seqNum > highestSeqNum) {
 				highestSeqNum = seqNum;
@@ -311,7 +284,6 @@ public class SequenceNumberAutomate extends Automate {
 			if (promoteChildList == null)
 				continue;
 			int seqNum = promoteChild.getInt(grandChildName + "/" + childSeqNumFieldNm);
-			System.out.println("SEQUENCE NUMBER: " + seqNum);
 			// If the current sequence number is greater than the highest found so far, then set the highestSeqNum
 			if (seqNum > highestSeqNum) {
 				highestSeqNum = seqNum;

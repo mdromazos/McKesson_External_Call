@@ -246,7 +246,7 @@ public class COIValidate extends Validate {
 				
 			String inputPromoteDocumentRowid = inputPromoteDocument
 					.getString(BusinessEntityConstants.ROWID_OBJECT);
-			logger.info("Document RowId : " + inputPromoteDocumentRowid);
+
 			DataObject promoteDocument = null;
 			if (inputPromoteDocumentRowid != null && inputPromoteDocumentList != null)
 				promoteDocument = dataObjectHelperContext.getDataObjectSearcher()
@@ -254,7 +254,6 @@ public class COIValidate extends Validate {
 			
 			String documentType = vendorSDOHelper.getString(inputPromoteDocument, promoteDocument, VendorMainConstants.DOCUMENT_DOC_TYP);
 			
-			logger.info("Document Type : " + documentType);
 			docTypesUploaded.add(documentType);
 			
 		}

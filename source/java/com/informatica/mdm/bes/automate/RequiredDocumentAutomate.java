@@ -64,8 +64,6 @@ public class RequiredDocumentAutomate extends Automate {
 			}
 			
 			List<DataObject> buMaintenanceDocs = getBuMaintenanceDocs(callContext, besClient, helperContext,filter);
-
-			logger.info("REQ DOC - BU MAINTENANCE DOCS : " + buMaintenanceDocs);
 			
 			createDocuments(inputSDOBe, buMaintenanceDocs, inputSdoChangeSummary);
 		} catch (Exception e) {
@@ -132,7 +130,6 @@ public class RequiredDocumentAutomate extends Automate {
 				if (buMaintenanceDoc == null)
 					continue;
 				String buMaintenanceDocTyp = buMaintenanceDoc.getString(BusinessEntityConstants.BU_MNTNC_DOCUMENT_DOC_TYP);
-				logger.info("REQ DOC - CREATING BU MAINTENANCE DOC TYPE: " + buMaintenanceDocTyp);
 				if (currentDocTypes.contains(buMaintenanceDocTyp))
 					continue;
 				
@@ -205,9 +202,6 @@ public class RequiredDocumentAutomate extends Automate {
 			filter = filterOnSubTeam ? filter + " AND subTeams IN [" +  String.join(",", subTeams) + "]" : filter;
 		}
 		
-		
-		
-		logger.info("FILTER: " + filter);
 		DataObject buMaintenanceListReturn = businessEntityServiceClient.searchBE(callContext, besClient, helperContext, "ExBuMaintenance", filter);
 		dataObjectHelperContext.getDataObjectDumper().dump(helperContext, "ExBuMaintenance", buMaintenanceListReturn);
 

@@ -20,7 +20,7 @@ public class ShortFullNameValidate extends Validate {
 	public List<ValidationError> doValidation(DataObject inputSDO, HelperContext helperContext,
 			Map<String, Object> inParams, Map<String, Object> outParams, String businessEntity,
 			DataObject promotePreviewSDO, CallContext callContext, CompositeServiceClient besClient, DataObject dbSDO) {
-		// TODO Auto-generated method stub
+
 		pauseLogging(inputSDO);
 		
 		DataObject promoteSDOBe = null;
